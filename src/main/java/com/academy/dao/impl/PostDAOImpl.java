@@ -23,13 +23,29 @@ public class PostDAOImpl implements IPostDAO {
     private PreparedStatement preparedStatement;
     private ResultSet resultSet;
 
-    //CRUD
+    //SQL
     private static final String GET_ALL_APPROVED_POSTS= "SELECT U.id, U.summary, U.description, R.name as post_type_name, D.name as post_status_name, Z.username as username\n" +
             "FROM post U \n" +
             "JOIN post_type R ON U.post_type_id = R.id\n" +
             "JOIN post_status D ON U.post_status_id = D.id \n" +
             "JOIN users Z ON U.user_id = Z.id \n" +
             "WHERE D.name = 'APPROVED'\n" +
+            "ORDER BY U.id";
+
+    private static final String GET_ALL_NEW_POSTS= "SELECT U.id, U.summary, U.description, R.name as post_type_name, D.name as post_status_name, Z.username as username\n" +
+            "FROM post U \n" +
+            "JOIN post_type R ON U.post_type_id = R.id\n" +
+            "JOIN post_status D ON U.post_status_id = D.id \n" +
+            "JOIN users Z ON U.user_id = Z.id \n" +
+            "WHERE D.name = 'NEW'\n" +
+            "ORDER BY U.id";
+
+    private static final String GET_ALL_DECLINED_POSTS= "SELECT U.id, U.summary, U.description, R.name as post_type_name, D.name as post_status_name, Z.username as username\n" +
+            "FROM post U \n" +
+            "JOIN post_type R ON U.post_type_id = R.id\n" +
+            "JOIN post_status D ON U.post_status_id = D.id \n" +
+            "JOIN users Z ON U.user_id = Z.id \n" +
+            "WHERE D.name = 'NEW'\n" +
             "ORDER BY U.id";
 
     private static final String INSERT_POST = "INSERT INTO post (summary, description, post_type_id, user_id) VALUES(?, ?, ?, ?)";
@@ -88,10 +104,53 @@ public class PostDAOImpl implements IPostDAO {
             preparedStatement.setObject(3, post.getPostType().getId());
             preparedStatement.setObject(4, post.getUser().getId());
             preparedStatement.executeUpdate();
-            log.debug("Role was successfully saved");
+            log.debug("Post was successfully saved");
         } catch (SQLException e){
-            log.error("Role wasn't saved to database", e);
+            log.error("Post wasn't saved to database", e);
 
         }
+    }
+
+    @Override
+    public List<Post> getAllNewPosts() {
+        List<Post> posts = null;
+        Post post;
+        User user;
+        PostStatus postStatus;
+        PostType postType;
+
+        log.trace("Started getting all new posts from database.");
+        try {
+            posts = new ArrayList<Post>();
+            connection = DBConnectionUtil.getConnection();
+            preparedStatement =  connection.prepareStatement(GET_ALL_NEW_POSTS);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                post = new Post();
+                user = new User();
+                postStatus = new PostStatus();
+                postType = new PostType();
+                post.setId(resultSet.getInt("id"));
+                post.setSummary(resultSet.getString("summary"));
+                post.setDescription(resultSet.getString("description"));
+
+                postType.setName(resultSet.getString("post_type_name"));
+                post.setPostType(postType);
+
+                postStatus.setName(resultSet.getString("post_status_name"));
+                post.setPostStatus(postStatus);
+
+                user.setUsername(resultSet.getString("username"));
+                post.setUser(user);
+
+                posts.add(post);
+            }
+            log.trace("All new post selected successfully");
+            //connection.close();
+        } catch (SQLException e) {
+            log.error("Something went wrong", e);
+        }
+        return posts;
     }
 }

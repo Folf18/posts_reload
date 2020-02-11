@@ -16,6 +16,11 @@ public class PostServiceImpl implements IPostService {
     }
 
     @Override
+    public List<Post> getAllNewPosts() {
+        return postDAO.getAllNewPosts();
+    }
+
+    @Override
     public void createNewPost(Post post) {
         postDAO.createPost(post);
     }

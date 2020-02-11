@@ -8,4 +8,5 @@ public interface IPostDAO {
 
     List<Post> getAllApprovedPosts();
     void createPost(Post post);
+    List<Post> getAllNewPosts();
 }
