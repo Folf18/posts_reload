@@ -1,11 +1,11 @@
-package com.academy.dao;
-
+package com.academy.service;
 
 import com.academy.model.Post;
+
 import java.util.List;
 
-public interface IPostDAO {
+public interface IPostService {
 
     List<Post> getAllApprovedPosts();
-    void createPost(Post post);
+    void createNewPost(Post post);
 }

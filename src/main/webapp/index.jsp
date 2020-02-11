@@ -5,29 +5,29 @@
   Time: 3:25 пп
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<html>
-<title>Users</title>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.css"/>
+<%@ include file="common/header.jspf" %>
 
+<h1>Posts</h1>
+<div class="container">
+    <div class="row flex-sm-row">
+        <c:forEach items="${approvedPosts}" var="approvedPost">
+            <div class="col-sm-3">
+                <div class="card">
+                    <div class="card-header">
+                           <a href="/post/${approvedPost.id}">${approvedPost.summary}</a>
+                    </div>
+                    <div class="card-body">
+                        <blockquote class="blockquote mb-0">
+                            <p>${approvedPost.description}</p>
+                            <footer class="blockquote-footer">${approvedPost.user.username} in <cite
+                                    title="Source Title">${approvedPost.postType.name}</cite></footer>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
 
-
-</head>
-    <title>Posts management system</title>
-</head>
-<body>
-<h1>List of users</h1>
-<br class="container">
-
-<div class="card w-75">
-    <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-        <a href="#" class="btn btn-primary">Button</a>
+        </c:forEach>
     </div>
 </div>
-</div>
-</body>
-</html>
+<%@ include file="common/footer.jspf" %>
+

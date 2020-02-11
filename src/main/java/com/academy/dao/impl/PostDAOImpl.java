@@ -32,8 +32,10 @@ public class PostDAOImpl implements IPostDAO {
             "WHERE D.name = 'APPROVED'\n" +
             "ORDER BY U.id";
 
+    private static final String INSERT_POST = "INSERT INTO post (summary, description, post_type_id, user_id) VALUES(?, ?, ?, ?)";
+
     @Override
-    public List<Post> getAllPostsInfo() {
+    public List<Post> getAllApprovedPosts() {
         List<Post> posts = null;
         Post post;
         User user;
@@ -54,7 +56,7 @@ public class PostDAOImpl implements IPostDAO {
                 postType = new PostType();
                 post.setId(resultSet.getInt("id"));
                 post.setSummary(resultSet.getString("summary"));
-                post.setDescription(resultSet.getString("email"));
+                post.setDescription(resultSet.getString("description"));
 
                 postType.setName(resultSet.getString("post_type_name"));
                 post.setPostType(postType);
@@ -68,9 +70,28 @@ public class PostDAOImpl implements IPostDAO {
                 posts.add(post);
             }
             log.trace("All approved post selected successfully");
+            //connection.close();
         } catch (SQLException e) {
             log.error("Something went wrong", e);
         }
         return posts;
+    }
+
+    @Override
+    public void createPost(Post post) {
+        log.trace("Started saving post to database");
+        try {
+            connection = DBConnectionUtil.getConnection();
+            preparedStatement = connection.prepareStatement(INSERT_POST);
+            preparedStatement.setObject(1, post.getSummary());
+            preparedStatement.setObject(2, post.getDescription());
+            preparedStatement.setObject(3, post.getPostType().getId());
+            preparedStatement.setObject(4, post.getUser().getId());
+            preparedStatement.executeUpdate();
+            log.debug("Role was successfully saved");
+        } catch (SQLException e){
+            log.error("Role wasn't saved to database", e);
+
+        }
     }
 }
