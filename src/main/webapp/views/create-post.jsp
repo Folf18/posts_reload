@@ -21,9 +21,9 @@
 
         <div class="form-group">
             Choose post type:
-            <select name="post_type_id">
+            <select class="form-control col-md-6" name="post_type_id">
                 <c:forEach items="${postTypes}" var="postType">
-                    <option value="${postType.id}">${postType.name}</option>
+                   <option value="${postType.id}">${postType.name}</option>
                 </c:forEach>
             </select>
             </br>
@@ -39,8 +39,7 @@
     </form>
 </div>
 
-<div class="form-group">
-    Enter post_type_id: <input type="text" name="post_type_id" placeholder="Post_type_id"
-                               class="form-control"/> </br>
-</div>
+
+
+
 <%@ include file="/common/footer.jspf" %>
