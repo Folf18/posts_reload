@@ -1,4 +1,4 @@
-package com.academy.dao;
+package com.academy.dao.interfaces;
 
 import com.academy.model.User;
 
@@ -8,6 +8,7 @@ public interface IUserDAO {
 
     List<User> getAllUsersInfo();
     void insertUser(User user);
+    User searchUserInDB(String username, String password);
 
 }
 

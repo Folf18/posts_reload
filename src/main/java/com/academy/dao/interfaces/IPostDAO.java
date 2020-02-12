@@ -1,4 +1,4 @@
-package com.academy.dao;
+package com.academy.dao.interfaces;
 
 
 import com.academy.model.Post;

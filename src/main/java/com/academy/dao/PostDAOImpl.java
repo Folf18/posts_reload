@@ -1,6 +1,6 @@
-package com.academy.dao.impl;
+package com.academy.dao;
 
-import com.academy.dao.IPostDAO;
+import com.academy.dao.interfaces.IPostDAO;
 import com.academy.model.Post;
 import com.academy.model.PostStatus;
 import com.academy.model.PostType;

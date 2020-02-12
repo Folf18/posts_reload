@@ -1,8 +1,8 @@
 package com.academy.controller.post;
 
 import com.academy.model.Post;
-import com.academy.service.IPostService;
-import com.academy.service.impl.PostServiceImpl;
+import com.academy.service.interfaces.IPostService;
+import com.academy.service.PostServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

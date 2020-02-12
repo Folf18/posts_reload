@@ -1,8 +1,8 @@
 package com.academy.controller.user;
 
 import com.academy.model.User;
-import com.academy.service.IUserService;
-import com.academy.service.impl.UserServiceImpl;
+import com.academy.service.interfaces.IUserService;
+import com.academy.service.UserServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

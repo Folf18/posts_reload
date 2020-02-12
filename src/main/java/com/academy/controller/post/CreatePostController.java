@@ -4,10 +4,10 @@ import com.academy.controller.user.SignInController;
 import com.academy.model.Post;
 import com.academy.model.PostType;
 import com.academy.model.User;
-import com.academy.service.IPostService;
-import com.academy.service.IPostTypeService;
-import com.academy.service.impl.PostServiceImpl;
-import com.academy.service.impl.PostTypeServiceimpl;
+import com.academy.service.interfaces.IPostService;
+import com.academy.service.interfaces.IPostTypeService;
+import com.academy.service.PostServiceImpl;
+import com.academy.service.PostTypeServiceimpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

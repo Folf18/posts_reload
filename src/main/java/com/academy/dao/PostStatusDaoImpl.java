@@ -1,6 +1,6 @@
-package com.academy.dao.impl;
+package com.academy.dao;
 
-import com.academy.dao.IPostStatusDAO;
+import com.academy.dao.interfaces.IPostStatusDAO;
 import com.academy.model.PostStatus;
 import com.academy.util.DBConnectionUtil;
 import org.apache.logging.log4j.LogManager;
