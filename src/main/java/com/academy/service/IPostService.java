@@ -7,6 +7,6 @@ import java.util.List;
 public interface IPostService {
 
     List<Post> getAllApprovedPosts();
-    List<Post> getAllNewPosts();
+    List<Post> getAllPostsByStatus(String status);
     void createNewPost(Post post);
 }

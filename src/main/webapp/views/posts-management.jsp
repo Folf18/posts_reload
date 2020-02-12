@@ -13,7 +13,7 @@
     <ul class="nav nav-pills row justify-content-center">
         <c:forEach items="${postStatuses}" var="postStatus">
             <li class="nav-item">
-                <a class="nav-link" href="/posts-managent?status=${postStatus.name}">${postStatus.name}</a>
+                <a class="nav-link active" href="/posts-management?status=${postStatus.name}">${postStatus.name}</a>
             </li>
         </c:forEach>
     </ul>

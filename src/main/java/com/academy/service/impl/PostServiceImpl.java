@@ -15,13 +15,14 @@ public class PostServiceImpl implements IPostService {
         return postDAO.getAllApprovedPosts();
     }
 
-    @Override
-    public List<Post> getAllNewPosts() {
-        return postDAO.getAllNewPosts();
-    }
 
     @Override
     public void createNewPost(Post post) {
         postDAO.createPost(post);
+    }
+
+    @Override
+    public List<Post> getAllPostsByStatus(String status) {
+        return postDAO.getAllPostsByStatus(status);
     }
 }

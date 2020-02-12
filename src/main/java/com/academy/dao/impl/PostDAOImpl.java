@@ -32,20 +32,13 @@ public class PostDAOImpl implements IPostDAO {
             "WHERE D.name = 'APPROVED'\n" +
             "ORDER BY U.id";
 
-    private static final String GET_ALL_NEW_POSTS= "SELECT U.id, U.summary, U.description, R.name as post_type_name, D.name as post_status_name, Z.username as username\n" +
-            "FROM post U \n" +
-            "JOIN post_type R ON U.post_type_id = R.id\n" +
-            "JOIN post_status D ON U.post_status_id = D.id \n" +
-            "JOIN users Z ON U.user_id = Z.id \n" +
-            "WHERE D.name = 'NEW'\n" +
-            "ORDER BY U.id";
 
-    private static final String GET_ALL_DECLINED_POSTS= "SELECT U.id, U.summary, U.description, R.name as post_type_name, D.name as post_status_name, Z.username as username\n" +
+    private static final String GET_ALL_POSTS_BY_STATUS = "SELECT U.id, U.summary, U.description, R.name as post_type_name, D.name as post_status_name, Z.username as username\n" +
             "FROM post U \n" +
             "JOIN post_type R ON U.post_type_id = R.id\n" +
             "JOIN post_status D ON U.post_status_id = D.id \n" +
             "JOIN users Z ON U.user_id = Z.id \n" +
-            "WHERE D.name = 'NEW'\n" +
+            "WHERE D.name = ? \n" +
             "ORDER BY U.id";
 
     private static final String INSERT_POST = "INSERT INTO post (summary, description, post_type_id, user_id) VALUES(?, ?, ?, ?)";
@@ -111,19 +104,21 @@ public class PostDAOImpl implements IPostDAO {
         }
     }
 
+
     @Override
-    public List<Post> getAllNewPosts() {
+    public List<Post> getAllPostsByStatus(String status) {
         List<Post> posts = null;
         Post post;
         User user;
         PostStatus postStatus;
         PostType postType;
 
-        log.trace("Started getting all new posts from database.");
+        log.trace("Started getting all posts by status {} from database.", status);
         try {
             posts = new ArrayList<Post>();
             connection = DBConnectionUtil.getConnection();
-            preparedStatement =  connection.prepareStatement(GET_ALL_NEW_POSTS);
+            preparedStatement =  connection.prepareStatement(GET_ALL_POSTS_BY_STATUS);
+            preparedStatement.setString(1, status);
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {

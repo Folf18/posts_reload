@@ -2,12 +2,9 @@ package com.academy.controller.post;
 
 import com.academy.model.Post;
 import com.academy.model.PostStatus;
-import com.academy.model.PostType;
 import com.academy.service.IPostService;
-import com.academy.service.IPostTypeService;
 import com.academy.service.impl.PostServiceImpl;
 import com.academy.service.impl.PostStatusesServiceImpl;
-import com.academy.service.impl.PostTypeServiceimpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -20,26 +17,38 @@ import java.io.IOException;
 import java.util.List;
 
 @WebServlet(urlPatterns = "/posts-management")
-public class GetAllNewPostsController extends HttpServlet {
-    final static Logger log = LogManager.getLogger(GetAllNewPostsController.class);
+public class GetAllPostsByStatusController extends HttpServlet {
+    final static Logger log = LogManager.getLogger(GetAllPostsByStatusController.class);
 
     IPostService postService;
 
-    public GetAllNewPostsController() {
+    public GetAllPostsByStatusController() {
         postService = new PostServiceImpl();
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        
+        String status = req.getParameter("status");
+
+            log.trace("status" + status);
+            status = status == null ? "NEW" : status;
+
         List<PostStatus> postStatuses = new PostStatusesServiceImpl().getAllPostStatuses();
-        log.trace("doGet in GetAllNewPostsController");
+        log.trace("doGet in GetAllPostsByStatusController");
         req.setAttribute("postStatuses", postStatuses);
 
+        /*
         List<Post> newPosts = postService.getAllNewPosts();
-        log.info("GetAllNewPostsController");
+        log.info("GetAllPostsByStatusController");
         req.setAttribute("newPosts", newPosts);
+
+         */
+
+        List<Post> newPosts = postService.getAllPostsByStatus(status);
+        log.info("GetPostsController");
+        req.setAttribute("newPosts", newPosts);
+
         req.getRequestDispatcher("/views/posts-management.jsp").forward(req, resp);
 
     }
