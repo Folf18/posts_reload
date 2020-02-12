@@ -41,7 +41,7 @@ public class PostDAOImpl implements IPostDAO {
             "WHERE D.name = ? \n" +
             "ORDER BY U.id";
 
-    private static final String INSERT_POST = "INSERT INTO post (summary, description, post_type_id, user_id) VALUES(?, ?, ?, ?)";
+    private static final String INSERT_POST = "INSERT INTO post (summary, description, post_type_id, user_id, post_status_id) VALUES(?, ?, ?, ?, ?)";
 
     @Override
     public List<Post> getAllApprovedPosts() {
@@ -92,10 +92,12 @@ public class PostDAOImpl implements IPostDAO {
         try {
             connection = DBConnectionUtil.getConnection();
             preparedStatement = connection.prepareStatement(INSERT_POST);
-            preparedStatement.setObject(1, post.getSummary());
-            preparedStatement.setObject(2, post.getDescription());
-            preparedStatement.setObject(3, post.getPostType().getId());
-            preparedStatement.setObject(4, post.getUser().getId());
+            preparedStatement.setString(1, post.getSummary());
+            preparedStatement.setString(2, post.getDescription());
+            preparedStatement.setInt(3, post.getPostType().getId());
+            preparedStatement.setInt(4, post.getUser().getId());
+            preparedStatement.setInt(5, post.getPostStatus().getId());
+
             preparedStatement.executeUpdate();
             log.debug("Post was successfully saved");
         } catch (SQLException e){
