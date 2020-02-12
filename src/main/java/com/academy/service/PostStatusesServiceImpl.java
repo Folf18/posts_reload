@@ -1,9 +1,9 @@
-package com.academy.service.impl;
+package com.academy.service;
 
-import com.academy.dao.IPostStatusDAO;
-import com.academy.dao.impl.PostStatusDaoImpl;
+import com.academy.dao.interfaces.IPostStatusDAO;
+import com.academy.dao.PostStatusDaoImpl;
 import com.academy.model.PostStatus;
-import com.academy.service.IPostStatusService;
+import com.academy.service.interfaces.IPostStatusService;
 
 import java.util.List;
 

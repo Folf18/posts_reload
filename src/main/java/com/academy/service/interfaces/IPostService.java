@@ -1,4 +1,4 @@
-package com.academy.service;
+package com.academy.service.interfaces;
 
 import com.academy.model.Post;
 

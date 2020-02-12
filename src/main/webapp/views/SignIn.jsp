@@ -7,6 +7,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/common/header.jspf" %>
+
+<h1 style="alignment: center"> ${message}</h1>
 <div class="row justify-content-center">
     <form action="/signin" method="post" class="col-md-4">
         <div class="form-group">

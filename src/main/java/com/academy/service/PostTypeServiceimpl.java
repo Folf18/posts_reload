@@ -1,11 +1,9 @@
-package com.academy.service.impl;
+package com.academy.service;
 
-import com.academy.controller.post.GetAllPostsByStatusController;
-import com.academy.dao.IPostTypeDAO;
-import com.academy.dao.impl.PostTypeDAOImpl;
+import com.academy.dao.interfaces.IPostTypeDAO;
+import com.academy.dao.PostTypeDAOImpl;
 import com.academy.model.PostType;
-import com.academy.service.IPostService;
-import com.academy.service.IPostTypeService;
+import com.academy.service.interfaces.IPostTypeService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

@@ -1,10 +1,11 @@
-package com.academy.service.impl;
+package com.academy.service;
 
 
-import com.academy.dao.IPostDAO;
-import com.academy.dao.impl.PostDAOImpl;
+import com.academy.dao.interfaces.IPostDAO;
+import com.academy.dao.PostDAOImpl;
 import com.academy.model.Post;
-import com.academy.service.IPostService;
+import com.academy.model.PostStatus;
+import com.academy.service.interfaces.IPostService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,8 +22,16 @@ public class PostServiceImpl implements IPostService {
 
     @Override
     public void createNewPost(Post post) {
+
+        //Set status to NEW by default
+        PostStatus postStatus = new PostStatus();
+        postStatus.setId(1);
+        post.setPostStatus(postStatus);
+
+
         postDAO.createPost(post);
     }
+
     @Override
     public List<Post> getAllPostsByStatus(String status) {
         log.trace("status " + status);

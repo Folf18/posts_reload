@@ -1,10 +1,9 @@
-package com.academy.service;
+package com.academy.dao.interfaces;
 
 import com.academy.model.PostType;
 
 import java.util.List;
 
-public interface IPostTypeService {
-
+public interface IPostTypeDAO {
     List<PostType> getAllPostTypes();
 }

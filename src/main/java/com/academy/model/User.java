@@ -9,6 +9,7 @@ public class User {
     private String email;
     private String password;
     private boolean isBlocked;
+    private boolean isActive;
     private Role role;
     private OffsetDateTime createdAt;
     private OffsetDateTime updatedAt;
@@ -115,6 +116,15 @@ public class User {
         this.updatedAt = updatedAt;
     }
 
+
+    public boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(boolean active) {
+        isActive = active;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -123,6 +133,7 @@ public class User {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", isBlocked=" + isBlocked +
+                ", isActive=" + isActive +
                 ", role=" + role +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
@@ -136,6 +147,7 @@ public class User {
         User user = (User) o;
         return id == user.id &&
                 isBlocked == user.isBlocked &&
+                isActive == user.isActive &&
                 username.equals(user.username) &&
                 email.equals(user.email) &&
                 password.equals(user.password) &&
@@ -146,7 +158,7 @@ public class User {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, email, password, isBlocked, role, createdAt, updatedAt);
+        return Objects.hash(id, username, email, password, isBlocked, isActive, role, createdAt, updatedAt);
     }
 }
 

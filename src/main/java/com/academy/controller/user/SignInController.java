@@ -1,8 +1,7 @@
 package com.academy.controller.user;
 
-import com.academy.model.User;
-import com.academy.service.IUserService;
-import com.academy.service.impl.UserServiceImpl;
+import com.academy.service.interfaces.IUserService;
+import com.academy.service.UserServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -19,7 +18,7 @@ public class SignInController extends HttpServlet {
     final static Logger log = LogManager.getLogger(SignInController.class);
 
     IUserService userService;
-    User user = new User();
+    //User user = new User();
 
     public SignInController() {
         userService = new UserServiceImpl();
@@ -32,10 +31,18 @@ public class SignInController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        user.setUsername(req.getParameter("username"));
-        user.setPassword(req.getParameter("password"));
-        //userService.createUser(user);
 
-        resp.sendRedirect("/post");
+        boolean canSignIn = userService.isAbleToSignIn(req.getParameter("username"), req.getParameter("password"));
+
+        if (canSignIn){
+            resp.sendRedirect("/posts");
+        }
+            else {
+
+            req.setAttribute("message", "Username or password is incorrect");
+            req.getRequestDispatcher("/views/SignIn.jsp").forward(req, resp);
+        }
+
+        //resp.sendRedirect("/si");
     }
 }
