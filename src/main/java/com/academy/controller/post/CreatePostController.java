@@ -38,10 +38,8 @@ public class CreatePostController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
        // IPostTypeService postTypeService = new PostTypeServiceimpl();
         List<PostType> postTypes = postTypeService.getAllPostTypes();
-        log.trace("doGet");
+        log.trace("doGet in CreatePostController");
         req.setAttribute("postTypes", postTypes);
-        log.info(postTypes.iterator());
-
         req.getRequestDispatcher("/views/create-post.jsp").forward(req, resp);
     }
 

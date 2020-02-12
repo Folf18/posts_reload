@@ -7,5 +7,7 @@ import java.util.List;
 public interface IPostDAO {
 
     List<Post> getAllApprovedPosts();
+    List<Post> getAllPostsByStatus(String status);
     void createPost(Post post);
+
 }
