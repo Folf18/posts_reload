@@ -8,34 +8,49 @@
 <%@ include file="/common/header.jspf" %>
 
 
-
 <div class="container">
     <ul class="nav nav-pills row justify-content-center">
-        <c:forEach items="${postStatuses}" var="postStatus">
-            <li class="nav-item">
-                <a class="nav-link" href="/posts-management?status=${postStatus.name}">${postStatus.name}</a>
-            </li>
-        </c:forEach>
+
+        <li class="nav-item">
+            <a class="nav-link active" href="/posts-management?status=NEW">NEW</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/posts-management?status=APPROVED">APPROVED</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/posts-management?status=DECLINED">DECLINED</a>
+        </li>
+
+
     </ul>
     <br>
-    <div class="row flex-sm-row">
-        <c:forEach items="${newPosts}" var="newPost">
-            <div class="col-sm-3">
-                <div class="card">
-                    <div class="card-header">
-                        <a href="/post/${newPost.id}">${newPost.summary}</a>
+
+    <c:forEach items="${newPosts}" var="newPost">
+        <form class="form " style="border:1px silver">
+            <div class="row w-100 justify-content-center">
+                <div class="col-sm-8">
+                    <div class="card">
+                        <div class="card-header">
+                                ${newPost.summary}
+
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">${newPost.description}</p>
+                        </div>
+                        <div class="card-footer text-muted text-left col">
+                                ${newPost.user.username} in ${newPost.postType.name}
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <blockquote class="blockquote mb-0">
-                            <p>${newPost.description}</p>
-                            <footer class="blockquote-footer">${newPost.user.username} in <cite
-                                    title="Source Title">${newPost.postType.name}</cite></footer>
-                        </blockquote>
+                    <br>
+                    <div class="text-right col">
+                        <a href="/approve?id=${newPost.id}" class="btn btn-success">Approve</a>
+                        <a href="/decline?id=${newPost.id}" class="btn btn-danger">Decline</a>
                     </div>
                 </div>
             </div>
+            <hr>
+        </form>
+    </c:forEach>
 
-        </c:forEach>
-    </div>
 </div>
 <%@ include file="/common/footer.jspf" %>
