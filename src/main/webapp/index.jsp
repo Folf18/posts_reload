@@ -9,25 +9,27 @@
 
 <h1>Posts</h1>
 <div class="container">
-    <div class="row flex-sm-row">
-        <c:forEach items="${approvedPosts}" var="approvedPost">
-            <div class="col-sm-3">
+
+    <c:forEach items="${approvedPosts}" var="approvedPost">
+        <div class="row w-100 justify-content-center">
+            <div class="col-sm-8">
                 <div class="card">
                     <div class="card-header">
-                           <a href="/post/${approvedPost.id}">${approvedPost.summary}</a>
+                        <a href="/post/${approvedPost.id}">
+                                ${approvedPost.summary} </a>
                     </div>
                     <div class="card-body">
-                        <blockquote class="blockquote mb-0">
-                            <p>${approvedPost.description}</p>
-                            <footer class="blockquote-footer">${approvedPost.user.username} in <cite
-                                    title="Source Title">${approvedPost.postType.name}</cite></footer>
-                        </blockquote>
+                        <p class="card-text">${approvedPost.description}</p>
+                    </div>
+                    <div class="card-footer text-muted si text-right">
+                            ${approvedPost.user.username} in ${approvedPost.postType.name}
                     </div>
                 </div>
             </div>
-
-        </c:forEach>
-    </div>
+        </div>
+        <br>
+    </c:forEach>
+</div>
 </div>
 <%@ include file="common/footer.jspf" %>
 
