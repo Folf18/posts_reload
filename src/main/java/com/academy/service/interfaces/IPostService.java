@@ -9,4 +9,6 @@ public interface IPostService {
     List<Post> getAllApprovedPosts();
     List<Post> getAllPostsByStatus(String status);
     void createNewPost(Post post);
+    void approvePost(int id);
+    void declinePost(int id);
 }

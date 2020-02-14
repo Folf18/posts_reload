@@ -39,3 +39,24 @@
             </li>
 
         </c:forEach>
+
+
+          <c:when test="${param.status=='APPROVED'}">
+                                        <a href="/decline?id=${newPost.id}" class="btn btn-danger">Decline</a>
+                                    </c:when>
+                                    <c:when test="${param.status=='DECLINED'}">
+                                        <a href="/approve?id=${newPost.id}" class="btn btn-success">Approve</a>
+                                    </c:when>
+                                    <c:when test="${empty param.status}">
+                                        <a href="/approve?id=${newPost.id}" class="btn btn-success">Approve</a>
+                                        <a href="/decline?id=${newPost.id}" class="btn btn-danger">Decline</a>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <a>Actions aren't available for the current User</a>
+                                    </c:otherwise>
+
+
+                                    $('.nav .nav-link').click(function(){
+                                            $('.nav .nav-link').removeClass('active');
+                                            $(this).addClass('active');
+                                        })

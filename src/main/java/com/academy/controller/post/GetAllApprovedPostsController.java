@@ -29,6 +29,6 @@ public class GetAllApprovedPostsController extends HttpServlet {
         List<Post> approvedPosts = postService.getAllApprovedPosts();
         log.info("GetAllApprovedPostsController");
         req.setAttribute("approvedPosts", approvedPosts);
-        req.getRequestDispatcher("index.jsp").forward(req, resp);
+        req.getRequestDispatcher("/views/posts.jsp").forward(req, resp);
     }
 }

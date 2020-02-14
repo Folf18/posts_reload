@@ -28,19 +28,13 @@ public class GetAllPostsByStatusController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-
-
+        //GET Post statuses
         List<PostStatus> postStatuses = new PostStatusesServiceImpl().getAllPostStatuses();
         log.trace("doGet in GetAllPostsByStatusController");
         req.setAttribute("postStatuses", postStatuses);
 
-        /*
-        List<Post> newPosts = postService.getAllNewPosts();
-        log.info("GetAllPostsByStatusController");
-        req.setAttribute("newPosts", newPosts);
 
-         */
+        //GET posts by parameter
         String status = req.getParameter("status");
 
         List<Post> newPosts = postService.getAllPostsByStatus(status);
@@ -51,8 +45,4 @@ public class GetAllPostsByStatusController extends HttpServlet {
 
     }
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
-    }
 }
