@@ -30,7 +30,7 @@ public class PostDAOImpl implements IPostDAO {
             "JOIN post_status D ON U.post_status_id = D.id \n" +
             "JOIN users Z ON U.user_id = Z.id \n" +
             "WHERE D.name = 'APPROVED'\n" +
-            "ORDER BY U.id";
+            "ORDER BY U.updated_at DESC";
 
 
     private static final String GET_ALL_POSTS_BY_STATUS = "SELECT U.id, U.summary, U.description, R.name as post_type_name, D.name as post_status_name, Z.username as username\n" +
@@ -39,9 +39,12 @@ public class PostDAOImpl implements IPostDAO {
             "JOIN post_status D ON U.post_status_id = D.id \n" +
             "JOIN users Z ON U.user_id = Z.id \n" +
             "WHERE D.name = ? \n" +
-            "ORDER BY U.id";
+            "ORDER BY U.created_at";
 
     private static final String INSERT_POST = "INSERT INTO post (summary, description, post_type_id, user_id, post_status_id) VALUES(?, ?, ?, ?, ?)";
+
+    private static final String APPROVE_POST = "UPDATE public.post SET post_status_id=2 WHERE id = ?;";
+    private static final String DECLINE_POST = "UPDATE public.post SET post_status_id=3 WHERE id = ?;";
 
     @Override
     public List<Post> getAllApprovedPosts() {
@@ -149,5 +152,38 @@ public class PostDAOImpl implements IPostDAO {
             log.error("Something went wrong", e);
         }
         return posts;
+    }
+
+    @Override
+    public void approvePostById(int id) {
+        log.trace("Started approving post with id {} from database.", id);
+
+        try {
+            connection = DBConnectionUtil.getConnection();
+            preparedStatement = connection.prepareStatement(APPROVE_POST);
+            preparedStatement.setInt(1, id);
+            int executionStatus = preparedStatement.executeUpdate();
+            if (executionStatus == 0) {  log.trace("No one post was approved");}
+            else log.debug("Post with id {} was approved successfully", id);
+        } catch (SQLException e){
+            log.error("Process of approving role with id {} has crashed", id, e);
+        }
+
+    }
+
+    @Override
+    public void declinePostById(int id) {
+        log.trace("Started declining post with id {} from database.", id);
+
+        try {
+            connection = DBConnectionUtil.getConnection();
+            preparedStatement = connection.prepareStatement(DECLINE_POST);
+            preparedStatement.setInt(1, id);
+            int executionStatus = preparedStatement.executeUpdate();
+            if (executionStatus == 0) {  log.trace("No one post was declined");}
+            else log.debug("Post with id {} was declined successfully", id);
+        } catch (SQLException e){
+            log.error("Process of declining role with id {} has crashed", id, e);
+        }
     }
 }

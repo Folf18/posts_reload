@@ -38,4 +38,14 @@ public class PostServiceImpl implements IPostService {
         status = status == null ? "NEW" : status;
         return postDAO.getAllPostsByStatus(status);
     }
+
+    @Override
+    public void approvePost(int id) {
+         postDAO.approvePostById(id);
+    }
+
+    @Override
+    public void declinePost(int id) {
+        postDAO.declinePostById(id);
+    }
 }

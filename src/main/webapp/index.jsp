@@ -9,26 +9,9 @@
 
 <h1>Posts</h1>
 <div class="container">
-
-    <c:forEach items="${approvedPosts}" var="approvedPost">
-        <div class="row w-100 justify-content-center">
-            <div class="col-sm-8">
-                <div class="card">
-                    <div class="card-header">
-                        <a href="/post/${approvedPost.id}">
-                                ${approvedPost.summary} </a>
-                    </div>
-                    <div class="card-body">
-                        <p class="card-text">${approvedPost.description}</p>
-                    </div>
-                    <div class="card-footer text-muted si text-right">
-                            ${approvedPost.user.username} in ${approvedPost.postType.name}
-                    </div>
-                </div>
-            </div>
-        </div>
-        <br>
-    </c:forEach>
+    <hr>
+    <h1>Hi there</h1>
+    <hr>
 </div>
 </div>
 <%@ include file="common/footer.jspf" %>
