@@ -1,12 +1,12 @@
 package com.academy.dao;
 
-import com.academy.dao.interfaces.IUserDAO;
 import com.academy.model.Role;
 import com.academy.model.User;
 import com.academy.util.DBConnectionUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,8 +14,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDAOImpl implements IUserDAO {
-    final static Logger log = LogManager.getLogger(UserDAOImpl.class);
+public class UserDAO implements Serializable {
+    final static Logger log = LogManager.getLogger(UserDAO.class);
     ;
 
     private Connection connection;
@@ -34,7 +34,7 @@ public class UserDAOImpl implements IUserDAO {
     //static final String BLOCK_USER = "UPDATE users SET is_blocked = ? WHERE id = ?";
 
 
-    @Override
+
     public List<User> getAllUsersInfo() {
         List<User> users = null;
         User user;
@@ -66,7 +66,7 @@ public class UserDAOImpl implements IUserDAO {
         return users;
     }
 
-    @Override
+
     public void insertUser(User user) {
         log.trace("Started saving user to database");
         try {
@@ -86,7 +86,7 @@ public class UserDAOImpl implements IUserDAO {
         }
     }
 
-    @Override
+
     public User searchUserInDB(String username, String password) {
         User user = null;
         Role role;
