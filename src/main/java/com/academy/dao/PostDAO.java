@@ -1,6 +1,5 @@
 package com.academy.dao;
 
-import com.academy.dao.interfaces.IPostDAO;
 import com.academy.model.Post;
 import com.academy.model.PostStatus;
 import com.academy.model.PostType;
@@ -9,6 +8,7 @@ import com.academy.util.DBConnectionUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,8 +16,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PostDAOImpl implements IPostDAO {
-    final static Logger log = LogManager.getLogger(PostDAOImpl.class);;
+public class PostDAO implements Serializable {
+    final static Logger log = LogManager.getLogger(PostDAO.class);;
 
     private Connection connection;
     private PreparedStatement preparedStatement;
@@ -46,7 +46,7 @@ public class PostDAOImpl implements IPostDAO {
     private static final String APPROVE_POST = "UPDATE public.post SET post_status_id=2 WHERE id = ?;";
     private static final String DECLINE_POST = "UPDATE public.post SET post_status_id=3 WHERE id = ?;";
 
-    @Override
+
     public List<Post> getAllApprovedPosts() {
         List<Post> posts = null;
         Post post;
@@ -89,7 +89,6 @@ public class PostDAOImpl implements IPostDAO {
         return posts;
     }
 
-    @Override
     public void createPost(Post post) {
         log.trace("Started saving post to database");
         try {
@@ -110,7 +109,7 @@ public class PostDAOImpl implements IPostDAO {
     }
 
 
-    @Override
+
     public List<Post> getAllPostsByStatus(String status) {
         List<Post> posts = null;
         Post post;
@@ -154,7 +153,6 @@ public class PostDAOImpl implements IPostDAO {
         return posts;
     }
 
-    @Override
     public void approvePostById(int id) {
         log.trace("Started approving post with id {} from database.", id);
 
@@ -171,7 +169,7 @@ public class PostDAOImpl implements IPostDAO {
 
     }
 
-    @Override
+
     public void declinePostById(int id) {
         log.trace("Started declining post with id {} from database.", id);
 

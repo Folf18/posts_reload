@@ -4,10 +4,8 @@ import com.academy.controller.user.SignInController;
 import com.academy.model.Post;
 import com.academy.model.PostType;
 import com.academy.model.User;
-import com.academy.service.interfaces.IPostService;
-import com.academy.service.interfaces.IPostTypeService;
-import com.academy.service.PostServiceImpl;
-import com.academy.service.PostTypeServiceimpl;
+import com.academy.service.PostService;
+import com.academy.service.PostTypeService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -23,20 +21,20 @@ import java.util.List;
 public class CreatePostController extends HttpServlet {
     final static Logger log = LogManager.getLogger(SignInController.class);
 
-    IPostService postService;
-    IPostTypeService postTypeService;
+    PostService postService;
+    PostTypeService postTypeService;
 
 
 
     public CreatePostController() {
-        postService = new PostServiceImpl();
-        postTypeService = new PostTypeServiceimpl();
+        postService = new PostService();
+        postTypeService = new PostTypeService();
 
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-       // IPostTypeService postTypeService = new PostTypeServiceimpl();
+       // PostTypeService postTypeService = new PostTypeService();
         List<PostType> postTypes = postTypeService.getAllPostTypes();
         log.trace("doGet in CreatePostController");
         req.setAttribute("postTypes", postTypes);

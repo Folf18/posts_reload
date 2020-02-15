@@ -1,8 +1,7 @@
 package com.academy.controller.post;
 
 import com.academy.model.Post;
-import com.academy.service.interfaces.IPostService;
-import com.academy.service.PostServiceImpl;
+import com.academy.service.PostService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,10 +17,10 @@ import java.util.List;
 public class GetAllApprovedPostsController extends HttpServlet {
     final static Logger log = LogManager.getLogger(GetAllApprovedPostsController.class);
 
-    IPostService postService;
+    PostService postService;
 
     public GetAllApprovedPostsController() {
-        postService = new PostServiceImpl();
+        postService = new PostService();
     }
 
     @Override

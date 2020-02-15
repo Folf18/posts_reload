@@ -1,8 +1,7 @@
 package com.academy.controller.user;
 
 import com.academy.model.User;
-import com.academy.service.interfaces.IUserService;
-import com.academy.service.UserServiceImpl;
+import com.academy.service.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,11 +16,11 @@ import java.io.IOException;
 public class SignUpController extends HttpServlet {
     final static Logger log = LogManager.getLogger(SignUpController.class);
 
-    IUserService userService;
+    UserService userService;
 
 
     public SignUpController() {
-        userService = new UserServiceImpl();
+        userService = new UserService();
     }
 
     @Override

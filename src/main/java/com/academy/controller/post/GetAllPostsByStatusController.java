@@ -2,9 +2,8 @@ package com.academy.controller.post;
 
 import com.academy.model.Post;
 import com.academy.model.PostStatus;
-import com.academy.service.interfaces.IPostService;
-import com.academy.service.PostServiceImpl;
-import com.academy.service.PostStatusesServiceImpl;
+import com.academy.service.PostService;
+import com.academy.service.PostStatusService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -20,16 +19,16 @@ import java.util.List;
 public class GetAllPostsByStatusController extends HttpServlet {
     final static Logger log = LogManager.getLogger(GetAllPostsByStatusController.class);
 
-    IPostService postService;
+    PostService postService;
 
     public GetAllPostsByStatusController() {
-        postService = new PostServiceImpl();
+        postService = new PostService();
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //GET Post statuses
-        List<PostStatus> postStatuses = new PostStatusesServiceImpl().getAllPostStatuses();
+        List<PostStatus> postStatuses = new PostStatusService().getAllPostStatuses();
         log.trace("doGet in GetAllPostsByStatusController");
         req.setAttribute("postStatuses", postStatuses);
 

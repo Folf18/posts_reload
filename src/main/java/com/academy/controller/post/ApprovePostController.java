@@ -1,7 +1,6 @@
 package com.academy.controller.post;
 
-import com.academy.service.PostServiceImpl;
-import com.academy.service.interfaces.IPostService;
+import com.academy.service.PostService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,9 +15,9 @@ import java.io.IOException;
 public class ApprovePostController extends HttpServlet {
     final static Logger log = LogManager.getLogger(ApprovePostController.class);
 
-    IPostService postService;
+    PostService postService;
 
-    public ApprovePostController() { postService = new PostServiceImpl();
+    public ApprovePostController() { postService = new PostService();
     }
 
 
