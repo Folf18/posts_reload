@@ -60,10 +60,19 @@ public class PropertiesService implements Serializable {
         Map<String, String> connectionProperties = new HashMap<>();
 
         connectionProperties.put("base_url", projectProperties.getProperty("app.base_url"));
-        connectionProperties.put("username", projectProperties.getProperty("mail.username"));
+
+        connectionProperties.put("host", projectProperties.getProperty("mail.smtp.host"));
+        connectionProperties.put("port", projectProperties.getProperty("mail.smtp.socketFactory.port"));
+        //connectionProperties.put("mail.smtp.socketFactory.class", projectProperties.getProperty("mail.smtp.socketFactory.class"));
+        /*connectionProperties.put("mail.smtp.host", projectProperties.getProperty("mail.smtp.host"));
+        connectionProperties.put("mail.smtp.socketFactory.port", projectProperties.getProperty("mail.smtp.socketFactory.port"));
+        connectionProperties.put("mail.smtp.socketFactory.class", projectProperties.getProperty("mail.smtp.socketFactory.class"));
+        connectionProperties.put("mail.smtp.auth", projectProperties.getProperty("mail.smtp.auth"));
+*/
+        connectionProperties.put("username", projectProperties.getProperty("mail.user"));
         connectionProperties.put("password", projectProperties.getProperty("mail.password"));
-        connectionProperties.put("host", projectProperties.getProperty("mail.host"));
-        connectionProperties.put("port", projectProperties.getProperty("mail.port"));
+
+
 
         return connectionProperties;
 

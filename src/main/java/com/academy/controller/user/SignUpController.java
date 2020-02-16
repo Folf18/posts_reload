@@ -1,6 +1,8 @@
 package com.academy.controller.user;
 
 import com.academy.model.User;
+import com.academy.service.ActivationService;
+import com.academy.service.EncryptingService;
 import com.academy.service.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,7 +27,9 @@ public class SignUpController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/views/SignUp.jsp").forward(req, resp);
+
+            req.getRequestDispatcher("/views/SignUp.jsp").forward(req, resp);
+
     }
 
     @Override
@@ -33,10 +37,15 @@ public class SignUpController extends HttpServlet {
         User user = new User();
         user.setUsername(req.getParameter("username"));
         user.setEmail(req.getParameter("email"));
-        user.setPassword(req.getParameter("password"));
-        // user.setRoleId(Integer.parseInt(req.getParameter("roleId")));
+        user.setPassword(EncryptingService.getInstance().encrypt(req.getParameter("password")));
+
         userService.createUser(user);
 
-        resp.sendRedirect("/post");
+        ActivationService activationService = ActivationService.getInstance();
+        activationService.saveAndSendMail(user.getEmail());
+
+        req.setAttribute("enteredEmail", user.getEmail());
+
+        req.getRequestDispatcher("/views/activate-message.jsp").forward(req, resp);
     }
 }
