@@ -1,12 +1,16 @@
 package com.academy.service;
 
+import com.academy.dao.ActivationDAO;
+import com.academy.dao.UserDAO;
+import com.academy.model.User;
+
 import java.io.Serializable;
 
 public class ActivationService extends TokenService implements Serializable {
 
     private static ActivationService activationService;
 
-    private ActivationService() {
+    public ActivationService() {
         super();
     }
 
@@ -16,10 +20,17 @@ public class ActivationService extends TokenService implements Serializable {
         }
         return activationService;
     }
+    ActivationDAO activationDAO = new ActivationDAO();
+    UserDAO userDAO = new UserDAO();
 
-    public void sendActivationMail(String email) {
+    public void saveAndSendMail(String email) {
 
-        String token = super.generate(email);
+
+        String token = super.generateToken(email);
+        User user = new UserDAO().getUserByEmail(email);
+        boolean isActivated = false;
+
+            activationDAO.saveToken(user.getId(), token, isActivated);
 
         MailService mailService = MailService.getInstance();
 
@@ -32,5 +43,26 @@ public class ActivationService extends TokenService implements Serializable {
         }
 
     }
+    public boolean activateAccountAndSendMail(String token){
+        int userId = activationDAO.getUserIdByToken(token);
+        if (userId!=0){
+            if (userDAO.activateUserById(userId) == true) {
+                activationDAO.markTokenAsActivated(token);
+                MailService mailService = MailService.getInstance();
+
+                try {
+                   User userEmail =  userDAO.getUserById(userId);
+                    mailService.sendGreetings(userEmail.getEmail());
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 
 }

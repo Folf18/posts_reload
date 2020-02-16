@@ -18,7 +18,7 @@ public class TokenService {
         return tokenService;
     }
 
-    public String generate(String username) {
+    public String generateToken(String username) {
 
         String token = UUID.randomUUID().toString().replaceAll("-", "");
 

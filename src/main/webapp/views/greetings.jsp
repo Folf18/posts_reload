@@ -1,15 +1,13 @@
 <%--
   Created by IntelliJ IDEA.
   User: fhavr
-  Date: 2/15/20
-  Time: 1:28 пп
+  Date: 2/16/20
+  Time: 1:24 пп
   To change this template use File | Settings | File Templates.
 --%>
 <%@ include file="/common/header.jspf" %>
 
 
-<h1>Verification email is sent to your email - ${enteredEmail}</h1>
+<h1>${greetingMessage}</h1>
 
 <%@ include file="/common/footer.jspf" %>
-
-

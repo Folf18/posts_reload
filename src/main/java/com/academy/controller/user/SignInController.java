@@ -1,5 +1,6 @@
 package com.academy.controller.user;
 
+import com.academy.service.EncryptingService;
 import com.academy.service.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -31,7 +32,7 @@ public class SignInController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        boolean canSignIn = userService.isAbleToSignIn(req.getParameter("username"), req.getParameter("password"));
+        boolean canSignIn = userService.isAbleToSignIn(req.getParameter("username"), EncryptingService.getInstance().encrypt(req.getParameter("password")));
 
         if (canSignIn){
             resp.sendRedirect("/posts");

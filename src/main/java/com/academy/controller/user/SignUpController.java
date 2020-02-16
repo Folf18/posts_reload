@@ -27,37 +27,6 @@ public class SignUpController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String token = req.getParameter("token");
-
-     /*    if (token != null) {
-
-            ActivationService activationService = ActivationService.getInstance();
-
-            String email = activationService.use(token);
-
-            if (!email.equals("")) {
-
-                UserRepository userRepository = UserRepository.getInstance(req.getSession());
-
-                Long id = userRepository.findByUsername(email);
-
-                if (id != null) {
-
-                    userRepository.activate(email);
-                    req.getSession().setAttribute(AuthenticationService.USER_AUTHENTICATION_KEY, id);
-
-                    resp.sendRedirect(req.getContextPath());
-
-                    return;
-
-                }
-
-            }
-
-            req.setAttribute("message", "Wrong activation token");
-
-        }
-        */
 
             req.getRequestDispatcher("/views/SignUp.jsp").forward(req, resp);
 
@@ -73,7 +42,9 @@ public class SignUpController extends HttpServlet {
         userService.createUser(user);
 
         ActivationService activationService = ActivationService.getInstance();
-        activationService.sendActivationMail(user.getEmail());
+        activationService.saveAndSendMail(user.getEmail());
+
+        req.setAttribute("enteredEmail", user.getEmail());
 
         req.getRequestDispatcher("/views/activate-message.jsp").forward(req, resp);
     }

@@ -30,7 +30,7 @@ public class UserService implements Serializable {
 
 
     public boolean isAbleToSignIn(String username, String password) throws IOException {
-        User foundUser = userDAO.searchUserInDB(username, password);
+        User foundUser = userDAO.searchUserInDBbyCredentials(username, password);
 
         boolean result;
         result = foundUser.getId() == 0 ? false : true;

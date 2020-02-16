@@ -52,13 +52,24 @@ public class MailService implements Serializable {
 
     public void sendActivationToken(String email, String token) throws MessagingException {
 
-        String link = BASE_URL + "/registration?token=" + token;
+        String link = BASE_URL + "/activateAccount?token=" + token;
 
-        String message = "Welcome! To activate your account, please follow link:<br/><br/><a href='" + link + "' style='margin-left:30%;'>Activate account</a>";
+        String message = "Hi there! To activate your account, please follow link:<br/><br/><a href='" + link + "' style='margin-left:30%;'>Activate account</a>";
 
         sendMimeMessage(email, "Account activation", message);
 
     }
+
+    public void sendGreetings(String email) throws MessagingException {
+
+        String link = BASE_URL + "/signin";
+
+        String message = "Welcome to our advertising system! <br/>  Your account was successfully activated.<br/><br/><a href='" + link + "' style='margin-left:30%;'>LOGIN TO ACCOUNT</a>";
+
+        sendMimeMessage(email, "Congratulations", message);
+
+    }
+
 
     private static void init() {
 

@@ -43,8 +43,8 @@ public class PostDAO implements Serializable {
 
     private static final String INSERT_POST = "INSERT INTO post (summary, description, post_type_id, user_id, post_status_id) VALUES(?, ?, ?, ?, ?)";
 
-    private static final String APPROVE_POST = "UPDATE public.post SET post_status_id=2 WHERE id = ?;";
-    private static final String DECLINE_POST = "UPDATE public.post SET post_status_id=3 WHERE id = ?;";
+    private static final String APPROVE_POST = "UPDATE public.post SET post_status_id=2 WHERE id = ?";
+    private static final String DECLINE_POST = "UPDATE public.post SET post_status_id=3 WHERE id = ?";
 
 
     public List<Post> getAllApprovedPosts() {
