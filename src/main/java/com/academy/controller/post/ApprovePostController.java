@@ -15,18 +15,12 @@ import java.io.IOException;
 public class ApprovePostController extends HttpServlet {
     final static Logger log = LogManager.getLogger(ApprovePostController.class);
 
-    PostService postService;
-
-    public ApprovePostController() { postService = new PostService();
-    }
-
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         log.info("In ApprovePostController");
         int postId = Integer.parseInt(req.getParameter("id"));
         log.trace("Post id for approve = "+ postId);
-        postService.approvePost(postId);
+        PostService.getInstance().approvePost(postId);
 
         //req.getRequestDispatcher("/posts-management").forward(req, resp);
         resp.sendRedirect("/posts-management");

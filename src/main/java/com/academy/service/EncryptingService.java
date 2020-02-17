@@ -22,7 +22,4 @@ public class EncryptingService implements Serializable {
 
     }
 
-    public String decrypt(String code) {
-        return new String(Base64.getDecoder().decode(code.getBytes()));
-    }
 }

@@ -19,7 +19,7 @@ public class MailService implements Serializable {
 
     private static Session session;
 
-    private MailService() {}
+    public MailService() {}
 
     public static MailService getInstance() {
         if (mailService == null) {

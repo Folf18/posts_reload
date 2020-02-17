@@ -12,7 +12,19 @@ import java.util.List;
 
 public class PostService implements Serializable {
     final static Logger log = LogManager.getLogger(PostService.class);
+
     PostDAO postDAO = new PostDAO();
+
+    private static PostService postService;
+
+    public PostService() {}
+
+    public static PostService getInstance() {
+        if (postService == null) {
+            postService = new PostService();
+        }
+        return postService;
+    }
 
     public List<Post> getAllApprovedPosts() {
         return postDAO.getAllApprovedPosts();

@@ -17,18 +17,13 @@ import java.io.IOException;
 public class ActivateUserController extends HttpServlet {
 
     final static Logger log = LogManager.getLogger(ActivateUserController.class);
-    ActivationService activationService;
-
-    public ActivateUserController() {
-        activationService = new ActivationService();
-    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String token = req.getParameter("token");
 
         if (token != null) {
-            if (activationService.activateAccountAndSendMail(token) == true){
+            if (ActivationService.getInstance().activateAccountAndSendMail(token) == true){
                 req.setAttribute("greetingMessage", "Your account successfully activated");
                 req.getRequestDispatcher("/views/greetings.jsp").forward(req, resp);
             }

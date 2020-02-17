@@ -21,21 +21,11 @@ import java.util.List;
 public class CreatePostController extends HttpServlet {
     final static Logger log = LogManager.getLogger(SignInController.class);
 
-    PostService postService;
-    PostTypeService postTypeService;
-
-
-
-    public CreatePostController() {
-        postService = new PostService();
-        postTypeService = new PostTypeService();
-
-    }
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
        // PostTypeService postTypeService = new PostTypeService();
-        List<PostType> postTypes = postTypeService.getAllPostTypes();
+
+        List<PostType> postTypes = PostTypeService.getInstance().getAllPostTypes();
         log.trace("doGet in CreatePostController");
         req.setAttribute("postTypes", postTypes);
         req.getRequestDispatcher("/views/create-post.jsp").forward(req, resp);
@@ -46,6 +36,8 @@ public class CreatePostController extends HttpServlet {
         Post post = new Post();
         User user = new User();
         PostType postType = new PostType();
+
+
         post.setSummary(req.getParameter("summary"));
         post.setDescription(req.getParameter("description"));
 
@@ -56,9 +48,9 @@ public class CreatePostController extends HttpServlet {
         post.setUser(user);
 
         log.info("Post info "+post.toString());
-        postService.createNewPost(post);
+        PostService.getInstance().createNewPost(post);
 
-        resp.sendRedirect("/post");
+        resp.sendRedirect("/add-post");
 
     }
 }

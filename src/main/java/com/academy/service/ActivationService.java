@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 public class ActivationService extends TokenService implements Serializable {
 
-    private static ActivationService activationService;
+    public static ActivationService activationService;
 
     public ActivationService() {
         super();
@@ -20,6 +20,7 @@ public class ActivationService extends TokenService implements Serializable {
         }
         return activationService;
     }
+
     ActivationDAO activationDAO = new ActivationDAO();
     UserDAO userDAO = new UserDAO();
 

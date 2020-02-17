@@ -17,15 +17,9 @@ import java.util.List;
 public class ViewUsersController extends HttpServlet {
     final static Logger log = LogManager.getLogger(ViewUsersController.class);
 
-    UserService userService;
-
-    public ViewUsersController() {
-        userService = new UserService();
-    }
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<User> users = userService.getAllUsers();
+        List<User> users = UserService.getInstance().getAllUsers();
         log.info("ViewUsersController");
         req.setAttribute("users", users);
         req.getRequestDispatcher("/views/user/users-list.jsp").forward(req, resp);

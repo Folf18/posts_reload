@@ -17,15 +17,10 @@ import java.util.List;
 public class GetAllApprovedPostsController extends HttpServlet {
     final static Logger log = LogManager.getLogger(GetAllApprovedPostsController.class);
 
-    PostService postService;
-
-    public GetAllApprovedPostsController() {
-        postService = new PostService();
-    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Post> approvedPosts = postService.getAllApprovedPosts();
+        List<Post> approvedPosts = PostService.getInstance().getAllApprovedPosts();
         log.info("GetAllApprovedPostsController");
         req.setAttribute("approvedPosts", approvedPosts);
         req.getRequestDispatcher("/views/posts.jsp").forward(req, resp);

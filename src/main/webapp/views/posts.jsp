@@ -15,7 +15,7 @@
             <div class="col-sm-8">
                 <div class="card">
                     <div class="card-header">
-                        <a href="/post/${approvedPost.id}">
+                        <a href="/post/?id=${approvedPost.id}">
                                 ${approvedPost.summary} </a>
                     </div>
                     <div class="card-body">

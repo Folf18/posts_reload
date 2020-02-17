@@ -17,13 +17,6 @@ public class SignInController extends HttpServlet {
 
     final static Logger log = LogManager.getLogger(SignInController.class);
 
-    UserService userService;
-    //User user = new User();
-
-    public SignInController() {
-        userService = new UserService();
-    }
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("/views/SignIn.jsp").forward(req, resp);
@@ -32,7 +25,7 @@ public class SignInController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        boolean canSignIn = userService.isAbleToSignIn(req.getParameter("username"), EncryptingService.getInstance().encrypt(req.getParameter("password")));
+        boolean canSignIn = UserService.getInstance().isAbleToSignIn(req.getParameter("username"), EncryptingService.getInstance().encrypt(req.getParameter("password")));
 
         if (canSignIn){
             resp.sendRedirect("/posts");
