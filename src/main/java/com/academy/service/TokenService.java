@@ -7,7 +7,6 @@ import java.util.UUID;
 public class TokenService {
     private static TokenService tokenService;
 
-    private Map<String, String> accessTokens = new HashMap<>();
 
     protected TokenService() {}
 
@@ -18,12 +17,9 @@ public class TokenService {
         return tokenService;
     }
 
-    public String generateToken(String username) {
+    public String generateToken() {
 
         String token = UUID.randomUUID().toString().replaceAll("-", "");
-
-        accessTokens.put(username, token);
-
         return token;
 
     }

@@ -27,7 +27,7 @@ public class ActivationService extends TokenService implements Serializable {
     public void saveAndSendMail(String email) {
 
 
-        String token = super.generateToken(email);
+        String token = super.generateToken();
         User user = new UserDAO().getUserByEmail(email);
         boolean isActivated = false;
 
