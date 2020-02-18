@@ -16,9 +16,9 @@ public class EncryptingService implements Serializable {
         return encryptingService;
     }
 
-    public String encrypt(String text) {
+    public String encrypt(String password) {
 
-        return new String(Base64.getEncoder().encode(text.getBytes()));
+        return new String(Base64.getEncoder().encode(password.getBytes()));
 
     }
 

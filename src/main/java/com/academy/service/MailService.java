@@ -79,12 +79,11 @@ public class MailService implements Serializable {
 
         Properties properties = new Properties();
 
-        properties.put("mail.smtp.host", "smtp.gmail.com");
-        properties.put("mail.smtp.socketFactory.port", "465");
-        properties.put("mail.smtp.socketFactory.class",
-                "javax.net.ssl.SSLSocketFactory");
-        properties.put("mail.smtp.auth", "true");
-        properties.put("mail.smtp.port", "465");
+        properties.put("mail.smtp.host", connectionProperties.get("host"));
+        properties.put("mail.smtp.socketFactory.port", connectionProperties.get("socketFactoryPort"));
+        properties.put("mail.smtp.socketFactory.class", connectionProperties.get("socketFactoryClass"));
+        properties.put("mail.smtp.auth", connectionProperties.get("auth"));
+        properties.put("mail.smtp.port", connectionProperties.get("port"));
 
         session = Session.getInstance(properties, new Authenticator() {
             @Override
