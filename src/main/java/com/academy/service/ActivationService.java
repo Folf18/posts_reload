@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 public class ActivationService extends TokenService implements Serializable {
 
-    private static ActivationService activationService;
+    public static ActivationService activationService;
 
     public ActivationService() {
         super();
@@ -20,6 +20,7 @@ public class ActivationService extends TokenService implements Serializable {
         }
         return activationService;
     }
+
     ActivationDAO activationDAO = new ActivationDAO();
     UserDAO userDAO = new UserDAO();
 
@@ -30,8 +31,7 @@ public class ActivationService extends TokenService implements Serializable {
         User user = new UserDAO().getUserByEmail(email);
         boolean isActivated = false;
 
-            activationDAO.saveToken(user.getId(), token, isActivated);
-
+        activationDAO.saveToken(user.getId(), token, isActivated);
         MailService mailService = MailService.getInstance();
 
         try {
@@ -43,15 +43,16 @@ public class ActivationService extends TokenService implements Serializable {
         }
 
     }
-    public boolean activateAccountAndSendMail(String token){
+
+    public boolean activateAccountAndSendMail(String token) {
         int userId = activationDAO.getUserIdByToken(token);
-        if (userId!=0){
+        if (userId != 0) {
             if (userDAO.activateUserById(userId) == true) {
                 activationDAO.markTokenAsActivated(token);
                 MailService mailService = MailService.getInstance();
 
                 try {
-                   User userEmail =  userDAO.getUserById(userId);
+                    User userEmail = userDAO.getUserById(userId);
                     mailService.sendGreetings(userEmail.getEmail());
 
                 } catch (Exception e) {

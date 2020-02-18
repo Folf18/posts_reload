@@ -19,16 +19,10 @@ import java.util.List;
 public class GetAllPostsByStatusController extends HttpServlet {
     final static Logger log = LogManager.getLogger(GetAllPostsByStatusController.class);
 
-    PostService postService;
-
-    public GetAllPostsByStatusController() {
-        postService = new PostService();
-    }
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //GET Post statuses
-        List<PostStatus> postStatuses = new PostStatusService().getAllPostStatuses();
+        List<PostStatus> postStatuses =  PostStatusService.getInstance().getAllPostStatuses();
         log.trace("doGet in GetAllPostsByStatusController");
         req.setAttribute("postStatuses", postStatuses);
 
@@ -36,7 +30,7 @@ public class GetAllPostsByStatusController extends HttpServlet {
         //GET posts by parameter
         String status = req.getParameter("status");
 
-        List<Post> newPosts = postService.getAllPostsByStatus(status);
+        List<Post> newPosts = PostService.getInstance().getAllPostsByStatus(status);
         log.info("GetPostsController");
         req.setAttribute("newPosts", newPosts);
 

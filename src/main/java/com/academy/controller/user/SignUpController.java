@@ -18,13 +18,6 @@ import java.io.IOException;
 public class SignUpController extends HttpServlet {
     final static Logger log = LogManager.getLogger(SignUpController.class);
 
-    UserService userService;
-
-
-    public SignUpController() {
-        userService = new UserService();
-    }
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
@@ -39,7 +32,7 @@ public class SignUpController extends HttpServlet {
         user.setEmail(req.getParameter("email"));
         user.setPassword(EncryptingService.getInstance().encrypt(req.getParameter("password")));
 
-        userService.createUser(user);
+        UserService.getInstance().createUser(user);
 
         ActivationService activationService = ActivationService.getInstance();
         activationService.saveAndSendMail(user.getEmail());
