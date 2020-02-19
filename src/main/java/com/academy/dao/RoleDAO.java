@@ -19,7 +19,8 @@ public class RoleDAO implements Serializable {
     private PreparedStatement preparedStatement;
     private ResultSet resultSet;
 
-    static final String GET_ROLE_ID_BY_NAME = "SELECT role.id FROM role WHERE name = ?";
+    static final String GET_ROLE_ID_BY_NAME = "SELECT id FROM role WHERE name = ?";
+    static final String GET_ROLE_NAME_BY_ID = "SELECT name FROM role WHERE id = ?";
 
     public Role getRoleIdByName(String name){
 
@@ -46,4 +47,30 @@ public class RoleDAO implements Serializable {
 
         return role;
     }
+
+    public String getRoleNameById(int id){
+
+        String roleName = "";
+
+        log.trace("Started searching role with id {} in database", id);
+        try {
+            connection = DBConnectionUtil.getConnection();
+            preparedStatement = connection.prepareStatement(GET_ROLE_NAME_BY_ID);
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+
+            if (!resultSet.wasNull()) {
+                while (resultSet.next()) {
+                    roleName = resultSet.getString("name");
+                }
+            }
+            return roleName;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return roleName;
+    }
+
 }

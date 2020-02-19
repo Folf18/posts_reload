@@ -28,7 +28,7 @@ public class UserDAO implements Serializable {
 
     static final String INSERT_USER = "INSERT INTO users (username, email, password, is_active, is_blocked, role_id) VALUES(?, ?, ?, ?, ?, ?)";
 
-    static final String FIND_USER_IN_DB_BY_CREDENTIALS = "SELECT * FROM users WHERE username = ?  AND password = ?";
+    static final String FIND_USER_IN_DB_BY_CREDENTIALS = "SELECT users.id FROM users WHERE username = ?  AND password = ?";
 
     static final String FIND_USER_IN_DB_BY_EMAIL = "SELECT * FROM users WHERE email = ?";
 
@@ -60,7 +60,7 @@ public class UserDAO implements Serializable {
                 user.setEmail(resultSet.getString("email"));
                 user.setIsBlocked(resultSet.getBoolean("is_blocked"));
                 role.setId(resultSet.getInt("role_id"));
-                role.setName(resultSet.getString("role_name"));
+                //role.setName(resultSet.getString("role_name"));
                 user.setRole(role);
                 users.add(user);
             }
@@ -134,6 +134,7 @@ public class UserDAO implements Serializable {
         try {
             user = new User();
             Role role = new Role();
+            RoleDAO roleDAO = new RoleDAO();
             connection = DBConnectionUtil.getConnection();
             preparedStatement = connection.prepareStatement(FIND_USER_IN_DB_BY_ID);
             preparedStatement.setInt(1, id);
@@ -146,7 +147,7 @@ public class UserDAO implements Serializable {
                     user.setEmail(resultSet.getString("email"));
                     user.setIsBlocked(resultSet.getBoolean("is_blocked"));
                     role.setId(resultSet.getInt("role_id"));
-                    //role.setName(resultSet.getString("role_name"));
+                    role.setName(roleDAO.getRoleNameById(resultSet.getInt("role_id")));
                     user.setRole(role);
                 }
             }
@@ -160,13 +161,13 @@ public class UserDAO implements Serializable {
     }
 
 
-    public User searchUserInDBbyCredentials(String username, String password) {
-        User user = null;
+    public int getUserIdByCredentials(String username, String password) {
+        int userId = 0;
 
         log.trace("Started searching user in database.");
         try {
-            user = new User();
             Role role = new Role();
+            RoleDAO roleDAO = new RoleDAO();
             connection = DBConnectionUtil.getConnection();
             preparedStatement = connection.prepareStatement(FIND_USER_IN_DB_BY_CREDENTIALS);
             preparedStatement.setString(1, username);
@@ -175,24 +176,16 @@ public class UserDAO implements Serializable {
 
             if (!resultSet.wasNull()) {
                 while (resultSet.next()) {
-                    user.setId(resultSet.getInt("id"));
-                    user.setUsername(resultSet.getString("username"));
-                    user.setEmail(resultSet.getString("email"));
-                    user.setIsBlocked(resultSet.getBoolean("is_blocked"));
-
-                    role.setId(resultSet.getInt("role_id"));
-                    //role.setName(resultSet.getString("role_name"));
-
-                    user.setRole(role);
+                    userId = resultSet.getInt("id");
                 }
             }
-            return user;
+            return userId;
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return user;
+        return userId;
     }
 
     public boolean activateUserById(int id){
