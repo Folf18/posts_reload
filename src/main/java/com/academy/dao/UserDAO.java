@@ -23,8 +23,7 @@ public class UserDAO implements Serializable {
 
     //CRUD
 
-    static final String GET_ALL_USERS = "SELECT U.id, U.username, U.email, U.is_blocked, U.role_id, R.name as role_name" +
-            "FROM users U LEFT JOIN role R ON U.role_id = R.id ORDER BY U.id";
+    static final String GET_ALL_USERS = "SELECT U.id, U.username, U.email, U.is_blocked,  U.is_active, U.role_id, R.name as role_name FROM users U LEFT JOIN role R ON U.role_id = R.id ORDER BY U.id";
 
     static final String INSERT_USER = "INSERT INTO users (username, email, password, is_active, is_blocked, role_id) VALUES(?, ?, ?, ?, ?, ?)";
 
@@ -51,7 +50,6 @@ public class UserDAO implements Serializable {
             connection = DBConnectionUtil.getConnection();
             preparedStatement = connection.prepareStatement(GET_ALL_USERS);
             resultSet = preparedStatement.executeQuery();
-
             while (resultSet.next()) {
                 user = new User();
                 role = new Role();
@@ -59,8 +57,9 @@ public class UserDAO implements Serializable {
                 user.setUsername(resultSet.getString("username"));
                 user.setEmail(resultSet.getString("email"));
                 user.setIsBlocked(resultSet.getBoolean("is_blocked"));
+                user.setIsActive(resultSet.getBoolean("is_active"));
                 role.setId(resultSet.getInt("role_id"));
-                //role.setName(resultSet.getString("role_name"));
+                role.setName(resultSet.getString("role_name"));
                 user.setRole(role);
                 users.add(user);
             }

@@ -17,12 +17,14 @@ import java.util.List;
 public class ViewUsersController extends HttpServlet {
     final static Logger log = LogManager.getLogger(ViewUsersController.class);
 
+
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<User> users = UserService.getInstance().getAllUsers();
         log.info("ViewUsersController");
         req.setAttribute("users", users);
-        req.getRequestDispatcher("/views/user/users-list.jsp").forward(req, resp);
+        req.getRequestDispatcher("/views/users-list.jsp").forward(req, resp);
     }
 
     @Override

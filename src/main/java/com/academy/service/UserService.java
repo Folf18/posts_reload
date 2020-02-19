@@ -39,7 +39,7 @@ public class UserService implements Serializable {
     public void createUser(User user) {
         Role role = new Role();
 
-        //Hardcoded and should be replaced to Role.name
+        //Hardcoded and should be replaced to search by Role.name
         role.setId(3);
 
         user.setIsBlocked(false);
