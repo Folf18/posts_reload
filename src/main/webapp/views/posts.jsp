@@ -16,7 +16,7 @@
                 <div class="card">
                     <div class="card-header">
                         <a href="/post/?id=${approvedPost.id}">
-                                ${approvedPost.summary} </a>
+                                ${approvedPost.summary}</a>
                     </div>
                     <div class="card-body">
                         <p class="card-text">${approvedPost.description}</p>

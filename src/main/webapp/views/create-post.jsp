@@ -20,7 +20,7 @@
         </div>
 
         <div class="form-group">
-            Choose post type:
+            Choose advertisement type:
             <select class="form-control col-md-6" name="post_type_id">
                 <c:forEach items="${postTypes}" var="postType">
                    <option value="${postType.id}">${postType.name}</option>
@@ -29,12 +29,13 @@
             </br>
         </div>
 
+
         <div class="form-group">
-            Enter user_id: <input type="text" name="user_id" placeholder="User_id" class="form-control"/> </br>
+            <p>user id = ${sessionScope.user_id}</p> </br>
         </div>
 
-        <div class="row justify-content-end">
-            <button class="btn btn-primary" type="submit">Create post</button>
+        <div class="row justify-content-center">
+            <button class="btn btn-primary" type="submit">Publish advertisement</button>
         </div>
     </form>
 </div>

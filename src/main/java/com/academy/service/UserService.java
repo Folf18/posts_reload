@@ -32,6 +32,10 @@ public class UserService implements Serializable {
     }
 
 
+    public User getUserInfoById(int id){
+      return userDAO.getUserById(id);
+    }
+
     public void createUser(User user) {
         Role role = new Role();
 
@@ -45,12 +49,7 @@ public class UserService implements Serializable {
     }
 
 
-    public boolean isAbleToSignIn(String username, String password) throws IOException {
-        User foundUser = userDAO.searchUserInDBbyCredentials(username, password);
-
-        boolean result;
-        result = foundUser.getId() == 0 ? false : true;
-
-        return  result;
+    public int getUserIdByCredentials(String username, String password) throws IOException {
+        return  userDAO.getUserIdByCredentials(username, password);
     }
 }

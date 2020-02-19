@@ -14,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -37,6 +38,7 @@ public class CreatePostController extends HttpServlet {
         User user = new User();
         PostType postType = new PostType();
 
+        HttpSession session;
 
         post.setSummary(req.getParameter("summary"));
         post.setDescription(req.getParameter("description"));
@@ -44,13 +46,20 @@ public class CreatePostController extends HttpServlet {
         postType.setId(Integer.parseInt(req.getParameter("post_type_id")));
         post.setPostType(postType);
 
-        user.setId(Integer.parseInt(req.getParameter("user_id")));
+       // String stringId = (String) req.getSession(false).getAttribute("user_id");
+        System.out.println(req.getSession(false).getAttribute("user_id"));
+        int userId = Integer.parseInt(String.valueOf(req.getSession(false).getAttribute("user_id")));
+        System.out.println(userId);
+        user.setId(userId);
         post.setUser(user);
+
+
 
         log.info("Post info "+post.toString());
         PostService.getInstance().createNewPost(post);
 
-        resp.sendRedirect("/add-post");
+        req.getRequestDispatcher("/views/post-published.jsp").forward(req, resp);
+        //resp.sendRedirect("/add-post");
 
     }
 }
