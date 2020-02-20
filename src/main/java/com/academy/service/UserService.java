@@ -68,4 +68,18 @@ public class UserService implements Serializable {
         else return "User blocking wasn't changed";
     }
 
+    public String changeUserRole(int id, int role_id){
+
+        if (role_id == 3) {
+            role_id = 2;
+        }
+        else if (role_id == 2) {
+            role_id = 3;
+        }
+
+        if (userDAO.changeUserRole(id, role_id) == true){
+            return "Role changed successfully";
+        }
+        else return "User role wasn't changed";
+    }
 }
