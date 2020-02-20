@@ -40,9 +40,10 @@ public class UserDAO implements Serializable {
 
     private static final String ACTIVATE_USER = "UPDATE users SET is_active = true WHERE id = ?";
 
-    private static final String BLOCK_USER = "UPDATE users SET is_blocked = ? WHERE id = ?";
+    private static final String CHANGE_BLOCKING_STATUS = "UPDATE users SET is_blocked = ? WHERE id = ?";
 
-    //static final String BLOCK_USER = "UPDATE users SET is_blocked = ? WHERE id = ?";
+    private static final String CHANGE_ROLE = "UPDATE users SET role_id = ? WHERE id = ?";
+
 
 
 
@@ -200,7 +201,7 @@ public class UserDAO implements Serializable {
 
         try {
             connection = DBConnectionUtil.getConnection();
-            preparedStatement = connection.prepareStatement(BLOCK_USER);
+            preparedStatement = connection.prepareStatement(CHANGE_BLOCKING_STATUS);
             preparedStatement.setInt(1, id);
             int executionStatus = preparedStatement.executeUpdate();
             if (executionStatus == 0) {
@@ -218,12 +219,36 @@ public class UserDAO implements Serializable {
         return false;
     }
 
-    public boolean blockUserById(int id, boolean status){
-        log.trace("Started blocking user with id {} from database.", id);
+    public boolean changeUserRole(int id, int role_id){
+        log.trace("Started changing role for user with id {}.", id);
 
         try {
             connection = DBConnectionUtil.getConnection();
-            preparedStatement = connection.prepareStatement(BLOCK_USER);
+            preparedStatement = connection.prepareStatement(CHANGE_ROLE);
+            preparedStatement.setInt(1, role_id);
+            preparedStatement.setInt(2, id);
+            int executionStatus = preparedStatement.executeUpdate();
+            if (executionStatus == 0) {
+                log.trace("No one user role changed");
+                return false;
+            }
+            else {
+                log.debug("User role change for user with id {} is successful", id);
+                return true;
+            }
+        } catch (SQLException e){
+            log.error("Process of changing  of user role  with id {} has crashed", id, e);
+        }
+
+        return false;
+    }
+
+    public boolean blockUserById(int id, boolean status){
+        log.trace("Started blocking user with id {} in database.", id);
+
+        try {
+            connection = DBConnectionUtil.getConnection();
+            preparedStatement = connection.prepareStatement(CHANGE_BLOCKING_STATUS);
             preparedStatement.setBoolean(1, status);
             preparedStatement.setInt(2, id);
             int executionStatus = preparedStatement.executeUpdate();
