@@ -47,8 +47,8 @@ public class CreatePostController extends HttpServlet {
         post.setPostType(postType);
 
        // String stringId = (String) req.getSession(false).getAttribute("user_id");
-        System.out.println(req.getSession(false).getAttribute("user_id"));
-        int userId = Integer.parseInt(String.valueOf(req.getSession(false).getAttribute("user_id")));
+        System.out.println(req.getSession(false).getAttribute("global_user_id"));
+        int userId = Integer.parseInt(String.valueOf(req.getSession(false).getAttribute("global_user_id")));
         System.out.println(userId);
         user.setId(userId);
         post.setUser(user);

@@ -23,7 +23,9 @@ public class UserDAO implements Serializable {
 
     //CRUD
 
-    static final String GET_ALL_USERS = "SELECT U.id, U.username, U.email, U.is_blocked,  U.is_active, U.role_id, R.name as role_name FROM users U LEFT JOIN role R ON U.role_id = R.id ORDER BY U.id";
+    static final String GET_ALL_USERS = "SELECT U.id, U.username, U.email, U.is_blocked,  U.is_active, U.role_id, R.name as role_name \n" +
+            "FROM users U LEFT JOIN role R ON U.role_id = R.id \n" +
+            "ORDER BY U.id";
 
     static final String INSERT_USER = "INSERT INTO users (username, email, password, is_active, is_blocked, role_id) VALUES(?, ?, ?, ?, ?, ?)";
 
@@ -31,9 +33,14 @@ public class UserDAO implements Serializable {
 
     static final String FIND_USER_IN_DB_BY_EMAIL = "SELECT * FROM users WHERE email = ?";
 
-    static final String FIND_USER_IN_DB_BY_ID = "SELECT * FROM users WHERE id = ?";
+    static final String FIND_USER_IN_DB_BY_ID = "SELECT U.id, U.username, U.email, U.is_blocked,  U.is_active, U.role_id, R.name as role_name \n" +
+            "FROM users U LEFT JOIN role R ON U.role_id = R.id \n" +
+            "WHERE U.id = ?\n" +
+            "ORDER BY U.id";
 
-    private static final String ACTIVATE_USER = "UPDATE users SET is_active=true WHERE id = ?";
+    private static final String ACTIVATE_USER = "UPDATE users SET is_active = true WHERE id = ?";
+
+    private static final String BLOCK_USER = "UPDATE users SET is_blocked = ? WHERE id = ?";
 
     //static final String BLOCK_USER = "UPDATE users SET is_blocked = ? WHERE id = ?";
 
@@ -133,7 +140,7 @@ public class UserDAO implements Serializable {
         try {
             user = new User();
             Role role = new Role();
-            RoleDAO roleDAO = new RoleDAO();
+            //RoleDAO roleDAO = new RoleDAO();
             connection = DBConnectionUtil.getConnection();
             preparedStatement = connection.prepareStatement(FIND_USER_IN_DB_BY_ID);
             preparedStatement.setInt(1, id);
@@ -145,8 +152,9 @@ public class UserDAO implements Serializable {
                     user.setUsername(resultSet.getString("username"));
                     user.setEmail(resultSet.getString("email"));
                     user.setIsBlocked(resultSet.getBoolean("is_blocked"));
+                    user.setIsActive(resultSet.getBoolean("is_active"));
                     role.setId(resultSet.getInt("role_id"));
-                    role.setName(roleDAO.getRoleNameById(resultSet.getInt("role_id")));
+                    role.setName(resultSet.getString("role_name"));
                     user.setRole(role);
                 }
             }
@@ -192,7 +200,7 @@ public class UserDAO implements Serializable {
 
         try {
             connection = DBConnectionUtil.getConnection();
-            preparedStatement = connection.prepareStatement(ACTIVATE_USER);
+            preparedStatement = connection.prepareStatement(BLOCK_USER);
             preparedStatement.setInt(1, id);
             int executionStatus = preparedStatement.executeUpdate();
             if (executionStatus == 0) {
@@ -205,6 +213,30 @@ public class UserDAO implements Serializable {
             }
         } catch (SQLException e){
             log.error("Process of activating user with id {} has crashed", id, e);
+        }
+
+        return false;
+    }
+
+    public boolean blockUserById(int id, boolean status){
+        log.trace("Started blocking user with id {} from database.", id);
+
+        try {
+            connection = DBConnectionUtil.getConnection();
+            preparedStatement = connection.prepareStatement(BLOCK_USER);
+            preparedStatement.setBoolean(1, status);
+            preparedStatement.setInt(2, id);
+            int executionStatus = preparedStatement.executeUpdate();
+            if (executionStatus == 0) {
+                log.trace("No one user blocked");
+                return false;
+            }
+            else {
+                log.debug("User blocking change  with id {}  successfully", id);
+                return true;
+            }
+        } catch (SQLException e){
+            log.error("Process of changing blocking of user with id {} has crashed", id, e);
         }
 
         return false;

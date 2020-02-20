@@ -31,7 +31,7 @@
 
 
         <div class="form-group">
-            <p>user id = ${sessionScope.user_id}</p> </br>
+            <p>user id = ${sessionScope.global_user_id}</p> </br>
         </div>
 
         <div class="row justify-content-center">

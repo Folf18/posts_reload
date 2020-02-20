@@ -37,9 +37,9 @@ public class SignInController extends HttpServlet {
             try {
                User loggedUser = UserService.getInstance().getUserInfoById(userId);
                 HttpSession session = req.getSession(true);
-                session.setAttribute("user_id", loggedUser.getId());
-                session.setAttribute("user_username", loggedUser.getUsername());
-                session.setAttribute("user_role", loggedUser.getRole().getName());
+                session.setAttribute("global_user_id", loggedUser.getId());
+                session.setAttribute("global_user_username", loggedUser.getUsername());
+                session.setAttribute("global_user_role", loggedUser.getRole().getName());
 
                 //req.getRequestDispatcher("/views/session.jsp").forward(req, resp);
                 resp.sendRedirect("/add-post");

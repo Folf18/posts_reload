@@ -52,4 +52,20 @@ public class UserService implements Serializable {
     public int getUserIdByCredentials(String username, String password) throws IOException {
         return  userDAO.getUserIdByCredentials(username, password);
     }
+
+    public String blockUserById(int id, boolean currentStatus){
+
+        if (currentStatus == true) {
+            currentStatus = false;
+        }
+        else if (currentStatus == false) {
+            currentStatus = true;
+        }
+
+        if (userDAO.blockUserById(id, currentStatus) == true){
+            return "User blocking changed successfully";
+        }
+        else return "User blocking wasn't changed";
+    }
+
 }
