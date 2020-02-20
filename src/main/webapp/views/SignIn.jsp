@@ -11,13 +11,16 @@
 <h1 style="alignment: center"> ${message}</h1>
 <div class="row justify-content-center">
     <form action="/signin" method="post" class="col-md-4">
+        <h2>Login</h2><br>
         <div class="form-group">
             Enter username: <input type="text" name="username" placeholder="Username" class="form-control"/> </br>
         </div>
         <div class="form-group">
             Enter password: <input type="password" name="password" placeholder="Password" class="form-control"/> </br>
         </div>
-        <button class="btn btn-primary" type="submit">Sign In</button>
+        <div class="row justify-content-end">
+            <button class="btn btn-primary" type="submit">Login</button>
+        </div>
     </form>
 </div>
 
