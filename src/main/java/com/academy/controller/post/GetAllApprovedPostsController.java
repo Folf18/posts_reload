@@ -20,9 +20,15 @@ public class GetAllApprovedPostsController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        if (req.getParameter("id") == null){
         List<Post> approvedPosts = PostService.getInstance().getAllApprovedPosts();
         log.info("GetAllApprovedPostsController");
         req.setAttribute("approvedPosts", approvedPosts);
-        req.getRequestDispatcher("/views/posts.jsp").forward(req, resp);
+        req.getRequestDispatcher("/views/posts.jsp").forward(req, resp);}
+        else {
+           int id = Integer.parseInt(req.getParameter("id"));
+
+        }
     }
 }
