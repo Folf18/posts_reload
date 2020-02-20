@@ -60,3 +60,11 @@
                                             $('.nav .nav-link').removeClass('active');
                                             $(this).addClass('active');
                                         })
+
+
+                                         <c:when test="${user.isBlocked == false}">
+                                                                <form action="/admin/blockUser" method="post">
+                                                                    <input type="hidden" value="${user.id}" name="userId"/>
+                                                                    <button class="btn btn-danger" type="submit">Block</button>
+                                                                </form>
+                                                            </c:when>
