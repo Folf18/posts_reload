@@ -27,8 +27,8 @@ public class GetAllApprovedPostsController extends HttpServlet {
         req.setAttribute("approvedPosts", approvedPosts);
         req.getRequestDispatcher("/views/posts.jsp").forward(req, resp);}
         else {
-           int id = Integer.parseInt(req.getParameter("id"));
-
+           req.setAttribute("postInfo", PostService.getInstance().getPostInfo(Integer.parseInt(req.getParameter("id"))));
+           req.getRequestDispatcher("/views/single-post.jsp").forward(req, resp);
         }
     }
 }

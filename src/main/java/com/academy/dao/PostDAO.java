@@ -41,10 +41,19 @@ public class PostDAO implements Serializable {
             "WHERE D.name = ? \n" +
             "ORDER BY U.created_at";
 
+    private static final String GET_POST_INFO = "SELECT U.id, U.summary, U.description, R.name as post_type_name, D.name as post_status_name, Z.username as username, Z.email as email\n" +
+            "FROM post U \n" +
+            "JOIN post_type R ON U.post_type_id = R.id\n" +
+            "JOIN post_status D ON U.post_status_id = D.id \n" +
+            "JOIN users Z ON U.user_id = Z.id \n" +
+            "WHERE U.id = ?";
+
     private static final String INSERT_POST = "INSERT INTO post (summary, description, post_type_id, user_id, post_status_id) VALUES(?, ?, ?, ?, ?)";
 
     private static final String APPROVE_POST = "UPDATE public.post SET post_status_id=2 WHERE id = ?";
+
     private static final String DECLINE_POST = "UPDATE public.post SET post_status_id=3 WHERE id = ?";
+
 
 
     public List<Post> getAllApprovedPosts() {
@@ -108,8 +117,6 @@ public class PostDAO implements Serializable {
         }
     }
 
-
-
     public List<Post> getAllPostsByStatus(String status) {
         List<Post> posts = null;
         Post post;
@@ -169,7 +176,6 @@ public class PostDAO implements Serializable {
 
     }
 
-
     public void declinePostById(int id) {
         log.trace("Started declining post with id {} from database.", id);
 
@@ -184,4 +190,47 @@ public class PostDAO implements Serializable {
             log.error("Process of declining role with id {} has crashed", id, e);
         }
     }
+
+    public Post getPostInfo(int id) {
+        Post post = new Post();
+        User user;
+        PostStatus postStatus;
+        PostType postType;
+
+        log.trace("Started getting post with id {} from database.", id);
+        try {
+            connection = DBConnectionUtil.getConnection();
+            preparedStatement =  connection.prepareStatement(GET_POST_INFO);
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                user = new User();
+                postStatus = new PostStatus();
+                postType = new PostType();
+
+                post.setId(resultSet.getInt("id"));
+                post.setSummary(resultSet.getString("summary"));
+                post.setDescription(resultSet.getString("description"));
+
+                postType.setName(resultSet.getString("post_type_name"));
+                post.setPostType(postType);
+
+                postStatus.setName(resultSet.getString("post_status_name"));
+                post.setPostStatus(postStatus);
+
+                user.setUsername(resultSet.getString("username"));
+                user.setEmail(resultSet.getString("email"));
+                post.setUser(user);
+
+            }
+            log.trace("Post selected successfully");
+            return post;
+            //connection.close();
+        } catch (SQLException e) {
+            log.error("Something went wrong", e);
+        }
+        return post;
+    }
+
 }
