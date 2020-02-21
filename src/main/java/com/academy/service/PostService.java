@@ -59,4 +59,9 @@ public class PostService implements Serializable {
     public void declinePost(int id) {
         postDAO.declinePostById(id);
     }
+
+    public Post getPostInfo(int id){
+
+        return postDAO.getPostInfo(id);
+    }
 }
