@@ -18,7 +18,7 @@
                         <p class="card-text">${postInfo.description}</p>
                     </div>
                     <div class="card-footer text-muted si text-right">
-                            ${postInfo.user.username} in ${postInfo.postType.name}
+                            ${postInfo.user.username} in ${postInfo.postType.name} and email: ${postInfo.user.email}
                     </div>
                 </div>
             </div>
