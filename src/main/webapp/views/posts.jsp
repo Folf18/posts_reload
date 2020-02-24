@@ -22,7 +22,19 @@
                         <p class="card-text">${approvedPost.description}</p>
                     </div>
                     <div class="card-footer text-muted si text-right">
-                            ${approvedPost.user.username} in <span class="badge badge-info">${approvedPost.postType.name}</span>
+                            ${approvedPost.user.username} in
+
+                                <c:choose>
+                                    <c:when test="${approvedPost.postType.name=='Buy'}">
+                                <span class="badge badge-success">${approvedPost.postType.name}</span>
+                                    </c:when>
+                                    <c:when test="${approvedPost.postType.name=='Sale'}">
+                                        <span class="badge badge-primary">${approvedPost.postType.name}</span>
+                                    </c:when>
+                                    <c:when test="${approvedPost.postType.name=='Trade'}">
+                                        <span class="badge badge-info">${approvedPost.postType.name}</span>
+                                    </c:when>
+                                </c:choose>
                     </div>
                 </div>
             </div>
