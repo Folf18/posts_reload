@@ -40,7 +40,7 @@
                     <div>
                         <c:choose>
                             <c:when test="${user.isBlocked == true}">
-                                <form action="/admin/blockUser" method="post">
+                                <form action="/admin/changeBlocking" method="post">
                                     <input type="hidden" value="${user.id}" name="userId"/>
                                     <input type="hidden" value="${user.isBlocked}" name="isBlocked"/>
                                     <button class="btn btn-info" type="submit">UnBlock</button>

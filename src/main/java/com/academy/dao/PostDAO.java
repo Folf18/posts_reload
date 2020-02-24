@@ -41,6 +41,15 @@ public class PostDAO implements Serializable {
             "WHERE D.name = ? \n" +
             "ORDER BY U.created_at";
 
+    private static final String GET_USER_POSTS = "SELECT U.id, U.summary, U.description, R.name as post_type_name, D.name as post_status_name, Z.username as username\n" +
+            " FROM post U \n" +
+            " JOIN post_type R ON U.post_type_id = R.id\n" +
+            " JOIN post_status D ON U.post_status_id = D.id\n" +
+            " JOIN users Z ON U.user_id = Z.id\n" +
+            " WHERE D.name = ?\n" +
+            " AND Z.id = ?\n" +
+            " ORDER BY U.created_at";
+
     private static final String GET_POST_INFO = "SELECT U.id, U.summary, U.description, R.name as post_type_name, D.name as post_status_name, Z.username as username, Z.email as email\n" +
             "FROM post U \n" +
             "JOIN post_type R ON U.post_type_id = R.id\n" +
@@ -53,6 +62,8 @@ public class PostDAO implements Serializable {
     private static final String APPROVE_POST = "UPDATE public.post SET post_status_id=2 WHERE id = ?";
 
     private static final String DECLINE_POST = "UPDATE public.post SET post_status_id=3 WHERE id = ?";
+
+
 
 
 
@@ -153,6 +164,50 @@ public class PostDAO implements Serializable {
                 posts.add(post);
             }
             log.trace("All new post selected successfully");
+            //connection.close();
+        } catch (SQLException e) {
+            log.error("Something went wrong", e);
+        }
+        return posts;
+    }
+
+    public List<Post> getUserPosts(String status, int id){
+        List<Post> posts = null;
+        Post post;
+        User user;
+        PostStatus postStatus;
+        PostType postType;
+
+        log.trace("Started getting all posts for user with id {} from database.", id);
+        try {
+            posts = new ArrayList<Post>();
+            connection = DBConnectionUtil.getConnection();
+            preparedStatement =  connection.prepareStatement(GET_USER_POSTS);
+            preparedStatement.setString(1, status);
+            preparedStatement.setInt(2, id);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                post = new Post();
+                user = new User();
+                postStatus = new PostStatus();
+                postType = new PostType();
+                post.setId(resultSet.getInt("id"));
+                post.setSummary(resultSet.getString("summary"));
+                post.setDescription(resultSet.getString("description"));
+
+                postType.setName(resultSet.getString("post_type_name"));
+                post.setPostType(postType);
+
+                postStatus.setName(resultSet.getString("post_status_name"));
+                post.setPostStatus(postStatus);
+
+                user.setUsername(resultSet.getString("username"));
+                post.setUser(user);
+
+                posts.add(post);
+            }
+            log.trace("All ads selected successfully");
             //connection.close();
         } catch (SQLException e) {
             log.error("Something went wrong", e);

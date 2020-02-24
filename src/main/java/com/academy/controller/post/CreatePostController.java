@@ -18,17 +18,14 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(urlPatterns = "/add-post")
+@WebServlet(urlPatterns = "/add-ads")
 public class CreatePostController extends HttpServlet {
     final static Logger log = LogManager.getLogger(SignInController.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-       // PostTypeService postTypeService = new PostTypeService();
-
-        List<PostType> postTypes = PostTypeService.getInstance().getAllPostTypes();
         log.trace("doGet in CreatePostController");
-        req.setAttribute("postTypes", postTypes);
+        req.setAttribute("postTypes", PostTypeService.getInstance().getAllPostTypes());
         req.getRequestDispatcher("/views/create-post.jsp").forward(req, resp);
     }
 
@@ -47,9 +44,9 @@ public class CreatePostController extends HttpServlet {
         post.setPostType(postType);
 
        // String stringId = (String) req.getSession(false).getAttribute("user_id");
-        System.out.println(req.getSession(false).getAttribute("global_user_id"));
+
         int userId = Integer.parseInt(String.valueOf(req.getSession(false).getAttribute("global_user_id")));
-        System.out.println(userId);
+       // System.out.println(userId);
         user.setId(userId);
         post.setUser(user);
 

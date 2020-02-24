@@ -29,8 +29,9 @@ public class SignInController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String username = req.getParameter("username");
-        String password = req.getParameter("password");
+        String password = EncryptingService.getInstance().encrypt(req.getParameter("password"));
 
+        System.out.println(username+ "   "+password);
         int userId = UserService.getInstance().getUserIdByCredentials(username, password);
 
         if (userId != 0){
@@ -42,7 +43,7 @@ public class SignInController extends HttpServlet {
                 session.setAttribute("global_user_role", loggedUser.getRole().getName());
 
                 //req.getRequestDispatcher("/views/session.jsp").forward(req, resp);
-                resp.sendRedirect("/add-post");
+                resp.sendRedirect("/post");
             } catch (Exception e){
                 e.printStackTrace();
             }

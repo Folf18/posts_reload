@@ -9,7 +9,7 @@
 <%@ include file="/common/header.jspf" %>
 
 <div class="row justify-content-center">
-    <form class="col-md-4" action="/add-post" method="post">
+    <form class="col-md-4" action="/add-ads" method="post">
         <div class="form-group">
             Enter short summary: <input type="text" name="summary" placeholder="Summary e.g. 'Selling a cow'"
                                         class="form-control"/> </br>

@@ -5,7 +5,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = "/add-post")
+@WebFilter(urlPatterns = {"/add-ads", "/my-ads"})
 public class LoggedUserFilter implements Filter {
 
     @Override
