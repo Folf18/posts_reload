@@ -50,6 +50,12 @@ public class PostService implements Serializable {
         return postDAO.getAllPostsByStatus(status);
     }
 
+    public List<Post> getUserPosts(String status, int id){
+        if ((status.equals("")) || (status == null)){
+            status = "NEW";
+        }
+       return postDAO.getUserPosts(status, id);
+    }
 
     public void approvePost(int id) {
          postDAO.approvePostById(id);
@@ -61,7 +67,6 @@ public class PostService implements Serializable {
     }
 
     public Post getPostInfo(int id){
-
         return postDAO.getPostInfo(id);
     }
 }
