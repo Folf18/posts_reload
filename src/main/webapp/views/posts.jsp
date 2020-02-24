@@ -22,7 +22,7 @@
                         <p class="card-text">${approvedPost.description}</p>
                     </div>
                     <div class="card-footer text-muted si text-right">
-                            ${approvedPost.user.username} in <span class="badge badge-pill badge-info">${approvedPost.postType.name}</span>
+                            ${approvedPost.user.username} in <span class="badge badge-info">${approvedPost.postType.name}</span>
                     </div>
                 </div>
             </div>
