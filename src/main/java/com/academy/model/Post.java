@@ -1,10 +1,13 @@
 package com.academy.model;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.OffsetDateTime;
 import java.util.Objects;
 
 public class Post {
     private int id;
+    
     private String summary;
     private String description;
     private PostType postType;

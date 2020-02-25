@@ -28,12 +28,13 @@ public class PostService implements Serializable {
     }
 
     public List<Post> getAllApprovedPosts(int page) {
+
+        //Hardcoded number of records per page
         int recordsPerPage = 10;
-        System.out.println("Empty page nu = "+ page);
 
-        int offset = (page-1)*(10);
+        //offset value
+        int offset = (page-1)*(recordsPerPage);
 
-        System.out.println(recordsPerPage + "    " + offset);
         return postDAO.getAllApprovedPosts(recordsPerPage, offset);
 
 

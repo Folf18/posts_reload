@@ -46,9 +46,9 @@
     <nav aria-label="Navigation for ads">
         <ul class="pagination">
 
-            <c:if test="${page != 1}">
+            <c:if test="${c != 1}">
                 <li class="page-item"><a class="page-link"
-                                         href="/post?v=${page-1}">Previous</a>
+                                         href="/post?page=${page-1}">Previous</a>
                 </li>
             </c:if>
 

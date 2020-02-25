@@ -24,25 +24,24 @@ public class GetAllApprovedPostsController extends HttpServlet {
         //default page is first
         int page = 1;
 
-        if (req.getParameter("page") != null){
+        if (req.getParameter("page") != null) {
             page = Integer.parseInt(req.getParameter("page"));
         }
         List<Post> approvedPosts = PostService.getInstance().getAllApprovedPosts(page);
 
         req.setAttribute("approvedPosts", approvedPosts);
-        int rows = PostService.getInstance().getNumberOfApprovedRecords();
 
-        int nOfPages = rows/10;
+        float rows = PostService.getInstance().getNumberOfApprovedRecords();
+        int nOfPages = (int) Math.ceil(rows / 10);
 
         System.out.println(nOfPages);
-    if (nOfPages % 10 > 0) {
-            nOfPages++;
-        }
+
+
 
         req.setAttribute("noOfPages", nOfPages);
         req.setAttribute("page", page);
 
-           req.getRequestDispatcher("/views/posts.jsp").forward(req, resp);
+        req.getRequestDispatcher("/views/posts.jsp").forward(req, resp);
 
     }
 }
