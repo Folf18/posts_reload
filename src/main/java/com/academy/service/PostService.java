@@ -7,6 +7,7 @@ import com.academy.model.PostStatus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.xml.transform.Source;
 import java.io.Serializable;
 import java.util.List;
 
@@ -26,11 +27,21 @@ public class PostService implements Serializable {
         return postService;
     }
 
-    public List<Post> getAllApprovedPosts() {
-        return postDAO.getAllApprovedPosts();
+    public List<Post> getAllApprovedPosts(int page) {
+        int recordsPerPage = 10;
+        System.out.println("Empty page nu = "+ page);
+
+        int offset = (page-1)*(10);
+
+        System.out.println(recordsPerPage + "    " + offset);
+        return postDAO.getAllApprovedPosts(recordsPerPage, offset);
+
+
     }
 
-
+    public int getNumberOfApprovedRecords(){
+        return postDAO.numberOfApprovedRecords();
+    }
 
     public void createNewPost(Post post) {
 

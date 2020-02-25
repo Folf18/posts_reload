@@ -41,7 +41,44 @@
         </div>
         <br>
     </c:forEach>
+
+    <div class="row w-100 justify-content-center">
+    <nav aria-label="Navigation for ads">
+        <ul class="pagination">
+
+            <c:if test="${page != 1}">
+                <li class="page-item"><a class="page-link"
+                                         href="/post?v=${page-1}">Previous</a>
+                </li>
+            </c:if>
+
+            <c:forEach begin="1" end="${noOfPages}" var="i">
+                <c:choose>
+                    <c:when test="${page eq i}">
+                        <li class="page-item active"><a class="page-link">
+                                ${i} <span class="sr-only">(current)</span></a>
+                        </li>
+                    </c:when>
+                    <c:otherwise>
+                        <li class="page-item"><a class="page-link"
+                                                 href="/post?page=${i}">${i}</a>
+                        </li>
+                    </c:otherwise>
+                </c:choose>
+            </c:forEach>
+
+            <c:if test="${page lt noOfPages}">
+                <li class="page-item"><a class="page-link"
+                                         href="/post?page=${page+1}">Next</a>
+                </li>
+            </c:if>
+        </ul>
+    </nav>
+    </div>
 </div>
 </div>
-<%@ include file="/common/footer.jspf" %>
+</body>
+
+
+</html>
 
