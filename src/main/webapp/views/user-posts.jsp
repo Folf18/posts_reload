@@ -53,7 +53,5 @@
 
 </body>
 
-<script>
-    $('#myTab a:last').tab('show')
-</script>
+
 </html>

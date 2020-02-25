@@ -1,12 +1,24 @@
 package com.academy.model;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.OffsetDateTime;
 import java.util.Objects;
 
 public class User {
     private int id;
+
+    @NotNull(message = "Username cannot be null")
+    @NotEmpty(message = "Username cannot be empty")
     private String username;
+
+    @NotNull
+    @Email(message = "Email should be valid")
     private String email;
+
+    @NotNull(message = "Password cannot be null")
+    @NotEmpty(message = "Password cannot be empty")
     private String password;
     private boolean isBlocked;
     private boolean isActive;

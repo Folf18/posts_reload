@@ -10,4 +10,7 @@
 
 <h1>${greetingMessage}</h1>
 
-<%@ include file="/common/footer.jspf" %>
+</body>
+
+
+</html>

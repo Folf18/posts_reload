@@ -44,6 +44,10 @@ public class UserDAO implements Serializable {
 
     private static final String CHANGE_ROLE = "UPDATE users SET role_id = ? WHERE id = ?";
 
+    private static final String CHECK_IF_USERNAME_EXIST = "SELECT id FROM users WHERE username = ?";
+
+    private static final String CHECK_IF_EMAIL_EXIST = "SELECT id FROM users WHERE email = ?";
+
 
 
 
@@ -265,5 +269,51 @@ public class UserDAO implements Serializable {
         }
 
         return false;
+    }
+
+    public boolean usernameExists(String username){
+        log.trace("Started verifying if user with username {} already exists.", username);
+
+        try {
+            connection = DBConnectionUtil.getConnection();
+            preparedStatement = connection.prepareStatement(CHECK_IF_USERNAME_EXIST);
+            preparedStatement.setString(1, username);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.wasNull()) {
+                log.debug("User with username = {} doesn't exist", username);
+                return false;
+            }
+            else {
+                log.debug("User with username = {} already exist", username);
+                return true;
+            }
+        } catch (SQLException e){
+            log.error("Process of seraching of user with username {} has crashed", username, e);
+        }
+
+        return true;
+    }
+
+    public boolean emailExists(String email){
+        log.trace("Started verifying if user with email {} already exists.", email);
+
+        try {
+            connection = DBConnectionUtil.getConnection();
+            preparedStatement = connection.prepareStatement(CHECK_IF_EMAIL_EXIST);
+            preparedStatement.setString(1, email);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.wasNull()) {
+                log.debug("User with email = {} doesn't exist", email);
+                return false;
+            }
+            else {
+                log.debug("User with email = {} already exist", email);
+                return true;
+            }
+        } catch (SQLException e){
+            log.error("Process of seraching of user with email {} has crashed", email, e);
+        }
+
+        return true;
     }
 }
