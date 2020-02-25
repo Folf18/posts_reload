@@ -10,6 +10,9 @@
 
 <h1>Verification email is sent to your email - ${enteredEmail}</h1>
 
-<%@ include file="/common/footer.jspf" %>
+</body>
+
+
+</html>
 
 

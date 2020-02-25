@@ -11,4 +11,7 @@
         <p> Enjoy your time and review all published ads <a href="/post"> here</a>.</p>
         <p> Do you want post more?  <a href="/add-ads"> Let`s  go!</a> </p>
     </h1>
-<%@ include file="/common/footer.jspf" %>
+</body>
+
+
+</html>

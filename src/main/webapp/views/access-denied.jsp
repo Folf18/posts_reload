@@ -13,4 +13,7 @@
         <div class="col ">Please <a href="/signin" class="alert-link">Login</a> to continue</div>
 </div>
 </div>
-<%@ include file="/common/footer.jspf" %>
+</body>
+
+
+</html>
