@@ -24,13 +24,14 @@ public class PostDAO implements Serializable {
     private ResultSet resultSet;
 
     //SQL
-    private static final String GET_ALL_APPROVED_POSTS= "SELECT U.id, U.summary, U.description, R.name as post_type_name, D.name as post_status_name, Z.username as username\n" +
-            "FROM post U \n" +
-            "JOIN post_type R ON U.post_type_id = R.id\n" +
-            "JOIN post_status D ON U.post_status_id = D.id \n" +
-            "JOIN users Z ON U.user_id = Z.id \n" +
-            "WHERE D.name = 'APPROVED'\n" +
-            "ORDER BY U.updated_at DESC";
+        private static final String GET_ALL_APPROVED_POSTS= "SELECT U.id, U.summary, U.description, R.name as post_type_name, D.name as post_status_name, Z.username as username\n" +
+                "FROM post U \n" +
+                "JOIN post_type R ON U.post_type_id = R.id\n" +
+                "JOIN post_status D ON U.post_status_id = D.id \n" +
+                "JOIN users Z ON U.user_id = Z.id \n" +
+                "WHERE D.name = 'APPROVED'\n" +
+                "ORDER BY U.updated_at DESC\n" +
+                "LIMIT ? offset ?";
 
 
     private static final String GET_ALL_POSTS_BY_STATUS = "SELECT U.id, U.summary, U.description, R.name as post_type_name, D.name as post_status_name, Z.username as username\n" +
@@ -63,11 +64,36 @@ public class PostDAO implements Serializable {
 
     private static final String DECLINE_POST = "UPDATE public.post SET post_status_id=3 WHERE id = ?";
 
+    private static final String GET_NUMBER_OF_APPROVED_POSTS = "SELECT COUNT(*)\n" +
+                                                                "FROM post\n" +
+                                                                "WHERE post_status_id = 2";
 
 
 
 
-    public List<Post> getAllApprovedPosts() {
+    public int numberOfApprovedRecords(){
+
+        int number = 0;
+
+        log.trace("Started getting number of approved ads");
+        try {
+            connection = DBConnectionUtil.getConnection();
+            preparedStatement =  connection.prepareStatement(GET_NUMBER_OF_APPROVED_POSTS);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+
+                number = resultSet.getInt(1);
+            }
+            log.trace("Number of ads"+number);
+            //connection.close();
+        } catch (SQLException e) {
+            log.error("Something went wrong", e);
+        }
+        return number;
+    }
+
+    public List<Post> getAllApprovedPosts(int limit, int offset) {
         List<Post> posts = null;
         Post post;
         User user;
@@ -79,6 +105,8 @@ public class PostDAO implements Serializable {
             posts = new ArrayList<Post>();
             connection = DBConnectionUtil.getConnection();
             preparedStatement =  connection.prepareStatement(GET_ALL_APPROVED_POSTS);
+            preparedStatement.setInt(1, limit);
+            preparedStatement.setInt(2, offset);
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -108,6 +136,7 @@ public class PostDAO implements Serializable {
         }
         return posts;
     }
+
 
     public void createPost(Post post) {
         log.trace("Started saving post to database");

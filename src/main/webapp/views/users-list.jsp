@@ -31,33 +31,7 @@
                 <td>${user.id}</td>
                 <td>${user.username}</td>
                 <td>${user.email}</td>
-                <td>${user.role.name}</td>
-                <td>${user.isBlocked}</td>
-                <td>${user.isActive}</td>
-
-
-                <td>
-                    <div>
-                        <c:choose>
-                            <c:when test="${user.isBlocked == true}">
-                                <form action="/admin/changeBlocking" method="post">
-                                    <input type="hidden" value="${user.id}" name="userId"/>
-                                    <input type="hidden" value="${user.isBlocked}" name="isBlocked"/>
-                                    <button class="btn btn-info" type="submit">UnBlock</button>
-                                </form>
-                            </c:when>
-
-                            <c:when test="${user.isBlocked == false}">
-                                <form action="/admin/changeBlocking" method="post">
-                                    <input type="hidden" value="${user.id}" name="userId"/>
-                                    <input type="hidden" value="${user.isBlocked}" name="isBlocked"/>
-                                    <button class="btn btn-danger" type="submit">Block</button>
-                                </form>
-                            </c:when>
-
-                        </c:choose>
-                    </div>
-
+                <td>${user.role.name}
                     <div>
                         <c:choose>
                             <c:when test="${user.role.name == 'USER'}">
@@ -81,6 +55,37 @@
                             </c:otherwise>
                         </c:choose>
                     </div>
+                </td>
+                <td>${user.isBlocked}
+                    <div>
+                        <c:choose>
+                            <c:when test="${user.isBlocked == true}">
+                                <form action="/admin/changeBlocking" method="post">
+                                    <input type="hidden" value="${user.id}" name="userId"/>
+                                    <input type="hidden" value="${user.isBlocked}" name="isBlocked"/>
+                                    <button class="btn btn-info" type="submit">UnBlock</button>
+                                </form>
+                            </c:when>
+
+                            <c:when test="${user.isBlocked == false}">
+                                <form action="/admin/changeBlocking" method="post">
+                                    <input type="hidden" value="${user.id}" name="userId"/>
+                                    <input type="hidden" value="${user.isBlocked}" name="isBlocked"/>
+                                    <button class="btn btn-danger" type="submit">Block</button>
+                                </form>
+                            </c:when>
+
+                        </c:choose>
+                    </div>
+                </td>
+
+                <td>${user.isActive}</td>
+
+
+                <td>
+
+
+
                 </td>
             </tr>
         </c:forEach>

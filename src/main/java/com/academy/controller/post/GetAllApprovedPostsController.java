@@ -21,14 +21,27 @@ public class GetAllApprovedPostsController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        if (req.getParameter("id") == null){
-        List<Post> approvedPosts = PostService.getInstance().getAllApprovedPosts();
-        log.info("GetAllApprovedPostsController");
-        req.setAttribute("approvedPosts", approvedPosts);
-        req.getRequestDispatcher("/views/posts.jsp").forward(req, resp);}
-        else {
-           req.setAttribute("postInfo", PostService.getInstance().getPostInfo(Integer.parseInt(req.getParameter("id"))));
-           req.getRequestDispatcher("/views/single-post.jsp").forward(req, resp);
+        //default page is first
+        int page = 1;
+
+        if (req.getParameter("page") != null) {
+            page = Integer.parseInt(req.getParameter("page"));
         }
+        List<Post> approvedPosts = PostService.getInstance().getAllApprovedPosts(page);
+
+        req.setAttribute("approvedPosts", approvedPosts);
+
+        float rows = PostService.getInstance().getNumberOfApprovedRecords();
+        int nOfPages = (int) Math.ceil(rows / 10);
+
+        System.out.println(nOfPages);
+
+
+
+        req.setAttribute("noOfPages", nOfPages);
+        req.setAttribute("page", page);
+
+        req.getRequestDispatcher("/views/posts.jsp").forward(req, resp);
+
     }
 }
