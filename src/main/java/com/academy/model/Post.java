@@ -7,11 +7,21 @@ import java.util.Objects;
 
 public class Post {
     private int id;
-    
+
+    @NotNull
+    @Size(min = 10, max = 100, message = "Summary should have at least 10 characters but not more than 100")
     private String summary;
+
+    @Size(min = 20, max = 500, message = "Description should have at least 20 characters but not more than 500")
     private String description;
+
+    @NotNull
     private PostType postType;
+
+    @NotNull
     private User user;
+
+    @NotNull
     private PostStatus postStatus;
     private OffsetDateTime createdAt;
     private OffsetDateTime updatedAt;
