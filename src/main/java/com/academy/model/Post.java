@@ -9,19 +9,19 @@ public class Post {
     private int id;
 
     @NotNull
-    @Size(min = 10, max = 100, message = "Summary should have at least 10 characters but not more than 100")
+    @Size(min = 10,  message = "Summary should have at least 10 characters")
+    @Size( max = 100, message = "Summary can't contain more than 100 characters")
     private String summary;
 
-    @Size(min = 20, max = 500, message = "Description should have at least 20 characters but not more than 500")
+    @Size(min = 15, message = "Description should have at least 15 characters")
+    @Size(max = 500, message = "Description can't have no more than 500 characters")
     private String description;
 
-    @NotNull
+
     private PostType postType;
 
-    @NotNull
     private User user;
 
-    @NotNull
     private PostStatus postStatus;
     private OffsetDateTime createdAt;
     private OffsetDateTime updatedAt;

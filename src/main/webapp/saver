@@ -68,3 +68,18 @@
                                                                     <button class="btn btn-danger" type="submit">Block</button>
                                                                 </form>
                                                             </c:when>
+
+
+<c:choose>
+    <c:when test="${not empty param.validationMessages}">
+<div class="row justify-content-center">
+    <div class="alert alert-primary" role="alert">
+        <div class="col ">
+            <c:forEach items="${validationMessages}" var="validationMessage">
+                <p>validationMessage</p>>
+            </c:forEach>
+        </div>
+    </div>
+</div>
+    </c:when>
+</c:choose>

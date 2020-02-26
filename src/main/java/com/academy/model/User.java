@@ -3,6 +3,7 @@ package com.academy.model;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.OffsetDateTime;
 import java.util.Objects;
 
@@ -11,14 +12,18 @@ public class User {
 
     @NotNull(message = "Username cannot be null")
     @NotEmpty(message = "Username cannot be empty")
+    @Size(min = 4, max = 20, message = "Username should consists at least from 4 characters but can not be more than 20 characters")
     private String username;
 
     @NotNull
     @Email(message = "Email should be valid")
+    @Size(min = 4, max = 20, message = "Email should consists at least from 4 characters but can not be more than 20 characters")
     private String email;
+
 
     @NotNull(message = "Password cannot be null")
     @NotEmpty(message = "Password cannot be empty")
+    @Size(min = 4, max = 20, message = "Password should consists at least from 4 characters but can not be more than 20 characters")
     private String password;
     private boolean isBlocked;
     private boolean isActive;
