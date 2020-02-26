@@ -34,9 +34,6 @@ public class GetAllApprovedPostsController extends HttpServlet {
         float rows = PostService.getInstance().getNumberOfApprovedRecords();
         int nOfPages = (int) Math.ceil(rows / 10);
 
-        System.out.println(nOfPages);
-
-
 
         req.setAttribute("noOfPages", nOfPages);
         req.setAttribute("page", page);

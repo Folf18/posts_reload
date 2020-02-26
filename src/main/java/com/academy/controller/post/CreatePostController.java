@@ -15,8 +15,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @WebServlet(urlPatterns = "/add-ads")
 public class CreatePostController extends HttpServlet {
@@ -34,28 +40,43 @@ public class CreatePostController extends HttpServlet {
         Post post = new Post();
         User user = new User();
         PostType postType = new PostType();
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+
 
         HttpSession session;
 
         post.setSummary(req.getParameter("summary"));
         post.setDescription(req.getParameter("description"));
-
         postType.setId(Integer.parseInt(req.getParameter("post_type_id")));
         post.setPostType(postType);
 
-       // String stringId = (String) req.getSession(false).getAttribute("user_id");
 
         int userId = Integer.parseInt(String.valueOf(req.getSession(false).getAttribute("global_user_id")));
-       // System.out.println(userId);
+
         user.setId(userId);
         post.setUser(user);
 
-
-
         log.info("Post info "+post.toString());
-        PostService.getInstance().createNewPost(post);
 
-        req.getRequestDispatcher("/views/post-published.jsp").forward(req, resp);
+
+        Set<ConstraintViolation<Post>> violations = validator.validate(post);
+
+
+        if (violations.isEmpty()){
+            req.setAttribute("errors", violations);
+            PostService.getInstance().createNewPost(post);
+            req.getRequestDispatcher("/views/post-published.jsp").forward(req, resp);
+        }
+        else {
+
+            req.setAttribute("errors", violations);
+            req.setAttribute("oldSummary", req.getParameter("summary"));
+            req.setAttribute("oldDescription", req.getParameter("description"));
+            req.setAttribute("oldPostTypeId", Integer.parseInt(req.getParameter("post_type_id")));
+            doGet(req, resp);
+        }
+
         //resp.sendRedirect("/add-post");
 
     }
