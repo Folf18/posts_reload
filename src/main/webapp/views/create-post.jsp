@@ -8,10 +8,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/common/header.jspf" %>
 
-<c:if test="${not empty errors}">
+<c:if test="${errors}">
 
         <div class="row justify-content-center">
-            <div class="alert alert-primary" role="alert">
+            <div class="alert alert-warning" role="alert">
                 <div class="col">
                     <ul>
                     <c:forEach items="${errors}" var="error">
@@ -22,6 +22,8 @@
             </div>
         </div>
 </c:if>
+
+
 
 <div class="row justify-content-center">
     <form class="col-md-4" action="/add-ads" method="post">

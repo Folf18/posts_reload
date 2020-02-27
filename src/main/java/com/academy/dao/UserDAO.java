@@ -271,49 +271,49 @@ public class UserDAO implements Serializable {
         return false;
     }
 
-    public boolean usernameExists(String username){
+    public int usernameExists(String username){
         log.trace("Started verifying if user with username {} already exists.", username);
-
+        int id = 0;
         try {
             connection = DBConnectionUtil.getConnection();
             preparedStatement = connection.prepareStatement(CHECK_IF_USERNAME_EXIST);
             preparedStatement.setString(1, username);
             resultSet = preparedStatement.executeQuery();
-            if (resultSet.wasNull()) {
-                log.debug("User with username = {} doesn't exist", username);
-                return false;
+            while (resultSet.next()) {
+                id = resultSet.getInt("id");
+
             }
-            else {
-                log.debug("User with username = {} already exist", username);
-                return true;
-            }
+            log.info("User with username {} already exists.", username);
+            return id;
+
+
         } catch (SQLException e){
             log.error("Process of seraching of user with username {} has crashed", username, e);
         }
 
-        return true;
+        log.info("User with username {} doesn't exist.", username);
+        return id;
     }
 
-    public boolean emailExists(String email){
+    public int emailExists(String email) {
         log.trace("Started verifying if user with email {} already exists.", email);
-
+        int id = 0;
         try {
             connection = DBConnectionUtil.getConnection();
             preparedStatement = connection.prepareStatement(CHECK_IF_EMAIL_EXIST);
             preparedStatement.setString(1, email);
             resultSet = preparedStatement.executeQuery();
-            if (resultSet.wasNull()) {
-                log.debug("User with email = {} doesn't exist", email);
-                return false;
-            }
-            else {
-                log.debug("User with email = {} already exist", email);
-                return true;
-            }
-        } catch (SQLException e){
-            log.error("Process of seraching of user with email {} has crashed", email, e);
-        }
 
-        return true;
+            while (resultSet.next()) {
+                id = resultSet.getInt("id");
+
+            }
+            return id;
+        } catch (SQLException ex) {
+            log.error("Process of seraching of user with email {} has crashed ", email, ex);
+
+
+            return id;
+        }
     }
 }
