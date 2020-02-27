@@ -12,19 +12,21 @@ public class User {
 
     @NotNull(message = "Username cannot be null")
     @NotEmpty(message = "Username cannot be empty")
-    @Size(min = 4, max = 20, message = "Username should consists at least from 4 characters but can not be more than 20 characters")
+    @Size(min = 4, message = "Username should contain at least  4 characters")
+    @Size(max = 20, message = "Username can not be more than 20 characters")
     private String username;
 
     @NotNull
     @Email(message = "Email should be valid")
-    @Size(min = 4, max = 20, message = "Email should consists at least from 4 characters but can not be more than 20 characters")
+    @Size(min = 4, message = "Email should consists at least from 4 characters but can not be more than 20 characters")
     private String email;
 
 
     @NotNull(message = "Password cannot be null")
     @NotEmpty(message = "Password cannot be empty")
-    @Size(min = 4, max = 20, message = "Password should consists at least from 4 characters but can not be more than 20 characters")
+    //@Size(min = 4,  message = "Password should consists at least from 4 characters")
     private String password;
+
     private boolean isBlocked;
     private boolean isActive;
     private Role role;

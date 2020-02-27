@@ -82,4 +82,12 @@ public class UserService implements Serializable {
         }
         else return "User role wasn't changed";
     }
+
+    public boolean checkIfEmailExists(String email){
+        return userDAO.emailExists(email) == 0 ? false : true;
+    }
+
+    public boolean checkIfEUsernameExists(String username){
+        return userDAO.usernameExists(username) == 0 ? false : true;
+    }
 }

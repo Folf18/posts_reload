@@ -40,17 +40,19 @@ public class CreatePostController extends HttpServlet {
         Post post = new Post();
         User user = new User();
         PostType postType = new PostType();
+
+
+
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
 
 
-        HttpSession session;
+       // HttpSession session;
 
         post.setSummary(req.getParameter("summary"));
         post.setDescription(req.getParameter("description"));
         postType.setId(Integer.parseInt(req.getParameter("post_type_id")));
         post.setPostType(postType);
-
 
         int userId = Integer.parseInt(String.valueOf(req.getSession(false).getAttribute("global_user_id")));
 
@@ -64,12 +66,11 @@ public class CreatePostController extends HttpServlet {
 
 
         if (violations.isEmpty()){
-            req.setAttribute("errors", violations);
+            //req.setAttribute("errors", violations);
             PostService.getInstance().createNewPost(post);
             req.getRequestDispatcher("/views/post-published.jsp").forward(req, resp);
         }
         else {
-
             req.setAttribute("errors", violations);
             req.setAttribute("oldSummary", req.getParameter("summary"));
             req.setAttribute("oldDescription", req.getParameter("description"));
