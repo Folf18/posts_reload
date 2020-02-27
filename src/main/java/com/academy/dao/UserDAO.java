@@ -283,7 +283,6 @@ public class UserDAO implements Serializable {
                 id = resultSet.getInt("id");
 
             }
-            log.info("User with username {} already exists.", username);
             return id;
 
 
@@ -312,7 +311,7 @@ public class UserDAO implements Serializable {
         } catch (SQLException ex) {
             log.error("Process of seraching of user with email {} has crashed ", email, ex);
 
-
+            log.info("User with email {} doesn't exist.", email);
             return id;
         }
     }
