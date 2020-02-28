@@ -32,6 +32,7 @@
                 <td>${user.username}</td>
                 <td>${user.email}</td>
                 <td>${user.role.name}
+                    <c:if test="${sessionScope.global_user_role == 'ADMIN'}">
                     <div>
                         <c:choose>
                             <c:when test="${user.role.name == 'USER'}">
@@ -55,6 +56,7 @@
                             </c:otherwise>
                         </c:choose>
                     </div>
+                    </c:if>
                 </td>
                 <td>${user.isBlocked}
                     <div>
