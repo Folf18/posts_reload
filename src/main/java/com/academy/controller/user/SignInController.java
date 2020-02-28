@@ -1,6 +1,5 @@
 package com.academy.controller.user;
 
-import com.academy.dao.UserDAO;
 import com.academy.model.User;
 import com.academy.service.EncryptingService;
 import com.academy.service.UserService;
@@ -31,30 +30,41 @@ public class SignInController extends HttpServlet {
         String username = req.getParameter("username");
         String password = EncryptingService.getInstance().encrypt(req.getParameter("password"));
 
-        System.out.println(username+ "   "+password);
+        System.out.println(username + "   " + password);
         int userId = UserService.getInstance().getUserIdByCredentials(username, password);
 
-        if (userId != 0){
-            try {
-               User loggedUser = UserService.getInstance().getUserInfoById(userId);
-                HttpSession session = req.getSession(true);
-                session.setAttribute("global_user_id", loggedUser.getId());
-                session.setAttribute("global_user_username", loggedUser.getUsername());
-                session.setAttribute("global_user_role", loggedUser.getRole().getName());
+        if (userId != 0) {
+            User loggedUser = UserService.getInstance().getUserInfoById(userId);
 
-                //req.getRequestDispatcher("/views/session.jsp").forward(req, resp);
-                resp.sendRedirect("/post");
-            } catch (Exception e){
-                e.printStackTrace();
+            System.out.println(loggedUser.getIsActive() + "    " + loggedUser.getIsBlocked());
+
+            if ((loggedUser.getIsActive()) && (!loggedUser.getIsBlocked()))
+            {
+                System.out.println(loggedUser.getIsActive() + "    " + loggedUser.getIsBlocked());
+
+
+            HttpSession session = req.getSession(true);
+            session.setAttribute("global_user_id", loggedUser.getId());
+            session.setAttribute("global_user_username", loggedUser.getUsername());
+            session.setAttribute("global_user_role", loggedUser.getRole().getName());
+
+            //req.getRequestDispatcher("/views/session.jsp").forward(req, resp);
+            resp.sendRedirect("/post");
+            }
+            if ((!loggedUser.getIsActive())) {
+                req.setAttribute("access", "Your account isn't activated. Please follow the link from the email to activate it.");
+                req.getRequestDispatcher("/views/no-access.jsp").forward(req, resp);
+            }
+            if (loggedUser.getIsBlocked()){
+                req.setAttribute("access", "Your account is blocked.");
+                req.getRequestDispatcher("/views/no-access.jsp").forward(req, resp);
             }
 
         }
-            else {
-
+        else {
             req.setAttribute("message", "Username or password is incorrect");
             req.getRequestDispatcher("/views/SignIn.jsp").forward(req, resp);
         }
-
         //resp.sendRedirect("/add-post");
     }
 }
