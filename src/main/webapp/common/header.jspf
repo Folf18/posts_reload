@@ -19,33 +19,65 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent" >
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item ">
-                <a class="nav-link" href="/post">Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/add-ads">Create Ad</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/my-ads">My Ads</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/ads-management">Ad management</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/users-management">Users management</a>
-            </li>
+
+            <c:choose>
+                <c:when test="${sessionScope.global_user_role == 'USER'}">
+                    <li class="nav-item ">
+                        <a class="nav-link" href="/post">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/add-ads">Create Ad</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/my-ads">My Ads</a>
+                    </li>
+                </c:when>
+                <c:when test="${sessionScope.global_user_role == 'MANAGER'}">
+                    <li class="nav-item ">
+                        <a class="nav-link" href="/post">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/ads-management">Ad management</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/users-management">Users management</a>
+                    </li>
+                </c:when>
+                <c:when test="${sessionScope.global_user_role == 'ADMIN'}">
+                    <li class="nav-item ">
+                        <a class="nav-link" href="/post">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/users-management">Users management</a>
+                    </li>
+                </c:when>
+                <c:when test="${empty sessionScope.global_user_role}">
+                    <li class="nav-item ">
+                        <a class="nav-link" href="/post">Home</a>
+                    </li>
+                </c:when>
+                <c:otherwise>
+                    <li class="nav-item ">
+                        <a class="nav-link" href="/post">Home</a>
+                    </li>
+                </c:otherwise>
+            </c:choose>
         </ul>
         <ul class="nav navbar-nav navbar-right">
+
+            <c:if test="${empty sessionScope.global_user_id}">
             <li class="nav-link">
                 <a href="/signup">Sign Up</a>
             </li>
             <li class="nav-link">
                 <a href="/signin">Sign In</a>
             </li>
+            </c:if>
+            <c:if test="${not empty sessionScope.global_user_id}">
             <li class="nav-link">
                 <a href="/logout">Logout</a>
             </li>
-
+            </c:if>
         </ul>
     </div>
 </nav>
