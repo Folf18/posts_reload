@@ -32,7 +32,7 @@
                 <a class="nav-link" href="/posts-management">Ad management</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/admin/user">Users management</a>
+                <a class="nav-link" href="/users-management">Users management</a>
             </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">

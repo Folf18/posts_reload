@@ -28,6 +28,6 @@ public class ChangeRoleController extends HttpServlet {
         req.setAttribute("message", UserService.getInstance().changeUserRole(userId, roleId));
 
         //req.getRequestDispatcher("/posts-management").forward(req, resp);
-        resp.sendRedirect("/admin/user");
+        resp.sendRedirect("/users-management");
     }
 }

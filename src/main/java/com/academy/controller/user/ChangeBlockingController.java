@@ -25,6 +25,6 @@ public class ChangeBlockingController extends HttpServlet {
         req.setAttribute("message", UserService.getInstance().blockUserById(userId, currentStatus));
 
         //req.getRequestDispatcher("/posts-management").forward(req, resp);
-        resp.sendRedirect("/admin/user");
+        resp.sendRedirect("/users-management");
     }
 }
