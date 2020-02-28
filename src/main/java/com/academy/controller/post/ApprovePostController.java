@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "/approve")
+@WebServlet(urlPatterns = "/manage/approve")
 public class ApprovePostController extends HttpServlet {
     final static Logger log = LogManager.getLogger(ApprovePostController.class);
 
@@ -23,6 +23,6 @@ public class ApprovePostController extends HttpServlet {
         PostService.getInstance().approvePost(postId);
 
         //req.getRequestDispatcher("/posts-management").forward(req, resp);
-        resp.sendRedirect("/posts-management");
+        resp.sendRedirect("/ads-management");
     }
 }

@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(urlPatterns = "/posts-management")
+@WebServlet(urlPatterns = "/ads-management")
 public class GetAllPostsByStatusController extends HttpServlet {
     final static Logger log = LogManager.getLogger(GetAllPostsByStatusController.class);
 

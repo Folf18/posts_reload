@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "/decline")
+@WebServlet(urlPatterns = "/manage/decline")
 public class DeclinePostController extends HttpServlet {
     final static Logger log = LogManager.getLogger(DeclinePostController.class);
 
@@ -23,6 +23,6 @@ public class DeclinePostController extends HttpServlet {
         PostService.getInstance().declinePost(postId);
 
         //req.getRequestDispatcher("/posts-management").forward(req, resp);
-        resp.sendRedirect("/posts-management");
+        resp.sendRedirect("/ads-management");
     }
 }

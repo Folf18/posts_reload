@@ -12,13 +12,13 @@
     <ul class="nav nav-pills row justify-content-center">
 
         <li class="nav-item ">
-            <a class="nav-link" href="/posts-management?status=NEW">NEW</a>
+            <a class="nav-link" href="/ads-management?status=NEW">NEW</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/posts-management?status=APPROVED">APPROVED</a>
+            <a class="nav-link" href="/ads-management?status=APPROVED">APPROVED</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/posts-management?status=DECLINED">DECLINED</a>
+            <a class="nav-link" href="/ads-management?status=DECLINED">DECLINED</a>
 
         </li>
 
@@ -47,40 +47,40 @@
 
                     <c:choose>
                         <c:when test="${param.status=='NEW'}">
-                            <form action="/approve" method="post" class="col text-right">
+                            <form action="/manage/decline" method="post" class="col text-right">
                                 <input  type="hidden" value="${newPost.id}" name="id"/>
                                 <input type="hidden" value="${param.status}" name="status"/>
                                 <button class="btn btn-success" type="submit">Approve</button>
                             </form>
 
-                            <form action="/decline" method="post">
+                            <form action="/manage/decline" method="post">
                                 <input type="hidden" value="${newPost.id}" name="id"/>
                                 <input type="hidden" value="${param.status}" name="status"/>
                                 <button class="btn btn-danger" type="submit">Decline</button>
                             </form>
                         </c:when>
                         <c:when test="${param.status=='APPROVED'}">
-                            <form action="/decline" method="post" class="col text-right">
+                            <form action="/manage/decline" method="post" class="col text-right">
                                 <input type="hidden" value="${newPost.id}" name="id"/>
                                 <input type="hidden" value="${param.status}" name="status"/>
                                 <button class="btn btn-danger" type="submit">Decline</button>
                             </form>
                         </c:when>
                         <c:when test="${param.status=='DECLINED'}">
-                            <form action="/approve" method="post" class="col text-right">
+                            <form action="/manage/approve" method="post" class="col text-right">
                                 <input  type="hidden" value="${newPost.id}" name="id"/>
                                 <input type="hidden" value="${param.status}" name="status"/>
                                 <button class="btn btn-success" type="submit">Approve</button>
                             </form>
                         </c:when>
                         <c:when test="${empty param.status}">
-                            <form action="/approve" method="post" class="col text-right">
+                            <form action="/manage/approve" method="post" class="col text-right">
                                 <input  type="hidden" value="${newPost.id}" name="id"/>
                                 <input type="hidden" value="${param.status}" name="status"/>
                                 <button class="btn btn-success" type="submit">Approve</button>
                             </form>
 
-                            <form action="/decline" method="post">
+                            <form action="/manage/decline" method="post">
                                 <input type="hidden" value="${newPost.id}" name="id"/>
                                 <input type="hidden" value="${param.status}" name="status"/>
                                 <button class="btn btn-danger" type="submit">Decline</button>

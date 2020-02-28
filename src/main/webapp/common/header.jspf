@@ -29,7 +29,7 @@
                 <a class="nav-link" href="/my-ads">My Ads</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/posts-management">Ad management</a>
+                <a class="nav-link" href="/ads-management">Ad management</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/users-management">Users management</a>
