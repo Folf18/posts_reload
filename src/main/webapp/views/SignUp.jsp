@@ -8,6 +8,19 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/common/header.jspf" %>
 
+<c:if test="${not empty emptyError}">
+    <div class="row justify-content-center">
+        <div class="alert alert-warning" role="alert">
+            <div class="col">
+                <ul>
+                    <li>${emptyError}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</c:if>
+
 <c:if test="${not empty emailExists}">
 
     <div class="row justify-content-center">
@@ -52,16 +65,16 @@
 <div class="row justify-content-center">
     <form action="/signup" method="post" class="col-md-4">
         <div class="form-group">
-            Enter username: <input type="text" name="username" placeholder="Username  e.g. User228"
+            Enter username: <input type="text" name="username" placeholder="from 4 to 20 characters"
                                    class="form-control" value="${oldUsername}"/> </br>
         </div>
 
         <div class="form-group">
-            Enter email: <input type="text" name="email" placeholder="Email" class="form-control" value="${oldEmail}"/> </br>
+            Enter email: <input type="text" name="email" placeholder="e.g. email@mail.com" class="form-control" value="${oldEmail}"/> </br>
         </div>
 
         <div class="form-group">
-            Enter password: <input type="password" name="password" placeholder="Password" class="form-control" /> </br>
+            Enter password: <input type="password" name="password" placeholder="min 4 characters" class="form-control" /> </br>
         </div>
 
         <div class="row justify-content-end">

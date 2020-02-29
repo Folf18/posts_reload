@@ -55,14 +55,10 @@ public class CreatePostController extends HttpServlet {
         user.setId(Integer.parseInt(String.valueOf(req.getSession(false).getAttribute("global_user_id"))));
         post.setUser(user);
 
-
-        log.info("Post info "+post.toString());
-
-
         Set<ConstraintViolation<Post>> violations = validator.validate(post);
 
 
-        if ((violations.isEmpty()) && (!post.getSummary().isBlank() && (!post.getDescription().isBlank()))){
+        if ((violations.isEmpty()) && ((!post.getSummary().isBlank()) && (!post.getDescription().isBlank()))){
 
             post.setSummary(req.getParameter("summary"));
             post.setDescription(req.getParameter("description"));
@@ -82,7 +78,7 @@ public class CreatePostController extends HttpServlet {
             doGet(req, resp);
         }
         else {
-            req.setAttribute("emptyError", "Summary and Description can not be empty");
+            req.setAttribute("emptyError", "Summary or Description can not be empty");
             doGet(req, resp);
         }
 
