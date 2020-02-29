@@ -5,8 +5,8 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/add-ads", "/my-ads"})
-public class LoggedUserFilter implements Filter {
+@WebFilter(urlPatterns = {"/ads-management"})
+public class AdsManagementFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -18,7 +18,7 @@ public class LoggedUserFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
 
 
-        if ((req.getSession().getAttribute("global_user_username") != null) && (String.valueOf(req.getSession().getAttribute("global_user_role")).equals("USER") )){
+        if ((req.getSession().getAttribute("global_user_username") != null) && (String.valueOf(req.getSession().getAttribute("global_user_role")).equals("MANAGER") )){
             chain.doFilter(request,response);
         }
         else {
