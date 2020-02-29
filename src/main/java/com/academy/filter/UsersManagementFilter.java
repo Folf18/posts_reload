@@ -6,7 +6,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/users-management"})
+@WebFilter(urlPatterns = "/users-management")
 public class UsersManagementFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -22,7 +22,7 @@ public class UsersManagementFilter implements Filter {
             chain.doFilter(request,response);
         }
         else {
-            request.getRequestDispatcher("/views/access-denied.jsp").forward(request, response);
+            request.getRequestDispatcher("/views/page-not-found.jsp").forward(request, response);
             //filterChain.doFilter(servletRequest, servletResponse);
         }
     }

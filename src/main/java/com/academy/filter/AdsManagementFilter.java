@@ -5,7 +5,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/ads-management"})
+@WebFilter(urlPatterns = "/ads-management")
 public class AdsManagementFilter implements Filter {
 
     @Override
@@ -22,7 +22,7 @@ public class AdsManagementFilter implements Filter {
             chain.doFilter(request,response);
         }
         else {
-            request.getRequestDispatcher("/views/access-denied.jsp").forward(request, response);
+            request.getRequestDispatcher("/views/page-not-found.jsp").forward(request, response);
             //filterChain.doFilter(servletRequest, servletResponse);
         }
     }
