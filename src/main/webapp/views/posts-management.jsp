@@ -10,18 +10,52 @@
 
 <div class="container">
     <ul class="nav nav-pills row justify-content-center">
-
-        <li class="nav-item ">
-            <a class="nav-link" href="/ads-management?status=NEW">NEW</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/ads-management?status=APPROVED">APPROVED</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/ads-management?status=DECLINED">DECLINED</a>
-
-        </li>
-
+        <c:choose>
+            <c:when test="${param.status == 'NEW'}">
+                <li class="nav-item ">
+                    <a class="nav-link active" href="/ads-management?status=NEW">NEW</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/ads-management?status=APPROVED">APPROVED</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/ads-management?status=DECLINED">DECLINED</a>
+                </li>
+            </c:when>
+            <c:when test="${param.status == 'APPROVED'}">
+                <li class="nav-item ">
+                    <a class="nav-link" href="/ads-management?status=NEW">NEW</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/ads-management?status=APPROVED">APPROVED</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/ads-management?status=DECLINED">DECLINED</a>
+                </li>
+            </c:when>
+            <c:when test="${param.status == 'DECLINED'}">
+                <li class="nav-item ">
+                    <a class="nav-link" href="/ads-management?status=NEW">NEW</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/ads-management?status=APPROVED">APPROVED</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/ads-management?status=DECLINED">DECLINED</a>
+                </li>
+            </c:when>
+            <c:otherwise>
+                <li class="nav-item ">
+                    <a class="nav-link active" href="/ads-management?status=NEW">NEW</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/ads-management?status=APPROVED">APPROVED</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/ads-management?status=DECLINED">DECLINED</a>
+                </li>
+            </c:otherwise>
+        </c:choose>
 
     </ul>
     <br>
@@ -39,7 +73,19 @@
                         <p class="card-text">${newPost.description}</p>
                     </div>
                     <div class="card-footer text-muted text-left col">
-                            ${newPost.user.username} in ${newPost.postType.name}
+                            ${newPost.user.username} in
+
+                        <c:choose>
+                            <c:when test="${newPost.postType.name=='Buy'}">
+                                <span class="badge badge-success">${newPost.postType.name}</span>
+                            </c:when>
+                            <c:when test="${newPost.postType.name=='Sale'}">
+                                <span class="badge badge-primary">${newPost.postType.name}</span>
+                            </c:when>
+                            <c:when test="${newPost.postType.name=='Trade'}">
+                                <span class="badge badge-info">${newPost.postType.name}</span>
+                            </c:when>
+                        </c:choose>
                     </div>
                 </div>
                 <br>
@@ -48,7 +94,7 @@
                     <c:choose>
                         <c:when test="${param.status=='NEW'}">
                             <form action="/manage/decline" method="post" class="col text-right">
-                                <input  type="hidden" value="${newPost.id}" name="id"/>
+                                <input type="hidden" value="${newPost.id}" name="id"/>
                                 <input type="hidden" value="${param.status}" name="status"/>
                                 <button class="btn btn-success" type="submit">Approve</button>
                             </form>
@@ -68,14 +114,14 @@
                         </c:when>
                         <c:when test="${param.status=='DECLINED'}">
                             <form action="/manage/approve" method="post" class="col text-right">
-                                <input  type="hidden" value="${newPost.id}" name="id"/>
+                                <input type="hidden" value="${newPost.id}" name="id"/>
                                 <input type="hidden" value="${param.status}" name="status"/>
                                 <button class="btn btn-success" type="submit">Approve</button>
                             </form>
                         </c:when>
                         <c:when test="${empty param.status}">
                             <form action="/manage/approve" method="post" class="col text-right">
-                                <input  type="hidden" value="${newPost.id}" name="id"/>
+                                <input type="hidden" value="${newPost.id}" name="id"/>
                                 <input type="hidden" value="${param.status}" name="status"/>
                                 <button class="btn btn-success" type="submit">Approve</button>
                             </form>

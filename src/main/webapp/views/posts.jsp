@@ -7,10 +7,12 @@
 --%>
 <%@ include file="/common/header.jspf" %>
 
-<h1>Posts</h1>
-<div class="container">
 
+<div class="container">
+    <h1 class="row justify-content-center">Advertisements</h1>
+    <br>
     <c:forEach items="${approvedPosts}" var="approvedPost">
+
         <div class="row w-100 justify-content-center">
             <div class="col-sm-8">
                 <div class="card">
@@ -46,7 +48,7 @@
     <nav aria-label="Navigation for ads">
         <ul class="pagination">
 
-            <c:if test="${c != 1}">
+            <c:if test="${page != 1}">
                 <li class="page-item"><a class="page-link"
                                          href="/post?page=${page-1}">Previous</a>
                 </li>

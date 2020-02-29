@@ -83,3 +83,8 @@
 </div>
     </c:when>
 </c:choose>
+
+ <div class="form-group">
+            Enter description: <input type="text" name="description" value="${oldDescription}" placeholder="Description"
+                                      class="form-control"/> </br>
+        </div>
