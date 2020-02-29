@@ -1,7 +1,6 @@
 package com.academy.controller.user;
 
 
-import com.academy.dao.ActivationDAO;
 import com.academy.service.ActivationService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,13 +20,15 @@ public class ActivateUserController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String token = req.getParameter("token");
+        boolean isSuccessful = ActivationService.getInstance().activateAccountAndSendMail(token);
 
         if (token != null) {
-            if (ActivationService.getInstance().activateAccountAndSendMail(token) == true){
+            if (isSuccessful) {
+                req.setAttribute("success", isSuccessful);
                 req.setAttribute("greetingMessage", "Your account successfully activated");
                 req.getRequestDispatcher("/views/greetings.jsp").forward(req, resp);
-            }
-            else {
+            } else {
+                req.setAttribute("success", isSuccessful);
                 req.setAttribute("greetingMessage", "SOMETHING WENT WRONG. <br> Please follow the link in email again. <br> If problem still exists contact fedir199@gmail.com");
                 req.getRequestDispatcher("/views/greetings.jsp").forward(req, resp);
             }

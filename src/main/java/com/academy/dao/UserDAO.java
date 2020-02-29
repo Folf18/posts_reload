@@ -205,7 +205,7 @@ public class UserDAO implements Serializable {
 
         try {
             connection = DBConnectionUtil.getConnection();
-            preparedStatement = connection.prepareStatement(CHANGE_BLOCKING_STATUS);
+            preparedStatement = connection.prepareStatement(ACTIVATE_USER);
             preparedStatement.setInt(1, id);
             int executionStatus = preparedStatement.executeUpdate();
             if (executionStatus == 0) {

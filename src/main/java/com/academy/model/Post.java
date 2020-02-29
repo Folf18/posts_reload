@@ -1,25 +1,31 @@
 package com.academy.model;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class Post {
     private int id;
 
-    @NotNull
+    @NotNull(message = "Summary can't ne null")
+    @NotEmpty(message = "Summary can't be empty")
     @Size(min = 10,  message = "Summary should have at least 10 characters")
     @Size( max = 100, message = "Summary can't contain more than 100 characters")
     private String summary;
 
+    @NotEmpty(message = "Summary can't be empty")
     @Size(min = 15, message = "Description should have at least 15 characters")
     @Size(max = 500, message = "Description can't have no more than 500 characters")
     private String description;
 
 
+    @NotNull
     private PostType postType;
 
+    @NotNull
     private User user;
 
     private PostStatus postStatus;
@@ -104,8 +110,8 @@ public class Post {
         this.postStatus = postStatus;
     }
 
-    public OffsetDateTime getCreatedAt() {
-        return createdAt;
+    public String getCreatedAt() {
+        return createdAt.toLocalDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
     }
 
     public void setCreatedAt(OffsetDateTime createdAt) {

@@ -13,6 +13,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,13 +26,13 @@ public class PostDAO implements Serializable {
     private ResultSet resultSet;
 
     //SQL
-        private static final String GET_ALL_APPROVED_POSTS= "SELECT U.id, U.summary, U.description, R.name as post_type_name, D.name as post_status_name, Z.username as username\n" +
+        private static final String GET_ALL_APPROVED_POSTS= "SELECT U.id, U.summary, U.description, U.created_at, R.name as post_type_name, D.name as post_status_name, Z.username as username\n" +
                 "FROM post U \n" +
                 "JOIN post_type R ON U.post_type_id = R.id\n" +
                 "JOIN post_status D ON U.post_status_id = D.id \n" +
                 "JOIN users Z ON U.user_id = Z.id \n" +
                 "WHERE D.name = 'APPROVED'\n" +
-                "ORDER BY U.updated_at DESC\n" +
+                "ORDER BY U.created_at DESC \n" +
                 "LIMIT ? offset ?";
 
 
@@ -123,6 +125,9 @@ public class PostDAO implements Serializable {
 
                 postStatus.setName(resultSet.getString("post_status_name"));
                 post.setPostStatus(postStatus);
+
+                OffsetDateTime createdAt  = resultSet.getObject("created_at", OffsetDateTime.class);
+                post.setCreatedAt(createdAt);
 
                 user.setUsername(resultSet.getString("username"));
                 post.setUser(user);
