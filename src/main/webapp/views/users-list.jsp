@@ -43,6 +43,7 @@
                                     <input type="hidden" value="${user.id}" name="userId"/>
                                     <input type="hidden" value="${user.role.id}" name="roleId"/>
                                     <input type="hidden" value="${user.role.name}" name="roleName"/>
+                                    <input type="hidden" value="${param.page}" name="page"/>
                                     <button class="btn btn-light" type="submit">Upgrade Role</button>
                                 </form>
                             </c:when>
@@ -51,6 +52,7 @@
                                     <input type="hidden" value="${user.id}" name="userId"/>
                                     <input type="hidden" value="${user.role.id}" name="roleId"/>
                                     <input type="hidden" value="${user.role.name}" name="roleName"/>
+                                    <input type="hidden" value="${param.page}" name="page"/>
                                     <button class="btn btn-dark" type="submit">Downgrade Role</button>
                                 </form>
                             </c:when>
@@ -68,6 +70,7 @@
                                 <form action="/admin/changeBlocking" method="post">
                                     <input type="hidden" value="${user.id}" name="userId"/>
                                     <input type="hidden" value="${user.isBlocked}" name="isBlocked"/>
+                                    <input type="hidden" value="${param.page}" name="page"/>
                                     <button class="btn btn-info" type="submit">UnBlock</button>
                                 </form>
                             </c:when>
@@ -76,6 +79,7 @@
                                 <form action="/admin/changeBlocking" method="post">
                                     <input type="hidden" value="${user.id}" name="userId"/>
                                     <input type="hidden" value="${user.isBlocked}" name="isBlocked"/>
+                                    <input type="hidden" value="${param.page}" name="page"/>
                                     <button class="btn btn-danger" type="submit">Block</button>
                                 </form>
                             </c:when>

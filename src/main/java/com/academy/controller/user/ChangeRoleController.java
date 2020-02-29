@@ -19,6 +19,9 @@ public class ChangeRoleController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         log.info("In ChangeRoleController");
+
+        String currentPage = req.getParameter("page");
+
         int userId = Integer.parseInt(req.getParameter("userId"));
         int  roleId = Integer.parseInt(req.getParameter("roleId"));
 
@@ -27,7 +30,7 @@ public class ChangeRoleController extends HttpServlet {
 
         req.setAttribute("message", UserService.getInstance().changeUserRole(userId, roleId));
 
-        //req.getRequestDispatcher("/posts-management").forward(req, resp);
-        resp.sendRedirect("/users-management");
+        int page = currentPage == null ? 1 : Integer.parseInt(currentPage);
+        resp.sendRedirect("/users-management?page="+page);
     }
 }
