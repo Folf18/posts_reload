@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/common/header.jspf" %>
 
-<c:if test="${errors}">
+<c:if test="${not empty errors}">
 
     <div class="row justify-content-center">
         <div class="alert alert-warning" role="alert">
@@ -27,14 +27,15 @@
 <div class="row justify-content-center">
     <form class="col-md-4" action="/add-ads" method="post">
         <div class="form-group">
-            Enter short summary: <input type="text" name="summary" value="${oldSummary}"
+            Enter short summary: <input type="text" name="summary" value="${enteredSummary}"
                                         placeholder="Summary e.g. 'Selling a cow'"
                                         class="form-control"/> </br>
         </div>
 
         <div class="form-group">
             Enter description: <br>
-            <textarea name="description" rows="5" cols="70">${oldDescription}</textarea>
+            <textarea class="form-control" name="description" rows="5" cols="70"
+                      placeholder="e.g. For sale cow in the village ###. Call the number 000-000-00-00"><c:if test="${not empty enteredDescription}">${enteredDescription}</c:if></textarea>
             </br>
         </div>
 
@@ -44,7 +45,7 @@
             <select class="form-control col-md-6" name="post_type_id">
                 <c:forEach items="${postTypes}" var="postType">
                     <option value="${postType.id}"
-                            <c:if test="${oldPostTypeId eq postType.id}">selected="selected"</c:if>>${postType.name}</option>
+                            <c:if test="${enteredPostTypeId eq postType.id}">selected="selected"</c:if>>${postType.name}</option>
                 </c:forEach>
             </select>
             </br>

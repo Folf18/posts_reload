@@ -28,10 +28,10 @@ public class SignInController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String username = req.getParameter("username");
-        String password = EncryptingService.getInstance().encrypt(req.getParameter("password"));
+        String password = req.getParameter("password");
 
         System.out.println(username + "   " + password);
-        int userId = UserService.getInstance().getUserIdByCredentials(username, password);
+        int userId = UserService.getInstance().getUserIdByCredentials(username, EncryptingService.getInstance().encrypt(password));
 
         if (userId != 0) {
             User loggedUser = UserService.getInstance().getUserInfoById(userId);
@@ -49,20 +49,26 @@ public class SignInController extends HttpServlet {
             session.setAttribute("global_user_role", loggedUser.getRole().getName());
 
             //req.getRequestDispatcher("/views/session.jsp").forward(req, resp);
-            resp.sendRedirect("/post");
+            resp.sendRedirect("/ads");
             }
             if ((!loggedUser.getIsActive())) {
+                req.setAttribute("enteredUsername", username);
+                req.setAttribute("enteredPassword", password);
                 req.setAttribute("access", "Your account isn't activated. Please follow the link from the email to activate it.");
                 req.getRequestDispatcher("/views/no-access.jsp").forward(req, resp);
             }
             if (loggedUser.getIsBlocked()){
+                req.setAttribute("enteredUsername", username);
+                req.setAttribute("enteredPassword", password);
                 req.setAttribute("access", "Your account is blocked.");
                 req.getRequestDispatcher("/views/no-access.jsp").forward(req, resp);
             }
 
         }
         else {
-            req.setAttribute("message", "Username or password is incorrect");
+            req.setAttribute("enteredUsername", username);
+            req.setAttribute("enteredPassword", password);
+            req.setAttribute("message", "Account with such credentials doesn't exist. \n Maybe username or password is incorrect.");
             req.getRequestDispatcher("/views/SignIn.jsp").forward(req, resp);
         }
         //resp.sendRedirect("/add-post");

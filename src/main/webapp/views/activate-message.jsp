@@ -6,9 +6,18 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ include file="/common/header.jspf" %>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-6">
 
+                <div class="alert alert-success text-center" role="alert">
+                    Activation link is sent to your email - ${enteredEmail}. Please follow it to activate your account.
+                </div>
 
-<h1>Verification email is sent to your email - ${enteredEmail}</h1>
+        </div>
+    </div>
+</div>
+
 
 </body>
 

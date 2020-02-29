@@ -72,9 +72,9 @@ public class CreatePostController extends HttpServlet {
         }
         else {
             req.setAttribute("errors", violations);
-            req.setAttribute("oldSummary", req.getParameter("summary"));
-            req.setAttribute("oldDescription", req.getParameter("description"));
-            req.setAttribute("oldPostTypeId", Integer.parseInt(req.getParameter("post_type_id")));
+            req.setAttribute("enteredSummary", req.getParameter("summary"));
+            req.setAttribute("enteredDescription", req.getParameter("description"));
+            req.setAttribute("enteredPostTypeId", Integer.parseInt(req.getParameter("post_type_id")));
             doGet(req, resp);
         }
 
