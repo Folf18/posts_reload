@@ -48,33 +48,37 @@ public class CreatePostController extends HttpServlet {
 
 
        // HttpSession session;
-
-        post.setSummary(req.getParameter("summary"));
-        post.setDescription(req.getParameter("description"));
+        post.setSummary(req.getParameter("summary").replaceAll("\\s+",""));
+        post.setDescription(req.getParameter("description").replaceAll("\\s+",""));
         postType.setId(Integer.parseInt(req.getParameter("post_type_id")));
         post.setPostType(postType);
-
-        int userId = Integer.parseInt(String.valueOf(req.getSession(false).getAttribute("global_user_id")));
-
-        user.setId(userId);
+        user.setId(Integer.parseInt(String.valueOf(req.getSession(false).getAttribute("global_user_id"))));
         post.setUser(user);
-
-        log.info("Post info "+post.toString());
-
 
         Set<ConstraintViolation<Post>> violations = validator.validate(post);
 
 
-        if (violations.isEmpty()){
-            //req.setAttribute("errors", violations);
+        if ((violations.isEmpty()) && ((!post.getSummary().isBlank()) && (!post.getDescription().isBlank()))){
+
+            post.setSummary(req.getParameter("summary"));
+            post.setDescription(req.getParameter("description"));
+            postType.setId(Integer.parseInt(req.getParameter("post_type_id")));
+            post.setPostType(postType);
+            user.setId(Integer.parseInt(String.valueOf(req.getSession(false).getAttribute("global_user_id"))));
+            post.setUser(user);
+
             PostService.getInstance().createNewPost(post);
             req.getRequestDispatcher("/views/post-published.jsp").forward(req, resp);
         }
-        else {
+        else if ((!post.getSummary().isBlank() && (!post.getDescription().isBlank()))){
             req.setAttribute("errors", violations);
             req.setAttribute("enteredSummary", req.getParameter("summary"));
             req.setAttribute("enteredDescription", req.getParameter("description"));
             req.setAttribute("enteredPostTypeId", Integer.parseInt(req.getParameter("post_type_id")));
+            doGet(req, resp);
+        }
+        else {
+            req.setAttribute("emptyError", "Summary or Description can not be empty");
             doGet(req, resp);
         }
 

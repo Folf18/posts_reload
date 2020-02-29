@@ -21,7 +21,6 @@ public class Post {
     @Size(max = 500, message = "Description can't have no more than 500 characters")
     private String description;
 
-
     @NotNull
     private PostType postType;
 

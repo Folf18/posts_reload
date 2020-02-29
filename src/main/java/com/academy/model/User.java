@@ -18,13 +18,13 @@ public class User {
 
     @NotNull
     @Email(message = "Email should be valid")
-    @Size(min = 4, message = "Email should consists at least from 4 characters but can not be more than 20 characters")
+    @Size(min = 4, message = "Email should consists at least from 4 characters")
     private String email;
 
 
     @NotNull(message = "Password cannot be null")
     @NotEmpty(message = "Password cannot be empty")
-    //@Size(min = 4,  message = "Password should consists at least from 4 characters")
+    @Size(min = 4,  message = "Password should consists at least from 4 characters")
     private String password;
 
     private boolean isBlocked;

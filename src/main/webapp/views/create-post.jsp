@@ -7,6 +7,19 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/common/header.jspf" %>
+<c:if test="${not empty emptyError}">
+    <div class="row justify-content-center">
+        <div class="alert alert-warning" role="alert">
+            <div class="col">
+                <ul>
+                        <li>${emptyError}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</c:if>
+
 
 <c:if test="${not empty errors}">
 

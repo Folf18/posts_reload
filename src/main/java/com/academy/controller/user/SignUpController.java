@@ -32,65 +32,76 @@ public class SignUpController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         User user = new User();
+
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
 
 
-        user.setUsername(req.getParameter("username"));
-        user.setEmail(req.getParameter("email"));
-        user.setPassword(EncryptingService.getInstance().encrypt(req.getParameter("password")));
+        user.setUsername(req.getParameter("username").replaceAll("\\s+", ""));
+        user.setEmail(req.getParameter("email").replaceAll("\\s+", ""));
+        user.setPassword(req.getParameter("password").replaceAll("\\s+", ""));
 
 
-        Set<ConstraintViolation<User>> violations = validator.validate(user);
+
 
         String usernameExistsMessage = null;
         String emailExistsMessage = null;
 
 
+        if ((!user.getUsername().isBlank()) && (!user.getEmail().isBlank()) && (!user.getPassword().isBlank())) {
 
+            Set<ConstraintViolation<User>> violations = validator.validate(user);
 
-        if (violations.isEmpty()) {
+            if (violations.isEmpty()) {
 
-            boolean usernameExists = UserService.getInstance().checkIfUsernameExists(user.getUsername());
-            boolean emailExists = UserService.getInstance().checkIfEmailExists(user.getEmail());
+                user.setUsername(req.getParameter("username"));
+                user.setEmail(req.getParameter("email"));
+                user.setPassword(EncryptingService.getInstance().encrypt(req.getParameter("password")));
 
-            if ((!emailExists) &&  (!usernameExists)) {
+                boolean usernameExists = UserService.getInstance().checkIfUsernameExists(user.getUsername());
+                boolean emailExists = UserService.getInstance().checkIfEmailExists(user.getEmail());
+
+                if ((!emailExists) && (!usernameExists)) {
+
                     UserService.getInstance().createUser(user);
                     ActivationService activationService = ActivationService.getInstance();
                     activationService.saveAndSendMail(user.getEmail());
                     req.setAttribute("enteredEmail", user.getEmail());
                     req.getRequestDispatcher("/views/activate-message.jsp").forward(req, resp);
-            }
-            if (usernameExists) {
-                usernameExistsMessage = "User with this username already exists";
-                req.setAttribute("usernameExists", usernameExistsMessage);
-            }
-            if (emailExists) {
-                emailExistsMessage = "User with this email already exists";
-                req.setAttribute("emailExists", emailExistsMessage);
-            }
+                }
+                if (usernameExists) {
+                    usernameExistsMessage = "User with this username already exists";
+                    req.setAttribute("usernameExists", usernameExistsMessage);
+                }
+                if (emailExists) {
+                    emailExistsMessage = "User with this email already exists";
+                    req.setAttribute("emailExists", emailExistsMessage);
+                }
+                doGet(req, resp);
 
+
+            } else if (!violations.isEmpty()) {
+
+                req.setAttribute("errors", violations);
+                if (UserService.getInstance().checkIfUsernameExists(user.getUsername())) {
+                    usernameExistsMessage = "User with this username already exists";
+                    req.setAttribute("usernameExists", usernameExistsMessage);
+                }
+                if (UserService.getInstance().checkIfEmailExists(user.getEmail())) {
+                    emailExistsMessage = "User with this email already exists";
+                    req.setAttribute("emailExists", emailExistsMessage);
+                }
+
+            }
             doGet(req, resp);
 
-
         }
-
-        else   if (!violations.isEmpty()){
-
-            req.setAttribute("errors", violations);
-            if (UserService.getInstance().checkIfUsernameExists(user.getUsername())) {
-                usernameExistsMessage = "User with this username already exists";
-                req.setAttribute("usernameExists", usernameExistsMessage);
-            }
-            if (UserService.getInstance().checkIfEmailExists(user.getEmail())) {
-                emailExistsMessage = "User with this email already exists";
-                req.setAttribute("emailExists", emailExistsMessage);
-            }
-
-
+        else {
+            req.setAttribute("emptyError", "Username, email or password can not be empty");
+            doGet(req, resp);
         }
-        doGet(req, resp);
-
     }
+
 }
