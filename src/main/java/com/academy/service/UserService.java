@@ -27,8 +27,18 @@ public class UserService implements Serializable {
     UserDAO userDAO = new UserDAO();
 
 
-    public List<User> getAllUsers() {
-        return userDAO.getAllUsersInfo();
+    public int getNumberOfUsers(){
+        return userDAO.numberOfUsers();
+    }
+
+    public List<User> getAllUsers(int page) {
+        //Hardcoded number of records per page
+        int recordsPerPage = 10;
+
+        //offset value
+        int offset = (page-1)*(recordsPerPage);
+
+        return userDAO.getAllUsersInfo(recordsPerPage, offset);
     }
 
 

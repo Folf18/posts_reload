@@ -87,7 +87,7 @@ public class PostDAO implements Serializable {
 
                 number = resultSet.getInt(1);
             }
-            log.trace("Number of ads"+number);
+            log.trace("Number of ads = "+number);
             //connection.close();
         } catch (SQLException e) {
             log.error("Something went wrong", e);
