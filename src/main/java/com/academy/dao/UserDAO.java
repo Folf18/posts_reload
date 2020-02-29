@@ -25,7 +25,8 @@ public class UserDAO implements Serializable {
 
     static final String GET_ALL_USERS = "SELECT U.id, U.username, U.email, U.is_blocked,  U.is_active, U.role_id, R.name as role_name \n" +
             "FROM users U LEFT JOIN role R ON U.role_id = R.id \n" +
-            "ORDER BY U.id";
+            "ORDER BY U.id \n" +
+             "LIMIT ? offset ?";
 
     static final String INSERT_USER = "INSERT INTO users (username, email, password, is_active, is_blocked, role_id) VALUES(?, ?, ?, ?, ?, ?)";
 
@@ -48,10 +49,32 @@ public class UserDAO implements Serializable {
 
     private static final String CHECK_IF_EMAIL_EXIST = "SELECT id FROM users WHERE email = ?";
 
+    private static final String GET_NUMBER_OF_USERS = "SELECT COUNT(*)\n" +
+            "FROM users";
 
 
+    public int numberOfUsers(){
 
-    public List<User> getAllUsersInfo() {
+        int number = 0;
+
+        log.trace("Started getting number of all users");
+        try {
+            connection = DBConnectionUtil.getConnection();
+            preparedStatement =  connection.prepareStatement(GET_NUMBER_OF_USERS);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+
+                number = resultSet.getInt(1);
+            }
+            log.trace("Number of users = "+number);
+        } catch (SQLException e) {
+            log.error("Something went wrong", e);
+        }
+        return number;
+    }
+
+    public List<User> getAllUsersInfo(int limit, int offset) {
         List<User> users = null;
         User user;
         Role role;
@@ -61,6 +84,8 @@ public class UserDAO implements Serializable {
             users = new ArrayList<User>();
             connection = DBConnectionUtil.getConnection();
             preparedStatement = connection.prepareStatement(GET_ALL_USERS);
+            preparedStatement.setInt(1, limit);
+            preparedStatement.setInt(2, offset);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 user = new User();
@@ -81,7 +106,6 @@ public class UserDAO implements Serializable {
         }
         return users;
     }
-
 
     public void insertUser(User user) {
         log.trace("Started saving user to database");

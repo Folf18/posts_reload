@@ -27,6 +27,8 @@ public class GetAllApprovedPostsController extends HttpServlet {
         if (req.getParameter("page") != null) {
             page = Integer.parseInt(req.getParameter("page"));
         }
+
+        //Get Ads for page
         List<Post> approvedPosts = PostService.getInstance().getAllApprovedPosts(page);
 
         req.setAttribute("approvedPosts", approvedPosts);

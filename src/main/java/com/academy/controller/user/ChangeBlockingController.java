@@ -18,13 +18,17 @@ public class ChangeBlockingController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         log.info("In ChangeBlockingController");
+
+        String currentPage = req.getParameter("page");
+
         int userId = Integer.parseInt(req.getParameter("userId"));
         boolean currentStatus = Boolean.valueOf(req.getParameter("isBlocked"));
         log.info("User id for changes = "+ userId);
         log.info(currentStatus + " in ChangeBlockingController");
         req.setAttribute("message", UserService.getInstance().blockUserById(userId, currentStatus));
+        
+        int page = currentPage == null ? 1 : Integer.parseInt(currentPage);
+           resp.sendRedirect("/users-management?page="+page);
 
-        //req.getRequestDispatcher("/posts-management").forward(req, resp);
-        resp.sendRedirect("/users-management");
     }
 }

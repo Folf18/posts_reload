@@ -63,9 +63,8 @@ public class PostService implements Serializable {
     }
 
     public List<Post> getUserPosts(String status, int id){
-        if ((status.equals("")) || (status == null)){
-            status = "NEW";
-        }
+        log.trace("status " + status);
+        status = status == null ? "NEW" : status;
        return postDAO.getUserPosts(status, id);
     }
 

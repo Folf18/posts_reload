@@ -1,6 +1,7 @@
 package com.academy.controller.user;
 
 import com.academy.model.User;
+import com.academy.service.PostService;
 import com.academy.service.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,9 +22,27 @@ public class ViewUsersController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<User> users = UserService.getInstance().getAllUsers();
+
+        //Pagination
+        int page = 1;
+
+        if (req.getParameter("page") != null) {
+            page = Integer.parseInt(req.getParameter("page"));
+        }
+
+        //Get users for page
+        List<User> users = UserService.getInstance().getAllUsers(page);
         log.info("ViewUsersController");
         req.setAttribute("users", users);
+
+
+        float rows = UserService.getInstance().getNumberOfUsers();
+        int nOfPages = (int) Math.ceil(rows / 10);
+
+
+        req.setAttribute("noOfPages", nOfPages);
+        req.setAttribute("page", page);
+
         req.getRequestDispatcher("/views/users-list.jsp").forward(req, resp);
     }
 

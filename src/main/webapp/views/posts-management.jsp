@@ -72,20 +72,28 @@
                     <div class="card-body">
                         <p class="card-text">${newPost.description}</p>
                     </div>
-                    <div class="card-footer text-muted text-left col">
-                            ${newPost.user.username} in
+                    <div class="card-footer text-muted">
+                        <div class="row">
+                            <div class="col-6 text-left">
+                                <a class="font-weight-bold">${newPost.user.username}</a> in
 
-                        <c:choose>
-                            <c:when test="${newPost.postType.name=='Buy'}">
-                                <span class="badge badge-success">${newPost.postType.name}</span>
-                            </c:when>
-                            <c:when test="${newPost.postType.name=='Sale'}">
-                                <span class="badge badge-primary">${newPost.postType.name}</span>
-                            </c:when>
-                            <c:when test="${newPost.postType.name=='Trade'}">
-                                <span class="badge badge-info">${newPost.postType.name}</span>
-                            </c:when>
-                        </c:choose>
+                                <c:choose>
+                                    <c:when test="${newPost.postType.name=='Buy'}">
+                                        <span class="badge badge-success">${newPost.postType.name}</span>
+                                    </c:when>
+                                    <c:when test="${newPost.postType.name=='Sale'}">
+                                        <span class="badge badge-primary">${newPost.postType.name}</span>
+                                    </c:when>
+                                    <c:when test="${newPost.postType.name=='Trade'}">
+                                        <span class="badge badge-info">${newPost.postType.name}</span>
+                                    </c:when>
+                                </c:choose>
+                            </div>
+
+                            <div class="col-6 text-right">
+                                    ${newPost.createdAt}
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <br>

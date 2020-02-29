@@ -8,8 +8,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/common/header.jspf" %>
 
-<h1>List of users</h1>
+
 <div class="container justify-content-center">
+
+    <h1 class="row justify-content-center">List of users</h1>
+    <br>
     <p>${message}</p>
 
     <table border="1" class="table table-hover">
@@ -40,6 +43,7 @@
                                     <input type="hidden" value="${user.id}" name="userId"/>
                                     <input type="hidden" value="${user.role.id}" name="roleId"/>
                                     <input type="hidden" value="${user.role.name}" name="roleName"/>
+                                    <input type="hidden" value="${param.page}" name="page"/>
                                     <button class="btn btn-light" type="submit">Upgrade Role</button>
                                 </form>
                             </c:when>
@@ -48,6 +52,7 @@
                                     <input type="hidden" value="${user.id}" name="userId"/>
                                     <input type="hidden" value="${user.role.id}" name="roleId"/>
                                     <input type="hidden" value="${user.role.name}" name="roleName"/>
+                                    <input type="hidden" value="${param.page}" name="page"/>
                                     <button class="btn btn-dark" type="submit">Downgrade Role</button>
                                 </form>
                             </c:when>
@@ -65,6 +70,7 @@
                                 <form action="/admin/changeBlocking" method="post">
                                     <input type="hidden" value="${user.id}" name="userId"/>
                                     <input type="hidden" value="${user.isBlocked}" name="isBlocked"/>
+                                    <input type="hidden" value="${param.page}" name="page"/>
                                     <button class="btn btn-info" type="submit">UnBlock</button>
                                 </form>
                             </c:when>
@@ -73,6 +79,7 @@
                                 <form action="/admin/changeBlocking" method="post">
                                     <input type="hidden" value="${user.id}" name="userId"/>
                                     <input type="hidden" value="${user.isBlocked}" name="isBlocked"/>
+                                    <input type="hidden" value="${param.page}" name="page"/>
                                     <button class="btn btn-danger" type="submit">Block</button>
                                 </form>
                             </c:when>
@@ -93,6 +100,41 @@
         </c:forEach>
         </tbody>
     </table>
+
+    <!-- NAVIGATION-->
+    <div class="row w-100 justify-content-center">
+        <nav aria-label="Navigation for ads">
+            <ul class="pagination">
+
+                <c:if test="${page != 1}">
+                    <li class="page-item"><a class="page-link"
+                                             href="/users-management?page=${page-1}">Previous</a>
+                    </li>
+                </c:if>
+
+                <c:forEach begin="1" end="${noOfPages}" var="i">
+                    <c:choose>
+                        <c:when test="${page eq i}">
+                            <li class="page-item active"><a class="page-link">
+                                    ${i} <span class="sr-only">(current)</span></a>
+                            </li>
+                        </c:when>
+                        <c:otherwise>
+                            <li class="page-item"><a class="page-link"
+                                                     href="/users-management?page=${i}">${i}</a>
+                            </li>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
+
+                <c:if test="${page lt noOfPages}">
+                    <li class="page-item"><a class="page-link"
+                                             href="/users-management?page=${page+1}">Next</a>
+                    </li>
+                </c:if>
+            </ul>
+        </nav>
+    </div>
 </div>
 
 
