@@ -35,14 +35,32 @@
         <div class="row w-100 justify-content-center tab-pane">
             <div class="col-sm-8">
                 <div class="card">
-                    <div class="card-header">
+                    <div class="card-header font-weight-bold">
                             ${approvedForUser.summary}
                     </div>
                     <div class="card-body">
                         <p class="card-text">${approvedForUser.description}</p>
                     </div>
-                    <div class="card-footer text-muted text-left col">
-                        in ${approvedForUser.postType.name}
+                    <div class="card-footer text-muted">
+                        <div class="row">
+                            <div class="col-6 text-left">  in
+                                <c:choose>
+                                    <c:when test="${approvedForUser.postType.name=='Buy'}">
+                                        <span class="badge badge-success">${approvedForUser.postType.name}</span>
+                                    </c:when>
+                                    <c:when test="${approvedForUser.postType.name=='Sale'}">
+                                        <span class="badge badge-primary">${approvedForUser.postType.name}</span>
+                                    </c:when>
+                                    <c:when test="${approvedForUser.postType.name=='Trade'}">
+                                        <span class="badge badge-info">${approvedForUser.postType.name}</span>
+                                    </c:when>
+                                </c:choose>
+                            </div>
+
+                            <div class="col-6 text-right">
+                                    ${approvedForUser.createdAt}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

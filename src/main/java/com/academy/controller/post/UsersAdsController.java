@@ -1,9 +1,8 @@
 package com.academy.controller.post;
 
-import com.academy.controller.user.SignInController;
+import com.academy.model.Post;
 import com.academy.service.PostService;
 import com.academy.service.PostStatusService;
-import com.academy.service.PostTypeService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -13,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet(urlPatterns = "/my-ads")
 public class UsersAdsController extends HttpServlet {
@@ -26,18 +26,11 @@ public class UsersAdsController extends HttpServlet {
 
         int id = Integer.parseInt(String.valueOf(req.getSession(false).getAttribute("global_user_id")));
 
-        String status;
-        if(req.getParameter("status") == null)
-        {
-            status = "";
-        }
-        else {
-            status = req.getParameter("status");
-        }
+        String status = req.getParameter("status");
 
+        List<Post> approvedForUser =PostService.getInstance().getUserPosts(status, id);
 
-                    //= req.getParameter("postStatus");
-                    req.setAttribute("approvedForUser", PostService.getInstance().getUserPosts(status, id));
+        req.setAttribute("approvedForUser", approvedForUser);
         req.getRequestDispatcher("/views/user-posts.jsp").forward(req, resp);
     }
 
