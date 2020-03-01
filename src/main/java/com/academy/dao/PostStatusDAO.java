@@ -21,6 +21,8 @@ public class PostStatusDAO implements Serializable {
     private ResultSet resultSet;
 
     static final String GET_ALL_POST_STATUSES = "SELECT * FROM post_status";
+    static final String GET_ID_BY_POST_STATUS_NAME = "SELECT id FROM post_status WHERE name = ?";
+
 
     public List<PostStatus> getAllPostStatuses() {
         List<PostStatus> postStatuses = null;
@@ -30,7 +32,7 @@ public class PostStatusDAO implements Serializable {
         try {
             postStatuses = new ArrayList<PostStatus>();
             connection = DBConnectionUtil.getConnection();
-            preparedStatement =  connection.prepareStatement(GET_ALL_POST_STATUSES);
+            preparedStatement = connection.prepareStatement(GET_ALL_POST_STATUSES);
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -44,5 +46,29 @@ public class PostStatusDAO implements Serializable {
             log.error("Something went wrong", e);
         }
         return postStatuses;
+    }
+
+    public int getIdByName(String name) {
+        int id = 0;
+        log.trace("Started searching user in database.");
+        try {
+            connection = DBConnectionUtil.getConnection();
+            preparedStatement = connection.prepareStatement(GET_ID_BY_POST_STATUS_NAME);
+            preparedStatement.setString(1, name);
+            resultSet = preparedStatement.executeQuery();
+
+
+            while (resultSet.next()) {
+                id = resultSet.getInt("id");
+            }
+            log.trace("Post status id = {}", id);
+            return id;
+
+
+        } catch (SQLException e) {
+           log.error("Something went wrong");
+
+            return id;
+        }
     }
 }

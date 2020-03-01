@@ -42,7 +42,8 @@ public class PostDAO implements Serializable {
             "JOIN post_status D ON U.post_status_id = D.id \n" +
             "JOIN users Z ON U.user_id = Z.id \n" +
             "WHERE D.name = ? \n" +
-            "ORDER BY U.created_at";
+            "ORDER BY U.created_at DESC \n" +
+            "LIMIT ? offset ?";
 
     private static final String GET_USER_POSTS = "SELECT U.id, U.summary, U.description, U.created_at, R.name as post_type_name, D.name as post_status_name, Z.username as username\n" +
             " FROM post U \n" +
@@ -70,6 +71,9 @@ public class PostDAO implements Serializable {
                                                                 "FROM post\n" +
                                                                 "WHERE post_status_id = 2";
 
+    private static final String GET_NUMBER_OF_POSTS_BY_STATUS = "SELECT COUNT(*)\n" +
+                                                                "FROM post\n" +
+                                                                "WHERE post_status_id = ?";
 
 
 
@@ -81,6 +85,29 @@ public class PostDAO implements Serializable {
         try {
             connection = DBConnectionUtil.getConnection();
             preparedStatement =  connection.prepareStatement(GET_NUMBER_OF_APPROVED_POSTS);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+
+                number = resultSet.getInt(1);
+            }
+            log.trace("Number of ads = "+number);
+            //connection.close();
+        } catch (SQLException e) {
+            log.error("Something went wrong", e);
+        }
+        return number;
+    }
+
+    public int numberOfRecordsByStatus(int id){
+
+        int number = 0;
+
+        log.trace("Started getting number of ads by status");
+        try {
+            connection = DBConnectionUtil.getConnection();
+            preparedStatement =  connection.prepareStatement(GET_NUMBER_OF_POSTS_BY_STATUS);
+            preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -162,7 +189,7 @@ public class PostDAO implements Serializable {
         }
     }
 
-    public List<Post> getAllPostsByStatus(String status) {
+    public List<Post> getAllPostsByStatus(String status, int limit, int offset) {
         List<Post> posts = null;
         Post post;
         User user;
@@ -175,6 +202,8 @@ public class PostDAO implements Serializable {
             connection = DBConnectionUtil.getConnection();
             preparedStatement =  connection.prepareStatement(GET_ALL_POSTS_BY_STATUS);
             preparedStatement.setString(1, status);
+            preparedStatement.setInt(2, limit);
+            preparedStatement.setInt(3, offset);
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {

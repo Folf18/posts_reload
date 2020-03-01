@@ -36,6 +36,8 @@ public class ViewUsersController extends HttpServlet {
         req.setAttribute("users", users);
 
 
+
+
         float rows = UserService.getInstance().getNumberOfUsers();
         int nOfPages = (int) Math.ceil(rows / 10);
 

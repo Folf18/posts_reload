@@ -64,6 +64,7 @@
 
 <div class="row justify-content-center">
     <form action="/signup" method="post" class="col-md-4">
+        <h2>Registration</h2><br>
         <div class="form-group">
             Enter username: <input type="text" name="username" placeholder="from 4 to 20 characters"
                                    class="form-control" value="${oldUsername}"/> </br>

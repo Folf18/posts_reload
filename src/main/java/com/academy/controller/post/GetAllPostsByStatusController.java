@@ -21,6 +21,14 @@ public class GetAllPostsByStatusController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        //Pagination
+        int page = 1;
+
+        if (req.getParameter("page") != null) {
+            page = Integer.parseInt(req.getParameter("page"));
+        }
+
         //GET Post statuses
         List<PostStatus> postStatuses =  PostStatusService.getInstance().getAllPostStatuses();
         log.trace("doGet in GetAllPostsByStatusController");
@@ -30,9 +38,19 @@ public class GetAllPostsByStatusController extends HttpServlet {
         //GET posts by parameter
         String status = req.getParameter("status");
 
-        List<Post> newPosts = PostService.getInstance().getAllPostsByStatus(status);
+        List<Post> newPosts = PostService.getInstance().getAllPostsByStatus(status, page);
         log.info("GetPostsController");
         req.setAttribute("newPosts", newPosts);
+
+
+        int statusId = PostStatusService.getInstance().getIdByName(status);
+        float rows = PostService.getInstance().getNumberOfRecordsByStatus(statusId);
+        int nOfPages = (int) Math.ceil(rows / 10);
+
+
+        req.setAttribute("noOfPages", nOfPages);
+        req.setAttribute("page", page);
+
 
         req.getRequestDispatcher("/views/posts-management.jsp").forward(req, resp);
 
