@@ -43,6 +43,9 @@ public class PostService implements Serializable {
     public int getNumberOfApprovedRecords(){
         return postDAO.numberOfApprovedRecords();
     }
+    public int getNumberOfRecordsByStatus(int id){
+        return postDAO.numberOfRecordsByStatus(id);
+    }
 
     public void createNewPost(Post post) {
 
@@ -56,10 +59,17 @@ public class PostService implements Serializable {
     }
 
 
-    public List<Post> getAllPostsByStatus(String status) {
+    public List<Post> getAllPostsByStatus(String status, int page) {
         log.trace("status " + status);
         status = status == null ? "NEW" : status;
-        return postDAO.getAllPostsByStatus(status);
+
+        //Hardcoded number of records per page
+        int recordsPerPage = 10;
+
+        //offset value
+        int offset = (page-1)*(recordsPerPage);
+
+        return postDAO.getAllPostsByStatus(status, recordsPerPage, offset);
     }
 
     public List<Post> getUserPosts(String status, int id){

@@ -27,4 +27,9 @@ public class PostStatusService implements Serializable {
     public List<PostStatus> getAllPostStatuses() {
         return postStatusDAO.getAllPostStatuses();
     }
+
+    public int getIdByName(String name) {
+        name = name == null ? "NEW" : name;
+            return postStatusDAO.getIdByName(name);
+    }
 }

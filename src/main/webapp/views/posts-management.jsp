@@ -149,11 +149,49 @@
         </div>
         <hr>
     </c:forEach>
+
+    <!-- NAVIGATION-->
+    <div class="row w-100 justify-content-center">
+        <nav aria-label="Navigation for ads">
+            <ul class="pagination">
+
+                <c:if test="${page != 1}">
+                    <li class="page-item">
+                    <c:if test="${empty param.status}"><a class="page-link" href="/ads-management?status=NEW&page=${page-1}">Previous</a></c:if>
+                    <c:if test="${not empty param.status}"><a class="page-link" href="/ads-management?status=${param.status}&page=${page-1}">Previous</a></c:if>
+                    </li>
+                </c:if>
+
+                <c:forEach begin="1" end="${noOfPages}" var="i">
+                    <c:choose>
+                        <c:when test="${page eq i}">
+                            <li class="page-item active"><a class="page-link">
+                                    ${i} <span class="sr-only">(current)</span></a>
+                            </li>
+                        </c:when>
+                        <c:otherwise>
+                            <li class="page-item">
+                                <c:if test="${empty param.status}"><a class="page-link" href="/ads-management?status=NEW&page=${i}">${i}</a></c:if>
+                                <c:if test="${not empty param.status}"><a class="page-link" href="/ads-management?status=${param.status}&page=${i}">${i}</a></c:if>
+                            </li>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
+
+                <c:if test="${page lt noOfPages}">
+                    <li class="page-item">
+                                        <c:if test="${empty param.status}"> <a class="page-link" href="/ads-management?status=NEW&page=${page+1}">Next</a></c:if>
+                                        <c:if test="${not empty param.status}"> <a class="page-link" href="/ads-management?status=${param.status}&page=${page+1}">Next</a></c:if>
+                    </li>
+                </c:if>
+            </ul>
+        </nav>
+    </div>
+
 </div>
+
+
 
 </body>
 
-<script>
-    $('#myTab a:last').tab('show')
-</script>
 </html>
