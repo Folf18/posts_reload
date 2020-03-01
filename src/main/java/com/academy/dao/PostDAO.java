@@ -169,7 +169,6 @@ public class PostDAO implements Serializable {
         return posts;
     }
 
-
     public void createPost(Post post) {
         log.trace("Started saving post to database");
         try {

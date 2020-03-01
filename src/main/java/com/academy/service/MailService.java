@@ -15,8 +15,6 @@ public class MailService implements Serializable {
 
     private static MailService mailService;
 
-    public static String BASE_URL;
-
     private static Session session;
 
     public MailService() {}
@@ -52,7 +50,7 @@ public class MailService implements Serializable {
 
     public void sendActivationToken(String email, String token) throws MessagingException {
 
-        String link = BASE_URL + "/activateAccount?token=" + token;
+        String link = "http://localhost:8080/activateAccount?token=" + token;
 
         String message = "Hi there! To activate your account, please follow link:<br/><br/><a href='" + link + "' style='margin-left:30%;'>Activate account</a>";
 
@@ -62,7 +60,7 @@ public class MailService implements Serializable {
 
     public void sendGreetings(String email) throws MessagingException {
 
-        String link = BASE_URL + "/signin";
+        String link = "http://localhost:8080/signin";
 
         String message = "Welcome to our advertising system! <br/>  Your account was successfully activated.<br/><br/><a href='" + link + "' style='margin-left:30%;'>LOGIN TO ACCOUNT</a>";
 
@@ -70,13 +68,19 @@ public class MailService implements Serializable {
 
     }
 
+    public void sendAdsStatus(String username, String email, String summary, String status) throws MessagingException {
+        String link = "http://localhost:8080/signin";
+
+        String message = "Hi "+ username +"! <br/>  <br/>" +
+                "Your ads <b> \""+ summary+"\"</b> was "+status.toLowerCase()+" by administrator.";
+
+        sendMimeMessage(email, "Ads status changed", message);
+    }
+
 
     private static void init() {
 
         Map<String, String> connectionProperties = PropertiesService.getInstance().getMailProperties();
-
-        BASE_URL = connectionProperties.get("base_url");
-
         Properties properties = new Properties();
 
         properties.put("mail.smtp.host", connectionProperties.get("host"));

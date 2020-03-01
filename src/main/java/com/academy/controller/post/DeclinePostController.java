@@ -1,9 +1,12 @@
 package com.academy.controller.post;
 
+import com.academy.model.Post;
+import com.academy.service.MailService;
 import com.academy.service.PostService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,7 +25,13 @@ public class DeclinePostController extends HttpServlet {
         log.trace("Post id for approve = "+ postId);
         PostService.getInstance().declinePost(postId);
 
-        //req.getRequestDispatcher("/posts-management").forward(req, resp);
+        Post post = PostService.getInstance().getPostInfo(postId);
+        try {
+            MailService.getInstance().sendAdsStatus(post.getUser().getUsername(), post.getUser().getEmail(), post.getSummary(), post.getPostStatus().getName());
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+
         resp.sendRedirect("/ads-management");
     }
 }
