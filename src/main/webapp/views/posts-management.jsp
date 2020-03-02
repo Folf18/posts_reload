@@ -13,46 +13,46 @@
         <c:choose>
             <c:when test="${param.status == 'NEW'}">
                 <li class="nav-item ">
-                    <a class="nav-link active" href="/ads-management?status=NEW">NEW</a>
+                    <a class="nav-link active" href="${pageContext.request.contextPath}/ads-management?status=NEW">NEW</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/ads-management?status=APPROVED">APPROVED</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/ads-management?status=APPROVED">APPROVED</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/ads-management?status=DECLINED">DECLINED</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/ads-management?status=DECLINED">DECLINED</a>
                 </li>
             </c:when>
             <c:when test="${param.status == 'APPROVED'}">
                 <li class="nav-item ">
-                    <a class="nav-link" href="/ads-management?status=NEW">NEW</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/ads-management?status=NEW">NEW</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="/ads-management?status=APPROVED">APPROVED</a>
+                    <a class="nav-link active" href="${pageContext.request.contextPath}/ads-management?status=APPROVED">APPROVED</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/ads-management?status=DECLINED">DECLINED</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/ads-management?status=DECLINED">DECLINED</a>
                 </li>
             </c:when>
             <c:when test="${param.status == 'DECLINED'}">
                 <li class="nav-item ">
-                    <a class="nav-link" href="/ads-management?status=NEW">NEW</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/ads-management?status=NEW">NEW</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/ads-management?status=APPROVED">APPROVED</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/ads-management?status=APPROVED">APPROVED</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="/ads-management?status=DECLINED">DECLINED</a>
+                    <a class="nav-link active" href="${pageContext.request.contextPath}/ads-management?status=DECLINED">DECLINED</a>
                 </li>
             </c:when>
             <c:otherwise>
                 <li class="nav-item ">
-                    <a class="nav-link active" href="/ads-management?status=NEW">NEW</a>
+                    <a class="nav-link active" href="${pageContext.request.contextPath}/ads-management?status=NEW">NEW</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/ads-management?status=APPROVED">APPROVED</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/ads-management?status=APPROVED">APPROVED</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/ads-management?status=DECLINED">DECLINED</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/ads-management?status=DECLINED">DECLINED</a>
                 </li>
             </c:otherwise>
         </c:choose>
@@ -101,40 +101,40 @@
 
                     <c:choose>
                         <c:when test="${param.status=='NEW'}">
-                            <form action="/manage/approve" method="post" class="col text-right">
+                            <form action="${pageContext.request.contextPath}/manage/approve" method="post" class="col text-right">
                                 <input type="hidden" value="${newPost.id}" name="id"/>
                                 <input type="hidden" value="${param.status}" name="status"/>
                                 <button class="btn btn-success" type="submit">Approve</button>
                             </form>
 
-                            <form action="/manage/decline" method="post">
+                            <form action="${pageContext.request.contextPath}/manage/decline" method="post">
                                 <input type="hidden" value="${newPost.id}" name="id"/>
                                 <input type="hidden" value="${param.status}" name="status"/>
                                 <button class="btn btn-danger" type="submit">Decline</button>
                             </form>
                         </c:when>
                         <c:when test="${param.status=='APPROVED'}">
-                            <form action="/manage/decline" method="post" class="col text-right">
+                            <form action="${pageContext.request.contextPath}/manage/decline" method="post" class="col text-right">
                                 <input type="hidden" value="${newPost.id}" name="id"/>
                                 <input type="hidden" value="${param.status}" name="status"/>
                                 <button class="btn btn-danger" type="submit">Decline</button>
                             </form>
                         </c:when>
                         <c:when test="${param.status=='DECLINED'}">
-                            <form action="/manage/approve" method="post" class="col text-right">
+                            <form action="${pageContext.request.contextPath}/manage/approve" method="post" class="col text-right">
                                 <input type="hidden" value="${newPost.id}" name="id"/>
                                 <input type="hidden" value="${param.status}" name="status"/>
                                 <button class="btn btn-success" type="submit">Approve</button>
                             </form>
                         </c:when>
                         <c:when test="${empty param.status}">
-                            <form action="/manage/approve" method="post" class="col text-right">
+                            <form action="${pageContext.request.contextPath}/manage/approve" method="post" class="col text-right">
                                 <input type="hidden" value="${newPost.id}" name="id"/>
                                 <input type="hidden" value="${param.status}" name="status"/>
                                 <button class="btn btn-success" type="submit">Approve</button>
                             </form>
 
-                            <form action="/manage/decline" method="post">
+                            <form action="${pageContext.request.contextPath}/manage/decline" method="post">
                                 <input type="hidden" value="${newPost.id}" name="id"/>
                                 <input type="hidden" value="${param.status}" name="status"/>
                                 <button class="btn btn-danger" type="submit">Decline</button>
@@ -157,8 +157,8 @@
 
                 <c:if test="${page != 1}">
                     <li class="page-item">
-                    <c:if test="${empty param.status}"><a class="page-link" href="/ads-management?status=NEW&page=${page-1}">Previous</a></c:if>
-                    <c:if test="${not empty param.status}"><a class="page-link" href="/ads-management?status=${param.status}&page=${page-1}">Previous</a></c:if>
+                    <c:if test="${empty param.status}"><a class="page-link" href="${pageContext.request.contextPath}/ads-management?status=NEW&page=${page-1}">Previous</a></c:if>
+                    <c:if test="${not empty param.status}"><a class="page-link" href="${pageContext.request.contextPath}/ads-management?status=${param.status}&page=${page-1}">Previous</a></c:if>
                     </li>
                 </c:if>
 
@@ -171,8 +171,8 @@
                         </c:when>
                         <c:otherwise>
                             <li class="page-item">
-                                <c:if test="${empty param.status}"><a class="page-link" href="/ads-management?status=NEW&page=${i}">${i}</a></c:if>
-                                <c:if test="${not empty param.status}"><a class="page-link" href="/ads-management?status=${param.status}&page=${i}">${i}</a></c:if>
+                                <c:if test="${empty param.status}"><a class="page-link" href="${pageContext.request.contextPath}/ads-management?status=NEW&page=${i}">${i}</a></c:if>
+                                <c:if test="${not empty param.status}"><a class="page-link" href="${pageContext.request.contextPath}/ads-management?status=${param.status}&page=${i}">${i}</a></c:if>
                             </li>
                         </c:otherwise>
                     </c:choose>
@@ -180,8 +180,8 @@
 
                 <c:if test="${page lt noOfPages}">
                     <li class="page-item">
-                                        <c:if test="${empty param.status}"> <a class="page-link" href="/ads-management?status=NEW&page=${page+1}">Next</a></c:if>
-                                        <c:if test="${not empty param.status}"> <a class="page-link" href="/ads-management?status=${param.status}&page=${page+1}">Next</a></c:if>
+                                        <c:if test="${empty param.status}"> <a class="page-link" href="${pageContext.request.contextPath}/ads-management?status=NEW&page=${page+1}">Next</a></c:if>
+                                        <c:if test="${not empty param.status}"> <a class="page-link" href="${pageContext.request.contextPath}/ads-management?status=${param.status}&page=${page+1}">Next</a></c:if>
                     </li>
                 </c:if>
             </ul>

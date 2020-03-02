@@ -14,8 +14,8 @@
 
             <div class="alert alert-success text-center" role="alert">
                 <p>Your advertisement sent to managers review.</p>
-                <p> Enjoy your time and review all published ads <a href="/ads"> here</a>.</p>
-                <p> Do you want post more?  <a href="/add-ads"> Let`s  go!</a> </p>
+                <p> Enjoy your time and review all published ads <a href="${pageContext.request.contextPath}/ads"> here</a>.</p>
+                <p> Do you want post more?  <a href="${pageContext.request.contextPath}/add-ads"> Let`s  go!</a> </p>
             </div>
 
         </div>

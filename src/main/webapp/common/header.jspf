@@ -14,7 +14,7 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="/">ADS SYSTEM</a>
+    <a class="navbar-brand" href="${pageContext.request.contextPath}/">ADS SYSTEM</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -25,42 +25,42 @@
             <c:choose>
                 <c:when test="${sessionScope.global_user_role == 'USER'}">
                     <li class="nav-item ">
-                        <a class="nav-link" href="/ads">Advertisements</a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/ads">Advertisements</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/add-ads">Create Ad</a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/add-ads">Create Ad</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/my-ads">My Ads</a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/my-ads">My Ads</a>
                     </li>
                 </c:when>
                 <c:when test="${sessionScope.global_user_role == 'MANAGER'}">
                     <li class="nav-item ">
-                        <a class="nav-link" href="/ads">Advertisements</a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/ads">Advertisements</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/ads-management">Ad management</a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/ads-management">Ad management</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/users-management">Users management</a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/users-management">Users management</a>
                     </li>
                 </c:when>
                 <c:when test="${sessionScope.global_user_role == 'ADMIN'}">
                     <li class="nav-item ">
-                        <a class="nav-link" href="/ads">Advertisements</a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/ads">Advertisements</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="/users-management">Users management</a>
+                        <a class="nav-link active" href="${pageContext.request.contextPath}/users-management">Users management</a>
                     </li>
                 </c:when>
                 <c:when test="${empty sessionScope.global_user_role}">
                     <li class="nav-item ">
-                        <a class="nav-link" href="/ads">Advertisements</a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/ads">Advertisements</a>
                     </li>
                 </c:when>
                 <c:otherwise>
                     <li class="nav-item ">
-                        <a class="nav-link" href="/ads">Advertisements</a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/ads">Advertisements</a>
                     </li>
                 </c:otherwise>
             </c:choose>
@@ -69,15 +69,15 @@
 
             <c:if test="${empty sessionScope.global_user_id}">
             <li class="nav-link">
-                <a href="/signup">Sign Up</a>
+                <a href="${pageContext.request.contextPath}/signup">Sign Up</a>
             </li>
             <li class="nav-link">
-                <a href="/signin">Sign In</a>
+                <a href="${pageContext.request.contextPath}/signin">Sign In</a>
             </li>
             </c:if>
             <c:if test="${not empty sessionScope.global_user_id}">
             <li class="nav-link">
-                <a href="/logout">Logout</a>
+                <a href="${pageContext.request.contextPath}/logout">Logout</a>
             </li>
             </c:if>
         </ul>

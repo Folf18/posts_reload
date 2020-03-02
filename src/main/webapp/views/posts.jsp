@@ -62,7 +62,7 @@
 
                 <c:if test="${page != 1}">
                     <li class="page-item"><a class="page-link"
-                                             href="/ads?page=${page-1}">Previous</a>
+                                             href="${pageContext.request.contextPath}/ads?page=${page-1}">Previous</a>
                     </li>
                 </c:if>
 
@@ -75,7 +75,7 @@
                         </c:when>
                         <c:otherwise>
                             <li class="page-item"><a class="page-link"
-                                                     href="/ads?page=${i}">${i}</a>
+                                                     href="${pageContext.request.contextPath}/ads?page=${i}">${i}</a>
                             </li>
                         </c:otherwise>
                     </c:choose>
@@ -83,7 +83,7 @@
 
                 <c:if test="${page lt noOfPages}">
                     <li class="page-item"><a class="page-link"
-                                             href="/ads?page=${page+1}">Next</a>
+                                             href="${pageContext.request.contextPath}/ads?page=${page+1}">Next</a>
                     </li>
                 </c:if>
             </ul>

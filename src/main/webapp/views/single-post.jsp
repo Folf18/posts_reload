@@ -11,7 +11,7 @@
             <div class="col-sm-8">
                 <div class="card">
                     <div class="card-header">
-                        <a href="/post/?id=${postInfo.id}">
+                        <a href="${pageContext.request.contextPath}/post/?id=${postInfo.id}">
                                 ${postInfo.summary}</a>
                     </div>
                     <div class="card-body">
