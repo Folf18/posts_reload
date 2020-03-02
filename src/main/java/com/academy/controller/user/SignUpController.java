@@ -39,6 +39,8 @@ public class SignUpController extends HttpServlet {
         Validator validator = factory.getValidator();
 
 
+
+
         user.setUsername(req.getParameter("username").replaceAll("\\s+", ""));
         user.setEmail(req.getParameter("email").replaceAll("\\s+", ""));
         user.setPassword(req.getParameter("password").replaceAll("\\s+", ""));
@@ -67,6 +69,7 @@ public class SignUpController extends HttpServlet {
 
                     UserService.getInstance().createUser(user);
                     ActivationService activationService = ActivationService.getInstance();
+
                     activationService.saveAndSendMail(user.getEmail());
                     req.setAttribute("enteredEmail", user.getEmail());
                     req.getRequestDispatcher("/views/activate-message.jsp").forward(req, resp);

@@ -21,6 +21,9 @@ public class GetAllApprovedPostsController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+
+        System.out.println(req.getRequestURL());
+        System.out.println();
         //default page is first
         int page = 1;
 

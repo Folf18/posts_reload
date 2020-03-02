@@ -95,13 +95,11 @@ public class UserService implements Serializable {
 
     public boolean checkIfEmailExists(String email){
         boolean emailExists = userDAO.emailExists(email) == 0 ? false : true;
-        System.out.println(emailExists);
         return emailExists;
     }
 
     public boolean checkIfUsernameExists(String username){
         boolean userExists = userDAO.usernameExists(username) == 0 ? false : true;
-        System.out.println(userExists);
         return userExists;
 
     }

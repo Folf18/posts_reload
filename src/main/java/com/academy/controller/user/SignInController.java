@@ -30,17 +30,15 @@ public class SignInController extends HttpServlet {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
 
-        System.out.println(username + "   " + password);
         int userId = UserService.getInstance().getUserIdByCredentials(username, EncryptingService.getInstance().encrypt(password));
 
         if (userId != 0) {
             User loggedUser = UserService.getInstance().getUserInfoById(userId);
 
-            System.out.println(loggedUser.getIsActive() + "    " + loggedUser.getIsBlocked());
+
 
             if ((loggedUser.getIsActive()) && (!loggedUser.getIsBlocked()))
             {
-                System.out.println(loggedUser.getIsActive() + "    " + loggedUser.getIsBlocked());
 
 
             HttpSession session = req.getSession(true);
@@ -49,7 +47,7 @@ public class SignInController extends HttpServlet {
             session.setAttribute("global_user_role", loggedUser.getRole().getName());
 
             //req.getRequestDispatcher("/views/session.jsp").forward(req, resp);
-            resp.sendRedirect("/ads");
+            resp.sendRedirect(req.getContextPath()+"/ads");
             }
             if ((!loggedUser.getIsActive())) {
                 req.setAttribute("enteredUsername", username);
@@ -71,6 +69,5 @@ public class SignInController extends HttpServlet {
             req.setAttribute("message", "Account with such credentials doesn't exist. \n Maybe username or password is incorrect.");
             req.getRequestDispatcher("/views/SignIn.jsp").forward(req, resp);
         }
-        //resp.sendRedirect("/add-post");
     }
 }

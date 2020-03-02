@@ -35,7 +35,6 @@ public class ActivationService extends TokenService implements Serializable {
         MailService mailService = MailService.getInstance();
 
         try {
-
             mailService.sendActivationToken(email, token);
 
         } catch (Exception e) {

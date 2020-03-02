@@ -28,7 +28,7 @@ public class ChangeBlockingController extends HttpServlet {
         req.setAttribute("message", UserService.getInstance().blockUserById(userId, currentStatus));
 
         int page = currentPage == null ? 1 : Integer.parseInt(currentPage);
-           resp.sendRedirect("/users-management?page="+page);
+           resp.sendRedirect(req.getContextPath()+"/users-management?page="+page);
 
     }
 }

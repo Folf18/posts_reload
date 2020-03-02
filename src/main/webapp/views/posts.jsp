@@ -11,7 +11,6 @@
 <div class="container">
     <h1 class="row justify-content-center">Advertisements</h1>
     <br>
-
     <!-- ADS' -->
     <c:forEach items="${approvedPosts}" var="approvedPost">
         <div class="row w-100 justify-content-center">
@@ -19,8 +18,7 @@
                 <div class="card">
 
                     <div class="card-header font-weight-bold">
-                        <a href="/post?id=${approvedPost.id}">
-                                ${approvedPost.summary}</a>
+                        <a>${approvedPost.summary}</a>
                     </div>
 
                     <div class="card-body">

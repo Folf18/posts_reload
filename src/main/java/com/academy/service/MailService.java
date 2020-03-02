@@ -17,6 +17,10 @@ public class MailService implements Serializable {
 
     private static Session session;
 
+    public static String APP_URL;
+
+    //public static String APP_URL = req.getScheme()+"://"+req.getServerName()+":"+req.getServerPort()
+
     public MailService() {}
 
     public static MailService getInstance() {
@@ -50,9 +54,7 @@ public class MailService implements Serializable {
 
     public void sendActivationToken(String email, String token) throws MessagingException {
 
-        String link = "http://localhost:8080/activateAccount?token=" + token;
-
-        String message = "Hi there! To activate your account, please follow link:<br/><br/><a href='" + link + "' style='margin-left:30%;'>Activate account</a>";
+        String message = "Hi there! To activate your account, please follow link <a href='" +  APP_URL + "/activateAccount?token=" + token + " " + "'>Activate account</a>";
 
         sendMimeMessage(email, "Account activation", message);
 
@@ -60,19 +62,15 @@ public class MailService implements Serializable {
 
     public void sendGreetings(String email) throws MessagingException {
 
-        String link = "http://localhost:8080/signin";
-
-        String message = "Welcome to our advertising system! <br/>  Your account was successfully activated.<br/><br/><a href='" + link + "' style='margin-left:30%;'>LOGIN TO ACCOUNT</a>";
+        String message = "Welcome to our advertising system! <br/>  Your account was successfully activated.<br/><br/><a href='" + APP_URL + "/signin" + "' style='margin-left:30%;'>LOGIN TO ACCOUNT</a>";
 
         sendMimeMessage(email, "Congratulations", message);
 
     }
 
     public void sendAdsStatus(String username, String email, String summary, String status) throws MessagingException {
-        String link = "http://localhost:8080/signin";
-
         String message = "Hi "+ username +"! <br/>  <br/>" +
-                "Your ads <b> \""+ summary+"\"</b> was "+status.toLowerCase()+" by administrator.";
+                "Your ads <b> \""+ summary+"\"</b> was "+status.toLowerCase()+" by manager.";
 
         sendMimeMessage(email, "Ads status changed", message);
     }
@@ -81,6 +79,9 @@ public class MailService implements Serializable {
     private static void init() {
 
         Map<String, String> connectionProperties = PropertiesService.getInstance().getMailProperties();
+
+        APP_URL = connectionProperties.get("app_url");
+
         Properties properties = new Properties();
 
         properties.put("mail.smtp.host", connectionProperties.get("host"));
