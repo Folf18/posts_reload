@@ -32,6 +32,6 @@ public class DeclinePostController extends HttpServlet {
             e.printStackTrace();
         }
 
-        resp.sendRedirect("/ads-management");
+        resp.sendRedirect(req.getContextPath()+"/ads-management");
     }
 }

@@ -59,7 +59,7 @@ public class PropertiesService implements Serializable {
 
         Map<String, String> connectionProperties = new HashMap<>();
 
-        connectionProperties.put("base_url", projectProperties.getProperty("app.base_url"));
+        connectionProperties.put("app_url", projectProperties.getProperty("app.url"));
 
         connectionProperties.put("host", projectProperties.getProperty("mail.smtp.host"));
         connectionProperties.put("socketFactoryPort", projectProperties.getProperty("mail.smtp.socketFactory.port"));

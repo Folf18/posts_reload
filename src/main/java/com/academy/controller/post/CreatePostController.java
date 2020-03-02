@@ -82,7 +82,5 @@ public class CreatePostController extends HttpServlet {
             doGet(req, resp);
         }
 
-        //resp.sendRedirect("/add-post");
-
     }
 }

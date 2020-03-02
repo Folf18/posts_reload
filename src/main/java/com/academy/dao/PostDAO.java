@@ -31,9 +31,11 @@ public class PostDAO implements Serializable {
                 "JOIN post_type R ON U.post_type_id = R.id\n" +
                 "JOIN post_status D ON U.post_status_id = D.id \n" +
                 "JOIN users Z ON U.user_id = Z.id \n" +
-                "WHERE D.name = 'APPROVED'\n" +
+                "WHERE D.name = 'APPROVED' \n" +
                 "ORDER BY U.created_at DESC \n" +
                 "LIMIT ? offset ?";
+
+
 
 
     private static final String GET_ALL_POSTS_BY_STATUS = "SELECT U.id, U.summary, U.description, U.created_at, R.name as post_type_name, D.name as post_status_name, Z.username as username\n" +

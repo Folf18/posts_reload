@@ -27,7 +27,9 @@ public class PostService implements Serializable {
         return postService;
     }
 
-    public List<Post> getAllApprovedPosts(int page) {
+    public List<Post> getAllApprovedPosts( int page) {
+
+
 
         //Hardcoded number of records per page
         int recordsPerPage = 10;

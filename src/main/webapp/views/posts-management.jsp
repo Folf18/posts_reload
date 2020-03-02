@@ -101,7 +101,7 @@
 
                     <c:choose>
                         <c:when test="${param.status=='NEW'}">
-                            <form action="/manage/decline" method="post" class="col text-right">
+                            <form action="/manage/approve" method="post" class="col text-right">
                                 <input type="hidden" value="${newPost.id}" name="id"/>
                                 <input type="hidden" value="${param.status}" name="status"/>
                                 <button class="btn btn-success" type="submit">Approve</button>

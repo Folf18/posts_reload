@@ -20,6 +20,7 @@ public class ActivateUserController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String token = req.getParameter("token");
+        String contextPath = req.getContextPath();
         boolean isSuccessful = ActivationService.getInstance().activateAccountAndSendMail(token);
 
         if (token != null) {

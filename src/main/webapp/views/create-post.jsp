@@ -64,11 +64,6 @@
             </br>
         </div>
 
-
-        <div class="form-group">
-            <p>user id = ${sessionScope.global_user_id}</p> </br>
-        </div>
-
         <div class="row justify-content-center">
             <button class="btn btn-primary" type="submit">Publish advertisement</button>
         </div>

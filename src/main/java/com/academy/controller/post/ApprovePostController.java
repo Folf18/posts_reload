@@ -30,6 +30,6 @@ public class ApprovePostController extends HttpServlet {
         } catch (MessagingException e) {
             e.printStackTrace();
         }
-        resp.sendRedirect("/ads-management");
+        resp.sendRedirect(req.getContextPath()+"/ads-management");
     }
 }
