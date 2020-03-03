@@ -10,7 +10,7 @@
 <!--Dropdown with post statuses-->
 <div align="center">
     <h2>Ads created by ${sessionScope.global_user_username}</h2>
-    <form action="/my-ads" method="post">
+    <form action="${pageContext.request.contextPath}/my-ads" method="post">
         Select a Status:&nbsp;
         <select name="status">
             <c:forEach items="${postStatuses}" var="status">

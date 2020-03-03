@@ -38,7 +38,7 @@
 
 
 <div class="row justify-content-center">
-    <form class="col-md-4" action="/add-ads" method="post">
+    <form class="col-md-4" action="${pageContext.request.contextPath}/add-ads" method="post">
         <div class="form-group">
             Enter short summary: <input type="text" name="summary" value="${enteredSummary}"
                                         placeholder="Summary e.g. 'Selling a cow'"

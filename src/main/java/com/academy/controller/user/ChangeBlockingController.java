@@ -19,6 +19,8 @@ public class ChangeBlockingController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         log.info("In ChangeBlockingController");
 
+
+
         String currentPage = req.getParameter("page");
 
         int userId = Integer.parseInt(req.getParameter("userId"));
@@ -27,7 +29,7 @@ public class ChangeBlockingController extends HttpServlet {
         log.info(currentStatus + " in ChangeBlockingController");
         req.setAttribute("message", UserService.getInstance().blockUserById(userId, currentStatus));
 
-        int page = currentPage == null ? 1 : Integer.parseInt(currentPage);
+        int page = currentPage.equals("") ? 1 : Integer.parseInt(currentPage);
            resp.sendRedirect(req.getContextPath()+"/users-management?page="+page);
 
     }

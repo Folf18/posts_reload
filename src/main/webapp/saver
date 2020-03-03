@@ -88,3 +88,27 @@
             Enter description: <input type="text" name="description" value="${oldDescription}" placeholder="Description"
                                       class="form-control"/> </br>
         </div>
+
+
+
+
+
+        <c:choose>
+                                            <c:when test="${user.isBlocked == true}">
+                                                <form action="${pageContext.request.contextPath}/admin/changeBlocking" method="post">
+                                                    <input type="hidden" value="${user.id}" name="userId"/>
+                                                    <input type="hidden" value="${user.isBlocked}" name="isBlocked"/>
+                                                    <input type="hidden" value="${param.page}" name="page"/>
+                                                    <button class="btn btn-info" type="submit">UnBlock</button>
+                                                </form>
+                                            </c:when>
+
+                                            <c:when test="${user.isBlocked == false}">
+                                                <form action="${pageContext.request.contextPath}/admin/changeBlocking" method="post">
+                                                    <input type="hidden" value="${user.id}" name="userId"/>
+                                                    <input type="hidden" value="${user.isBlocked}" name="isBlocked"/>
+                                                    <input type="hidden" value="${param.page}" name="page"/>
+                                                    <button class="btn btn-danger" type="submit">Block</button>
+                                                </form>
+                                            </c:when>
+                                        </c:choose>

@@ -10,7 +10,7 @@
 
 <div class="row justify-content-center">
         <div class="alert alert-primary" role="alert">
-                <div class="col ">Please <a href="/signin" class="alert-link">Login</a> to continue</div>
+                <div class="col ">Please <a href="${pageContext.request.contextPath}/signin" class="alert-link">Login</a> to continue</div>
         </div>
 </div>
 </body>

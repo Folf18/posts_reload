@@ -24,7 +24,6 @@
             <th>Role</th>
             <th>Is Blocked</th>
             <th>Is Active</th>
-            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -36,66 +35,75 @@
                 <td>${user.email}</td>
                 <td>${user.role.name}
                     <c:if test="${sessionScope.global_user_role == 'ADMIN'}">
-                    <div>
-                        <c:choose>
-                            <c:when test="${user.role.name == 'USER'}">
-                                <form action="/admin/changeRole" method="post">
-                                    <input type="hidden" value="${user.id}" name="userId"/>
-                                    <input type="hidden" value="${user.role.id}" name="roleId"/>
-                                    <input type="hidden" value="${user.role.name}" name="roleName"/>
-                                    <input type="hidden" value="${param.page}" name="page"/>
+                        <div>
+
+                            <form action="${pageContext.request.contextPath}/admin/changeRole" method="post">
+                                <input type="hidden" value="${user.id}" name="userId"/>
+                                <input type="hidden" value="${user.role.id}" name="roleId"/>
+                                <input type="hidden" value="${user.role.name}" name="roleName"/>
+                                <input type="hidden" value="${param.page}" name="page"/>
+                                <c:if test="${user.role.name == 'USER'}">
                                     <button class="btn btn-light" type="submit">Upgrade Role</button>
-                                </form>
-                            </c:when>
-                            <c:when test="${user.role.name == 'MANAGER'}">
-                                <form action="/admin/changeRole" method="post">
-                                    <input type="hidden" value="${user.id}" name="userId"/>
-                                    <input type="hidden" value="${user.role.id}" name="roleId"/>
-                                    <input type="hidden" value="${user.role.name}" name="roleName"/>
-                                    <input type="hidden" value="${param.page}" name="page"/>
+                                </c:if>
+                                <c:if test="${user.role.name == 'MANAGER'}">
                                     <button class="btn btn-dark" type="submit">Downgrade Role</button>
-                                </form>
-                            </c:when>
-                            <c:otherwise>
-                                <a>Action isn't available</a>
-                            </c:otherwise>
-                        </c:choose>
-                    </div>
+                                </c:if>
+                                <c:if test="${user.role.name == 'ADMIN'}">
+                                    <a>Action isn't available</a>
+                                </c:if>
+                            </form>
+                        </div>
                     </c:if>
                 </td>
+
+                <!---->
                 <td>${user.isBlocked}
                     <div>
+
                         <c:choose>
-                            <c:when test="${user.isBlocked == true}">
-                                <form action="/admin/changeBlocking" method="post">
+                            <c:when test="${sessionScope.global_user_role == 'MANAGER'}">
+                                <c:if test="${user.role.name != 'ADMIN'}">
+
+                                    <form action="${pageContext.request.contextPath}/admin/changeBlocking"
+                                          method="post">
+                                        <input type="hidden" value="${user.id}" name="userId"/>
+                                        <input type="hidden" value="${user.isBlocked}" name="isBlocked"/>
+                                        <input type="hidden" value="${param.page}" name="page"/>
+                                        <c:if test="${user.isBlocked == true}">
+                                            <button class="btn btn-info" type="submit">UnBlock</button>
+                                        </c:if>
+                                        <c:if test="${user.isBlocked == false}">
+                                            <button class="btn btn-danger" type="submit">Block</button>
+                                        </c:if>
+                                    </form>
+                                </c:if>
+
+                                <c:if test="${user.role.name == 'ADMIN'}">
+                                    <a>Action isn't available</a>
+                                </c:if>
+                            </c:when>
+
+                            <c:otherwise> <!-- otherwise = ADMIN -->
+                                <form action="${pageContext.request.contextPath}/admin/changeBlocking" method="post">
                                     <input type="hidden" value="${user.id}" name="userId"/>
                                     <input type="hidden" value="${user.isBlocked}" name="isBlocked"/>
                                     <input type="hidden" value="${param.page}" name="page"/>
-                                    <button class="btn btn-info" type="submit">UnBlock</button>
+                                    <c:if test="${user.isBlocked == true}">
+                                        <button class="btn btn-info" type="submit">UnBlock</button>
+                                    </c:if>
+                                    <c:if test="${user.isBlocked == false}">
+                                        <button class="btn btn-danger" type="submit">Block</button>
+                                    </c:if>
                                 </form>
-                            </c:when>
-
-                            <c:when test="${user.isBlocked == false}">
-                                <form action="/admin/changeBlocking" method="post">
-                                    <input type="hidden" value="${user.id}" name="userId"/>
-                                    <input type="hidden" value="${user.isBlocked}" name="isBlocked"/>
-                                    <input type="hidden" value="${param.page}" name="page"/>
-                                    <button class="btn btn-danger" type="submit">Block</button>
-                                </form>
-                            </c:when>
-
+                            </c:otherwise>
                         </c:choose>
+
+
                     </div>
                 </td>
 
                 <td>${user.isActive}</td>
 
-
-                <td>
-
-
-
-                </td>
             </tr>
         </c:forEach>
         </tbody>
@@ -108,20 +116,19 @@
 
                 <c:if test="${page != 1}">
                     <li class="page-item"><a class="page-link"
-                                             href="/users-management?page=${page-1}">Previous</a>
+                                             href="${pageContext.request.contextPath}/users-management?page=${page-1}">Previous</a>
                     </li>
                 </c:if>
 
                 <c:forEach begin="1" end="${noOfPages}" var="i">
                     <c:choose>
                         <c:when test="${page eq i}">
-                            <li class="page-item active"><a class="page-link">
-                                    ${i} <span class="sr-only">(current)</span></a>
+                            <li class="page-item active"><a class="page-link">${i}<span class="sr-only">(current)</span></a>
                             </li>
                         </c:when>
                         <c:otherwise>
                             <li class="page-item"><a class="page-link"
-                                                     href="/users-management?page=${i}">${i}</a>
+                                                     href="${pageContext.request.contextPath}/users-management?page=${i}">${i}</a>
                             </li>
                         </c:otherwise>
                     </c:choose>
@@ -129,7 +136,7 @@
 
                 <c:if test="${page lt noOfPages}">
                     <li class="page-item"><a class="page-link"
-                                             href="/users-management?page=${page+1}">Next</a>
+                                             href="${pageContext.request.contextPath}/users-management?page=${page+1}">Next</a>
                     </li>
                 </c:if>
             </ul>

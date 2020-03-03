@@ -22,7 +22,7 @@
     </div>
     </c:if>
 <div class="row justify-content-center">
-    <form action="/signin" method="post" class="col-md-4">
+    <form action="${pageContext.request.contextPath}/signin" method="post" class="col-md-4">
         <h2>Login</h2><br>
         <div class="form-group">
             Enter username: <input type="text" name="username" placeholder="Username" class="form-control" value="${enteredUsername}"/> </br>
