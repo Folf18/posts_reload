@@ -156,6 +156,9 @@ public class PostDAO implements Serializable {
                 post.setPostStatus(postStatus);
 
                 OffsetDateTime createdAt  = resultSet.getObject("created_at", OffsetDateTime.class);
+              /*  OffsetDateTime createdAt;
+                createdAt = (OffsetDateTime) resultSet.getObject("created_at");
+               */
                 post.setCreatedAt(createdAt);
 
                 user.setUsername(resultSet.getString("username"));

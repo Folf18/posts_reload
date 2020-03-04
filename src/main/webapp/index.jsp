@@ -7,12 +7,14 @@
 --%>
 <%@ include file="common/header.jspf" %>
 
-<h1>Posts</h1>
 <div class="container">
     <hr>
-    <h1>Hi there</h1>
+    <h1>Beautiful  description of the site</h1>
     <hr>
 </div>
 </div>
-<%@ include file="common/footer.jspf" %>
+</body>
+
+
+</html>
 

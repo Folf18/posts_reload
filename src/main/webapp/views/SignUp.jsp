@@ -24,7 +24,7 @@
 <c:if test="${not empty emailExists}">
 
     <div class="row justify-content-center">
-        <div class="alert alert-warning" role="alert">
+        <div class="alert alert-danger" role="alert">
             <div class="col col-lg-12">
                 <ul>
                     <li>${emailExists}</li>
@@ -37,7 +37,7 @@
 <c:if test="${not empty usernameExists}">
 
     <div class="row justify-content-center">
-        <div class="alert alert-warning" role="alert">
+        <div class="alert alert-danger" role="alert">
             <div class="col col-lg-12">
                 <ul>
                     <li>${usernameExists}</li>

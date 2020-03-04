@@ -56,6 +56,7 @@ public class SignUpController extends HttpServlet {
 
             Set<ConstraintViolation<User>> violations = validator.validate(user);
 
+
             if (violations.isEmpty()) {
 
                 user.setUsername(req.getParameter("username"));
@@ -64,6 +65,7 @@ public class SignUpController extends HttpServlet {
 
                 boolean usernameExists = UserService.getInstance().checkIfUsernameExists(user.getUsername());
                 boolean emailExists = UserService.getInstance().checkIfEmailExists(user.getEmail());
+
 
                 if ((!emailExists) && (!usernameExists)) {
 
@@ -77,10 +79,15 @@ public class SignUpController extends HttpServlet {
                 if (usernameExists) {
                     usernameExistsMessage = "User with this username already exists";
                     req.setAttribute("usernameExists", usernameExistsMessage);
+                    req.setAttribute("oldUsername", req.getParameter("username"));
+                    req.setAttribute("oldEmail", req.getParameter("email"));
+
                 }
                 if (emailExists) {
                     emailExistsMessage = "User with this email already exists";
                     req.setAttribute("emailExists", emailExistsMessage);
+                    req.setAttribute("oldUsername", req.getParameter("username"));
+                    req.setAttribute("oldEmail", req.getParameter("email"));
                 }
                 doGet(req, resp);
 
@@ -91,20 +98,31 @@ public class SignUpController extends HttpServlet {
                 if (UserService.getInstance().checkIfUsernameExists(user.getUsername())) {
                     usernameExistsMessage = "User with this username already exists";
                     req.setAttribute("usernameExists", usernameExistsMessage);
+                    req.setAttribute("oldUsername", req.getParameter("username"));
+                    req.setAttribute("oldEmail", req.getParameter("email"));
                 }
                 if (UserService.getInstance().checkIfEmailExists(user.getEmail())) {
                     emailExistsMessage = "User with this email already exists";
                     req.setAttribute("emailExists", emailExistsMessage);
+                    req.setAttribute("oldUsername", req.getParameter("username"));
+                    req.setAttribute("oldEmail", req.getParameter("email"));
                 }
 
+
+                req.setAttribute("usernameExists", usernameExistsMessage);
+                req.setAttribute("oldUsername", req.getParameter("username"));
+                req.setAttribute("oldEmail", req.getParameter("email"));
             }
             doGet(req, resp);
 
         }
         else {
             req.setAttribute("emptyError", "Username, email or password can not be empty");
+            req.setAttribute("oldUsername", req.getParameter("username"));
+            req.setAttribute("oldEmail", req.getParameter("email"));
             doGet(req, resp);
         }
     }
+
 
 }

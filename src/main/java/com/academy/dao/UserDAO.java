@@ -209,18 +209,14 @@ public class UserDAO implements Serializable {
             preparedStatement.setString(1, username);
             preparedStatement.setString(2, password);
             resultSet = preparedStatement.executeQuery();
-
-            if (!resultSet.wasNull()) {
                 while (resultSet.next()) {
                     userId = resultSet.getInt("id");
                 }
-            }
             return userId;
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return userId;
     }
 
