@@ -8,11 +8,7 @@ import java.sql.SQLException;
 import java.util.Map;
 
 public class DBConnectionUtil {
-
-/*    private static final String URL = "jdbc:postgresql://localhost:5432/posts_demo";
-    private static final String USERNAME = "postgres";
-    private static final String PASSWORD = "postgres";
-    private static final String DRIVER = "org.postgresql.Driver"; */
+    
     private static Connection connection = null;
 
 
